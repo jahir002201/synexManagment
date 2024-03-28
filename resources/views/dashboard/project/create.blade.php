@@ -1,4 +1,122 @@
 @extends('dashboard.index')
+@section('style')
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<link rel="stylesheet" href="{{asset('dashboard_assets/vendor/select2/css/select2.min.css')}}">
+<style>
+    .btn-outline-primary{
+       background-color: #e3daff !important;
+        border: 0 !important;
+        font-size: 15px;
+    }
+    .btn-outline-primary:hover{
+       background-color: #6b51df !important;
+    }
+</style>
+<style>
+    .note-toolbar{
+        background-color: transparent;
+    }
+   .note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar{
+        background-color: transparent !important;
+    }
+    img:not(.note-editable > p > img) {
+           width: 100% ;
+           display: flex !important;
+           margin: auto !important;
+       }
+       .note-editable > p > img{
+           display: flex;
+           margin: auto;
+       }
+       .note-editable > ul{
+           list-style-type: disc !important;
+           padding-left: 2rem !important;
+           margin-bottom: 20px !important;
+       }
+       .note-editable > ul li{
+        list-style: disc !important;
+       }
+       .note-editable > ol li{
+            margin-left: 30px;
+            list-style-type: decimal;
+       }
+       .customUl > ul{
+           list-style-type: disc !important;
+           padding-left: 2rem !important;
+           margin-bottom: 20px !important;
+       }
+       iframe {
+           display: block;
+           margin: auto;
+           max-width: 100%;
+           max-height: 100%;
+       }
+
+
+       table:not(.note-editable > table) {
+           display: flex   ;
+           overflow-x: auto;
+           white-space: nowrap;
+           width: 100% !important;
+           border-collapse: collapse;
+           justify-content: center;
+           align-items: center;
+       }
+
+   table th,
+   table td {
+       padding: 8px;
+       border: 1px solid #ccc;
+       word-wrap: break-word;
+   }
+
+
+       @media (max-width: 576px) {
+           .table {
+               font-size: 8px; /* Adjust font size for smaller screens */
+           }
+           img:not(.note-editable > p > img) {
+           width: 100% !important;
+           }
+           iframe {
+               width: 95%;
+               height: 100%;
+           }
+           .note-editable img {
+               /* Add your CSS properties for the img element here */
+
+           }
+           table:not(.note-editable > table) {
+
+           justify-content: normal !important;
+           align-items: normal !important;
+           }
+
+       }
+       @media (max-width: 767px) {
+           .table {
+               font-size: 10px; /* Adjust font size for smaller screens */
+           }
+
+           img:not(.note-editable > p > img) {
+               width: 100% !important;
+           }
+           iframe {
+               width: 95%;
+               height: 100%;
+           }
+       }
+       @media (min-width: 768px) and (max-width: 992px) {
+           img:not(.note-editable > p > img) {
+               width: 100% !important;
+           }
+       }
+
+</style>
+@endsection
 @section('content')
 <div class="row ">
     <div class="col-lg-6">
@@ -13,9 +131,9 @@
     </div>
 
 </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
+    <div class="row mb-5">
+        <div class="col-lg-12 mb-5">
+            <div class="card ">
                 <div class="card-header ">
                    <h4 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp;Create Project</h4>
                 </div>
@@ -38,12 +156,50 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label font-weight-bold">Project Description :</label>
-                            <textarea name="" id="" class="form-control" cols="30" rows="10"></textarea>
+                            <textarea name="" id="summernote" class="form-control " cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="form-row mb-3">
+                            <div class="form-group  col-lg-4">
+                                <label for="inputPassword4" class="font-weight-bold">Budget :</label>
+                                <input type="number" name="budget" id="" class="form-control" >
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="currency" class="font-weight-bold">Currency Type :</label>
+                                <select class="form-control" id="currencySelect">
+                                    <option value="USD">USD</option>
+                                    <option value="BDT">BDT</option>
+                                    <option value="EURO">EURO</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="rate" class="font-weight-bold">Exchange Rate :</label>
+                                <input type="text" class="form-control" id="exchangeRateInput" readonly>
+                            </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class="form-group  col-lg-6">
+                                <label for="inputPassword4" class="font-weight-bold">Team Leader :</label>
+                                <select class="multi-select" name="states[]" multiple="multiple">
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="UI">dlf</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="inputPassword4" class="font-weight-bold">Team Member :</label>
+                                <select class="multi-select" name="states[]" multiple="multiple">
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="UI">dlf</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row mb-3">
+                            <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Status :</label>
-                                <select class="form-control form-control-lg">
+                                <select class="single-select">
                                     <option selected>INPROGRESS</option>
                                     <option>ON-HOLD</option>
                                     <option>COMPLETED</option>
@@ -51,7 +207,7 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Priority :</label>
-                                <select class="form-control form-control-lg">
+                                <select class="single-select">
                                     <option>LOW</option>
                                     <option>MEDIUM</option>
                                     <option>HIGH</option>
@@ -59,9 +215,62 @@
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <button class="btn btn-outline-primary float-right">Create Project</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+<script src="{{asset('dashboard_assets/vendor/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('dashboard_assets/js/plugins-init/select2-init.js')}}"></script>
+<script>
+
+    const currencySelect = document.getElementById('currencySelect');
+    const exchangeRateInput = document.getElementById('exchangeRateInput');
+
+    currencySelect.addEventListener('change', function() {
+        const selectedCurrency = currencySelect.value;
+        const exchangeRate = getExchangeRate(selectedCurrency);
+        exchangeRateInput.value = exchangeRate !== null ? exchangeRate : '';
+
+    });
+    function getExchangeRate(currency) {
+    if (currency === 'USD') {
+        return 120;
+    } else if (currency === 'BDT') {
+        return 1;
+    } else if (currency === 'EURO') {
+        return 130;
+    }else {
+        return null; // Return null for unsupported currencies
+    }
+
+}
+</script>
+
+@endsection
+@section('summernote')
+<script>
+
+
+
+         $('#summernote').summernote({
+           tabsize: 2,
+           height: 320,
+           toolbar: [
+             ['style', ['style']],
+             ['font', ['bold', 'underline', 'clear']],
+             ['color', ['color']],
+             ['para', ['ul', 'ol', 'paragraph']],
+             ['table', ['table']],
+             ['insert', ['link', 'picture', 'video']],
+             ['view', ['fullscreen', 'codeview', 'help']]
+           ],
+
+   });
+ </script>
 @endsection
