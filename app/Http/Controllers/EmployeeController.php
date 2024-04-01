@@ -35,7 +35,7 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('dashboard.employee.profile');
     }
 
     /**

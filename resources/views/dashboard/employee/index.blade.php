@@ -54,11 +54,13 @@
         </div>
         <div class="col-md-3 mb-4">
             <div class="card position-relative">
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
+                <a href="{{ route('employee.show', 1) }}">
+                    <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">John Doe</h5>
+                        <p class="card-text text-muted">Web Designer</p>
+                    </div>
+                </a>
               <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
                 <div class="dropdown custom-dropdown">
                     <div data-toggle="dropdown">
@@ -122,6 +124,29 @@
                 <h5 class="card-title">John Doe</h5>
                 <p class="card-text text-muted">Web Designer</p>
               </div>
+              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
+                <div class="dropdown custom-dropdown">
+                    <div data-toggle="dropdown">
+                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
+                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
+                        <a class="dropdown-item py-1" href="#">Delete</a>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card position-relative">
+                <a href="{{ route('employee.show', 1) }}">
+                    <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">John Doe</h5>
+                        <p class="card-text text-muted">Web Designer</p>
+                    </div>
+                </a>
               <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
                 <div class="dropdown custom-dropdown">
                     <div data-toggle="dropdown">
@@ -228,7 +253,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create Employee</h5>
+                <h5 class="modal-title">Add Employee Details</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
@@ -237,90 +262,62 @@
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Full Name :</label>
-                            <input type="text" class="form-control" placeholder="Enter Project Name">
+                            <input type="text" class="form-control" placeholder="Enter  Full Name">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Email :</label>
-                          <input type="password" class="form-control" id="inputPassword4" placeholder="Enter Client Name">
+                          <input type="password" class="form-control" id="inputPassword4" placeholder="Enter Email">
                         </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="form-group col-md-6">
+                            <label for="" class="form-label font-weight-bold">Phone :</label>
+                            <input type="text" class="form-control" placeholder="Enter Contact Number">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4" class="font-weight-bold">Start Date :</label>
+                          <input type="date" class="form-control" id="inputPassword4" placeholder="Enter Email">
+                        </div>
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="form-group col-md-6">
+                            <label for="" class="form-label font-weight-bold">Department :</label>
+                            <select class="single-select">
+                                <option>Department</option>
+                                <option>Developer</option>
+                                <option>Designer</option>
+                                <option>Writer</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4" class="font-weight-bold">Designation :</label>
+                          <select class="single-select">
+                            <option>Desegination</option>
+                            <option>Developer</option>
+                            <option>Designer</option>
+                            <option>Writer</option>
+                          </select>
+                        </div>
+
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Password :</label>
-                            <input type="text" class="form-control" placeholder="Enter Project Name">
+                            <input type="text" class="form-control" placeholder="Enter Password">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Confirm Password :</label>
-                          <input type="password" class="form-control" id="inputPassword4" placeholder="Enter Client Name">
+                          <input type="password" class="form-control" id="inputPassword4" placeholder="Confirm  Password">
                         </div>
 
-                    </div>
-                    <div id="snote" class="mb-3">
-                        <label for="" class="form-label font-weight-bold">Project Description :</label>
-                        <textarea name="" id="summernote" class="form-control " cols="30" rows="10"></textarea>
-                    </div>
-                    <div class="form-row mb-3">
-                        <div class="form-group  col-lg-4">
-                            <label for="inputPassword4" class="font-weight-bold">Budget :</label>
-                            <input type="number" name="budget" id="" class="form-control" >
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label for="currency" class="font-weight-bold">Currency Type :</label>
-                            <select class="form-control" id="currencySelect">
-                                <option value="USD">USD</option>
-                                <option value="BDT">BDT</option>
-                                <option value="EURO">EURO</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label for="rate" class="font-weight-bold">Exchange Rate :</label>
-                            <input type="text" class="form-control" id="exchangeRateInput" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row mb-3">
-                        <div class="form-group  col-lg-6">
-                            <label for="inputPassword4" class="font-weight-bold">Team Leader :</label>
-                            <select class="multi-select" name="states[]" multiple="multiple">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
-                                <option value="UI">dlf</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="inputPassword4" class="font-weight-bold">Team Member :</label>
-                            <select class="multi-select" name="states[]" multiple="multiple">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
-                                <option value="UI">dlf</option>
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="form-row mb-3">
-                        <div class="form-group  col-lg-6">
-                            <label for="inputPassword4" class="font-weight-bold">Status :</label>
-                            <select class="single-select">
-                                <option selected>INPROGRESS</option>
-                                <option>ON-HOLD</option>
-                                <option>COMPLETED</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="inputPassword4" class="font-weight-bold">Priority :</label>
-                            <select class="single-select">
-                                <option>LOW</option>
-                                <option>MEDIUM</option>
-                                <option>HIGH</option>
-                            </select>
-                        </div>
                     </div>
 
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Create Project</button>
+                <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Employee</button>
             </div>
         </div>
     </div>

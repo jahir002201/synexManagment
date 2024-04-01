@@ -19182,6 +19182,7 @@ span#counter {
     [direction="rtl"] .nav-control {
       left: -3rem; } }
   @media (max-width: 575.98px) {
+
     [direction="rtl"] .nav-control {
       left: -2.5rem; } }
 
@@ -19416,4 +19417,20 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     width: 100%;
     /* position: absolute; */
     bottom: 0px;
+}
+.photo-content .profile-photo{
+    left: 63px;
+}
+
+@media (max-width: 480.98px) {
+    .prf-col{
+        margin-top: 56px;
+        text-align: center;
+    }
+}
+@media (min-width: 480.99px) and (max-width: 1200px) {
+    .prf-col{
+
+        margin-left: 167px;
+    }
 }
