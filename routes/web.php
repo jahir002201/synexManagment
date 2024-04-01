@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,5 +19,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');
     Route::resources([
         'project' => ProjectController::class,
+        'employee' => EmployeeController::class,
     ]);
 });

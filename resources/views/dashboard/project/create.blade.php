@@ -16,39 +16,39 @@
     }
 </style>
 <style>
-    .note-toolbar{
+   #snote .note-toolbar{
         background-color: transparent;
     }
-   .note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar{
+    #snote .note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar{
         background-color: transparent !important;
     }
-    img:not(.note-editable > p > img) {
+    #snote img:not(.note-editable > p > img) {
            width: 100% ;
            display: flex !important;
            margin: auto !important;
        }
-       .note-editable > p > img{
+       #snote .note-editable > p > img{
            display: flex;
            margin: auto;
        }
-       .note-editable > ul{
+       #snote .note-editable > ul{
            list-style-type: disc !important;
            padding-left: 2rem !important;
            margin-bottom: 20px !important;
        }
-       .note-editable > ul li{
+       #snote .note-editable > ul li{
         list-style: disc !important;
        }
-       .note-editable > ol li{
+       #snote .note-editable > ol li{
             margin-left: 30px;
             list-style-type: decimal;
        }
-       .customUl > ul{
+       #snote .customUl > ul{
            list-style-type: disc !important;
            padding-left: 2rem !important;
            margin-bottom: 20px !important;
        }
-       iframe {
+       #snote iframe {
            display: block;
            margin: auto;
            max-width: 100%;
@@ -56,7 +56,7 @@
        }
 
 
-       table:not(.note-editable > table) {
+       #snote table:not(.note-editable > table) {
            display: flex   ;
            overflow-x: auto;
            white-space: nowrap;
@@ -66,30 +66,30 @@
            align-items: center;
        }
 
-   table th,
-   table td {
-       padding: 8px;
-       border: 1px solid #ccc;
-       word-wrap: break-word;
-   }
+       #snote table th,
+       #snote table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            word-wrap: break-word;
+         }
 
 
        @media (max-width: 576px) {
-           .table {
+            #snote .table {
                font-size: 8px; /* Adjust font size for smaller screens */
            }
-           img:not(.note-editable > p > img) {
+           #snote img:not(.note-editable > p > img) {
            width: 100% !important;
            }
-           iframe {
+           #snote iframe {
                width: 95%;
                height: 100%;
            }
-           .note-editable img {
+           #snote .note-editable img {
                /* Add your CSS properties for the img element here */
 
            }
-           table:not(.note-editable > table) {
+           #snote table:not(.note-editable > table) {
 
            justify-content: normal !important;
            align-items: normal !important;
@@ -97,20 +97,20 @@
 
        }
        @media (max-width: 767px) {
-           .table {
+        #snote .table {
                font-size: 10px; /* Adjust font size for smaller screens */
            }
 
-           img:not(.note-editable > p > img) {
+           #snote img:not(.note-editable > p > img) {
                width: 100% !important;
            }
-           iframe {
+           #snote iframe {
                width: 95%;
                height: 100%;
            }
        }
        @media (min-width: 768px) and (max-width: 992px) {
-           img:not(.note-editable > p > img) {
+        #snote img:not(.note-editable > p > img) {
                width: 100% !important;
            }
        }
@@ -154,7 +154,7 @@
                                 <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="">
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div id="snote" class="mb-3">
                             <label for="" class="form-label font-weight-bold">Project Description :</label>
                             <textarea name="" id="summernote" class="form-control " cols="30" rows="10"></textarea>
                         </div>
@@ -216,7 +216,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <button class="btn btn-outline-primary float-right">Create Project</button>
+                            <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Create Project</button>
                         </div>
                     </form>
                 </div>
@@ -257,7 +257,6 @@
 <script>
 
 
-
          $('#summernote').summernote({
            tabsize: 2,
            height: 320,
@@ -271,6 +270,6 @@
              ['view', ['fullscreen', 'codeview', 'help']]
            ],
 
-   });
+         });
  </script>
 @endsection

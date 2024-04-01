@@ -22,7 +22,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Project List</h4>
-                    <a href="{{route('project.create')}}" class="btn btn-primary">New Project</a>
+
+                        <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">Create Project</a>
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

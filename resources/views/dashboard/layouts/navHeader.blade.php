@@ -5,7 +5,7 @@
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
 
-                <img class="logo-abbr "   src="{{asset('dashboard_assets/download.jfif')}}" alt="">
+                <img class="logo-abbr "   src="{{asset('dashboard_assets/images/logo-text.png')}}" alt="">
 
                 <img class="logo-compact" src="{{asset('dashboard_assets/images/logo-text.png')}}" alt="">
                 <p class="brand-title">Hennry </p>
