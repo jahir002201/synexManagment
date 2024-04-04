@@ -15,11 +15,6 @@
 
 </div>
 <!-- row -->
-    
-
-
-
-
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -74,6 +69,131 @@
         </div>
     </div>
 </div>
+<div class="card-header mb-2">
+    <h4 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Projects</h4>
+ </div>
+<div class="row">
+    <div class="col-xl-12 col-xxl-12 col-lg-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Project Name 1</h5>
+            </div>
+            <hr>
+            <div class="card-body">
+                <h6>Description :</h6>
+                <p class="card-text">He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff <br> sections. The bedding was hardly able to cover it and seemed ready to
+                    slide off any moment.
+                </p>
+               <div class="row">
+                <div class="col-lg-6">
+                    <h6>Leader :</h6>
+                    <p class="card-text">Imran  </p>
+
+                </div>
+                <div class="col-lg-6">
+                    <h6>Members :</h6>
+                    <p class="card-text">Esmail,Imran,Jobayer,Jahir,Tamim</p>
+                </div>
+               </div>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="d-inline-block  ">
+                            <h6 class="mb-0">Assigned Date</h6>
+                            <p class="badge badge-light text-primary">12,April 2024 </p>
+                        </div>
+                        <div class="d-inline-block text-center float-right">
+                            <h6 class="mb-0">Deadline</h6>
+                            <p class="badge badge-light text-info">12,April 2024 </p>
+                        </div>
+
+                    </div>
+
+
+
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Project Name 2</h5>
+            </div>
+            <hr>
+            <div class="card-body">
+                <h6>Description :</h6>
+                <p class="card-text">He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff <br> sections. The bedding was hardly able to cover it and seemed ready to
+                    slide off any moment.
+                </p>
+                <h6>Leader :</h6>
+                <p class="card-text">He lay on his  </p>
+                <h6>Members :</h6>
+                <p class="card-text">joe, doe, hib  </p>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="d-inline-block  ">
+                            <h6 class="mb-0">Assigned Date</h6>
+                            <p class="badge badge-light text-primary">12,April 2024 </p>
+                        </div>
+                        <div class="d-inline-block text-center float-right">
+                            <h6 class="mb-0">Deadline</h6>
+                            <p class="badge badge-light text-info">12,April 2024 </p>
+                        </div>
+
+                    </div>
+
+
+
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Project Name</h5>
+            </div>
+            <hr>
+            <div class="card-body">
+                <h6>Description :</h6>
+                <p class="card-text">He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff <br> sections. The bedding was hardly able to cover it and seemed ready to
+                    slide off any moment.
+                </p>
+                <h6>Leader :</h6>
+                <p class="card-text">He lay on his  </p>
+                <h6>Members :</h6>
+                <p class="card-text">joe, doe, hib  </p>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="d-inline-block  ">
+                            <h6 class="mb-0">Assigned Date</h6>
+                            <p class="badge badge-light text-primary">12,April 2024 </p>
+                        </div>
+                        <div class="d-inline-block text-center float-right">
+                            <h6 class="mb-0">Deadline</h6>
+                            <p class="badge badge-light text-info">12,April 2024 </p>
+                        </div>
+
+                    </div>
+
+
+
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 @endsection
 
 
