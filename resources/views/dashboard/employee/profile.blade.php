@@ -104,67 +104,80 @@
                                 <div class="">
                                     <div class="settings-form">
                                         <div class="row">
-                                            <div class="col-lg-4 ml-0">
-                                                <div class=" shadow-sm rounded bg-white">
-                                                        <form action="">
-                                                            <label for="" class="form-label">Profile Picture</label>
-                                                            <input type="file" name="" id="" class="form-control">
-                                                        </form>
+                                            <div class="col-lg-8  ml-0 pl-0">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                <h4 class="text-primary mt-2 pt-1 mb-4">Update Personal Informations</h4>
+                                                <form class="mt-3">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-12">
+                                                            <label for="" class="form-label font-weight-bold">Full Name :</label>
+                                                            <input type="email" placeholder="" class="form-control">
+                                                        </div>
 
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="" class="form-label font-weight-bold">Phone :</label>
+                                                            <input type="email" placeholder="" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="" class="form-label font-weight-bold">Email :</label>
+                                                            <input type="email" placeholder="" class="form-control">
+                                                        </div>
 
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="" class="form-label font-weight-bold" >Address</label>
+                                                        <textarea  class="form-control" name=""  id="" cols="30" rows="10"></textarea>
+                                                    </div>
+
+                                                    <button  class="btn btn-primary" type="submit">Update</button>
+                                                </form>
                                             </div>
                                         </div>
-                                        <h4 class="text-primary">Account Setting</h4>
-                                        <form>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label>Email</label>
-                                                    <input type="email" placeholder="Email" class="form-control">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label>Password</label>
-                                                    <input type="password" placeholder="Password" class="form-control">
-                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Address</label>
-                                                <input type="text" placeholder="1234 Main St" class="form-control">
+                                            <div class="col-lg-4">
+                                               <div class="card">
+                                                    <div class="card-body">
+                                                        <form action="">
+                                                            <h4 class="text-primary mt-2 pt-1 mb-4">Update Profile Image</h4>
+                                                            <div class="input-group mb-3">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input">
+                                                                    <label class="custom-file-label">Choose file</label>
+                                                                </div>
+                                                                <div class="input-group-append">
+                                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                               </div>
+                                               <div class="card">
+                                                    <div class="card-body">
+                                                        <form action="">
+                                                            <h4 class="text-primary mt-2 pt-1 mb-4">Update Password</h4>
+                                                            <div class="mb-3">
+                                                                <label for="" class="form-label font-weight-bold">Current Password :</label>
+                                                                <input type="text" placeholder="" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="" class="form-label font-weight-bold">New Password :</label>
+                                                                <input type="text" placeholder="" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="" class="form-label font-weight-bold">Confirm Password :</label>
+                                                                <input type="text" placeholder="" class="form-control">
+                                                            </div>
+                                                            <button class="btn btn-primary" type="submit">Update</button>
+                                                        </form>
+                                                    </div>
+                                               </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Address 2</label>
-                                                <input type="text" placeholder="Apartment, studio, or floor" class="form-control">
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label>City</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <label>State</label>
-                                                    <select class="form-control" id="inputState">
-                                                        <option selected="">Choose...</option>
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <label>Zip</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="gridCheck">
-                                                    <label for="gridCheck" class="form-check-label">Check me out</label>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-primary" type="submit">Sign
-                                                in</button>
-                                        </form>
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

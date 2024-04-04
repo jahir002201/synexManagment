@@ -7,6 +7,7 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first text-white">Main</li>
                     <li><a href="{{route('dashboard')}}"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
+                    <li><a href="{{route('users')}}"><i class="icon icon-single-04"></i><span class="nav-text">Users</span></a>
                     </li>
                     {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
@@ -17,14 +18,16 @@
                     </li> --}}
                     <li class="nav-label first text-white">EMPLOYEES</li>
                     <li><a href="{{route('employee.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Employees</span></a>
+                    <li><a href="{{route('client.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Clients</span></a>
+                    <li><a href="{{route('project.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Projects</span></a>
                     </li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                    {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Projects</span></a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('project.index')}}">Project List</a></li>
                             <li><a href="{{route('project.create')}}">Create Project</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-label">Apps</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
