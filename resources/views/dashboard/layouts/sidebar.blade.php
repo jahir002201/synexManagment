@@ -17,10 +17,13 @@
                         </ul>
                     </li> --}}
                     <li class="nav-label first text-white">EMPLOYEES</li>
-                    <li><a href="{{route('employee.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Employees</span></a>
-                    <li><a href="{{route('client.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Clients</span></a>
+                    <li><a href="{{route('employee.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Employees</span></a></li>
+                    <li><a href="{{route('client.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Clients</span></a></li>
                     <li><a href="{{route('project.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Projects</span></a>
                     </li>
+                    <li><a href="{{ route('department.index') }}"><i class="icon icon-single-04"></i><span class="nav-text">Departments</span></a>
+                    </li>
+                  
                     {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Projects</span></a>
                         <ul aria-expanded="false">

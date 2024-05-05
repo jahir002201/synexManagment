@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DepartmentController;
 
 Auth::routes();
 
@@ -27,5 +28,7 @@ Route::middleware(['auth'])->group(function () {
         'project' => ProjectController::class,
         'employee' => EmployeeController::class,
         'client' => ClientController::class,
+        'department' => DepartmentController::class,
+        
     ]);
 });
