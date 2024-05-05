@@ -7,20 +7,81 @@
             {{-- <p class="mb-0">Your business dashboard template</p> --}}
         </div>
     </div>
+
+
     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
 
     </div>
 </div>
 
-{{-- <div class="row">
+    <div class="row">
+
+
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Earnings<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">$1,42,300 </p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="card-text"><span class="text-muted">Previous Month</span> $1,15,852</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Expenses<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">$42,300 </p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="card-text"><span class="text-muted">Previous Month</span> $5,852</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Profit<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">$42,300 </p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="card-text"><span class="text-muted">Previous Month</span> $5,852</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Projects</h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">300 </p>
+
+            {{-- <div class="progress">
+                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+            </div> --}}
+            <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> 52</span> </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add similar divs for Expenses and Profit sections -->
+    </div>
+
+
+ <div class="row">
     <div class="col-lg-3 col-sm-6">
         <div class="card">
             <div class="stat-widget-one card-body">
                 <div class="stat-icon d-inline-block">
-                    <i class="ti-money text-success border-success"></i>
+                    <i class="ti-user text-success border-success"></i>
                 </div>
                 <div class="stat-content d-inline-block">
-                    <div class="stat-text">Profit</div>
+                    <div class="stat-text">Employee</div>
+
                     <div class="stat-digit">1,012</div>
                 </div>
             </div>
@@ -30,10 +91,10 @@
         <div class="card">
             <div class="stat-widget-one card-body">
                 <div class="stat-icon d-inline-block">
-                    <i class="ti-user text-primary border-primary"></i>
+                    <i class="ti-headphone-alt text-primary border-primary"></i>
                 </div>
                 <div class="stat-content d-inline-block">
-                    <div class="stat-text">Customer</div>
+                    <div class="stat-text">Client </div>
                     <div class="stat-digit">961</div>
                 </div>
             </div>
@@ -43,10 +104,10 @@
         <div class="card">
             <div class="stat-widget-one card-body">
                 <div class="stat-icon d-inline-block">
-                    <i class="ti-layout-grid2 text-pink border-pink"></i>
+                    <i class="ti-notepad text-pink border-pink"></i>
                 </div>
                 <div class="stat-content d-inline-block">
-                    <div class="stat-text">Projects</div>
+                    <div class="stat-text">Task</div>
                     <div class="stat-digit">770</div>
                 </div>
             </div>
@@ -598,5 +659,5 @@
             </div>
         </div>
     </div>
-</div>--}}
+</div>
 @endsection

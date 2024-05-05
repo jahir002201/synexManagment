@@ -61,7 +61,7 @@
                         </div>
                        </div>
                         <div class="tab-content ">
-                            <div id="about-me" class="tab-pane fade   shadow-sm rounded bg-white">
+                            <div id="about-me" class="tab-pane fade active show  shadow-sm rounded bg-white">
                                 <div class="profile-personal-info mt-4  pt-2 pl-4">
                                     <h4 class="text-primary mb-4 pt-4">Personal Information</h4>
                                     <div class="row mb-4">
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
 
-                            <div id="profile-settings" class="tab-pane fade active show ml-4">
+                            <div id="profile-settings" class="tab-pane fade  ml-4">
                                 <div class="">
                                     <div class="settings-form">
                                         <div class="row">
