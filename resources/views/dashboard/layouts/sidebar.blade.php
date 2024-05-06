@@ -23,6 +23,10 @@
                     </li>
                     <li><a href="{{ route('department.index') }}"><i class="icon icon-single-04"></i><span class="nav-text">Departments</span></a>
                     </li>
+                    <li class="nav-label first text-white">HR</li>
+                    <li><a href="{{route('expenses.index')}}"><i class="icon icon-single-04"></i><span class="nav-text">Expenses</span></a></li>
+
+
 
                     {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Projects</span></a>

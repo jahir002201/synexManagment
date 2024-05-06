@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ExpensesController;
 
 Auth::routes();
 
@@ -29,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
         'employee' => EmployeeController::class,
         'client' => ClientController::class,
         'department' => DepartmentController::class,
-        
+        'expenses' => ExpensesController::class,
+
+
     ]);
 });

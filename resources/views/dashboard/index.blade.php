@@ -1,4 +1,7 @@
 @extends('dashboard.layouts.app')
+@section('style')
+<link href="{{asset('dashboard_assets/vendor/pg-calendar/css/pignose.calendar.min.css')}}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="row page-titles mx-0">
     <div class="col-sm-6 p-md-0">
@@ -91,7 +94,7 @@
         <div class="card">
             <div class="stat-widget-one card-body">
                 <div class="stat-icon d-inline-block">
-                    <i class="ti-headphone-alt text-primary border-primary"></i>
+                    <i class="ti-headphone-alt text-warning border-warning"></i>
                 </div>
                 <div class="stat-content d-inline-block">
                     <div class="stat-text">Client </div>
@@ -104,7 +107,7 @@
         <div class="card">
             <div class="stat-widget-one card-body">
                 <div class="stat-icon d-inline-block">
-                    <i class="ti-notepad text-pink border-pink"></i>
+                    <i class="ti-notepad text-primary border-primary"></i>
                 </div>
                 <div class="stat-content d-inline-block">
                     <div class="stat-text">Task</div>
@@ -113,7 +116,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-sm-6">
+    {{-- <div class="col-lg-3 col-sm-6">
         <div class="card">
             <div class="stat-widget-one card-body">
                 <div class="stat-icon d-inline-block">
@@ -125,9 +128,194 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="year-calendar"></div>
+            </div>
+        </div>
+        <!-- /# card -->
+    </div>
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">All Expense</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table student-data-table m-t-20">
+                        <thead>
+                            <tr>
+                                <th>Expense Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Email</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    Salary
+                                </td>
+                                <td>
+                                    $2000
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary">Paid</span>
+                                </td>
+                                <td>
+                                    edumin@gmail.com
+                                </td>
+                                <td>
+                                    10/05/2017
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    Salary
+                                </td>
+                                <td>
+                                    $2000
+                                </td>
+                                <td>
+                                    <span class="badge badge-warning">Pending</span>
+                                </td>
+                                <td>
+                                    edumin@gmail.com
+                                </td>
+                                <td>
+                                    10/05/2017
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    Salary
+                                </td>
+                                <td>
+                                    $2000
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary">Paid</span>
+                                </td>
+                                <td>
+                                    edumin@gmail.com
+                                </td>
+                                <td>
+                                    10/05/2017
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    Salary
+                                </td>
+                                <td>
+                                    $2000
+                                </td>
+                                <td>
+                                    <span class="badge badge-danger">Due</span>
+                                </td>
+                                <td>
+                                    edumin@gmail.com
+                                </td>
+                                <td>
+                                    10/05/2017
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    Salary
+                                </td>
+                                <td>
+                                    $2000
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary">Paid</span>
+                                </td>
+                                <td>
+                                    edumin@gmail.com
+                                </td>
+                                <td>
+                                    10/05/2017
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- recent projects --}}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>Recent Projects</h5>
+        </div>
+        <div class="card-body">
+           <div class="table-responsive">
+            <table class="table " >
+                <thead>
+                    <tr class="text-dark">
+                        <th>#</th>
+                        <th>Project Name</th>
+                        <th>Leader</th>
+
+                        <th>Deadline</th>
+
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Synex Management</td>
+                        <td>Imran</td>
+                        <td>5 April</td>
+
+                        <td>On-Going</td>
+                        <td>
+                            <a href="{{ route('project.show', 1) }}" class=" btn btn-primary btn-sm   ">
+                                <i class="fa fa-eye "></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+
+                        <td>Synex Management</td>
+                        <td>Imran</td>
+                        <td>5 April</td>
+
+                        <td>On-Going</td>
+                        <td>
+                            <a href="{{ route('project.show', 1) }}" class=" btn btn-primary btn-sm   ">
+                                <i class="fa fa-eye "></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+           </div>
+        </div>
+       </div>
+  </div>
+</div>
+{{-- <div class="row">
     <div class="col-lg-8">
         <div class="card">
             <div class="card-header">
@@ -145,9 +333,9 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <div class="row">
-    <div class="col-lg-12">
+    {{-- <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">All Exam Result</h4>
@@ -445,9 +633,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="col-xl-12 col-xxl-6 col-lg-6 col-md-12">
+    {{-- <div class="col-xl-12 col-xxl-6 col-lg-6 col-md-12">
         <div class="row">
             <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6 col-md-6">
                 <div class="card">
@@ -534,18 +722,18 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="row">
-    <div class="col-lg-4">
+    {{-- <div class="col-lg-4">
         <div class="card">
             <div class="card-body">
                 <div class="year-calendar"></div>
             </div>
         </div>
         <!-- /# card -->
-    </div>
-    <div class="col-lg-8">
+    </div> --}}
+    {{-- <div class="col-lg-8">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">All Expense</h4>
@@ -658,6 +846,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
+@endsection\
+@section('script')
+<script src="{{asset('dashboard_assets/vendor/pg-calendar/js/pignose.calendar.min.js')}}"></script>
 @endsection
