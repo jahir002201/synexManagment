@@ -89,11 +89,22 @@
                                     </div>
 
                                     <div class="row mb-4">
-                                        <div class="col-4 mb-4">
+                                        <div class="col-4">
                                             <h5 class="f-w-500">Address <span class="pull-right">:</span></h5>
                                         </div>
                                         <div class="col-8"><span>Rosemont Avenue Melbourne,
                                                 Florida</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-4 mb-4">
+                                            <h5 class="f-w-500">Socials <span class="pull-right">:</span></h5>
+                                        </div>
+                                        <div class="col-8 ">
+                                            <i class="fa fa-facebook-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
+                                            <i class="fa fa-github-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
+                                            <i class="fa fa-linkedin-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
+                                            <i class="fa fa-whatsapp  text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
                                         </div>
                                     </div>
 
@@ -103,8 +114,40 @@
                             <div id="profile-settings" class="tab-pane fade  ml-4">
                                 <div class="">
                                     <div class="settings-form">
+
                                         <div class="row">
                                             <div class="col-lg-8  ml-0 pl-0">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>Update Social Links</h5>
+                                                    </div>
+                                                    <div class="card-body">
+
+                                                        <div class="col-12 icon-div mb-3">
+                                                            <i class="fa fa-facebook-square  " style="font-size: 30px;" aria-hidden="true"></i>
+                                                            <i class="fa fa-github-square  " style="font-size: 30px;" aria-hidden="true"></i>
+                                                            <i class="fa fa-linkedin-square  " style="font-size: 30px;" aria-hidden="true"></i>
+                                                            <i class="fa fa-whatsapp  " style="font-size: 30px;" aria-hidden="true"></i>
+                                                        </div>
+
+                                                        <div class="col-md-12 mb-3">
+                                                            <div class="input-group flex-nowrap">
+                                                                <span class="input-group-text bg-light border border-end-0 text-dark" id="insta-id">Icon</span>
+                                                                <input name="icon" id="icons" type="text" class="form-control" aria-label="Username" aria-describedby="insta-id" readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12 mb-3">
+                                                            <div class="input-group flex-nowrap">
+                                                                <span class="input-group-text bg-light border border-end-0 text-dark" id="insta-id">Link</span>
+                                                                <input name="link" id="links" type="text" class="form-control" aria-label="Username" aria-describedby="insta-id">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <button  class="btn btn-primary float-right mr-3" type="submit">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="card">
                                                     <div class="card-body">
                                                 <h4 class="text-primary mt-2 pt-1 mb-4">Update Personal Informations</h4>
@@ -125,14 +168,14 @@
                                                             <label for="" class="form-label font-weight-bold">Email :</label>
                                                             <input type="email" placeholder="" class="form-control">
                                                         </div>
-
                                                     </div>
+
                                                     <div class="form-group">
                                                         <label for="" class="form-label font-weight-bold" >Address</label>
-                                                        <textarea  class="form-control" name=""  id="" cols="30" rows="10"></textarea>
+                                                        <textarea  class="form-control" name=""  id="" cols="30" rows="4"></textarea>
                                                     </div>
 
-                                                    <button  class="btn btn-primary" type="submit">Update</button>
+                                                    <button  class="btn btn-primary float-right " type="submit">Update</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -170,7 +213,7 @@
                                                                 <label for="" class="form-label font-weight-bold">Confirm Password :</label>
                                                                 <input type="text" placeholder="" class="form-control">
                                                             </div>
-                                                            <button class="btn btn-primary" type="submit">Update</button>
+                                                            <button  class="btn btn-primary float-right " type="submit">Update</button>
                                                         </form>
                                                     </div>
                                                </div>
@@ -192,7 +235,15 @@
 @endsection
 
 
+@section('script')
+    <script>
+        $('.fa').click(function(){
+            var data = $(this).attr('class')
+            $('#icons').val(data);
+        });
 
+    </script>
+@endsection
 
 
 

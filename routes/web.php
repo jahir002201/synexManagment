@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\TaskController;
 
 Auth::routes();
 
@@ -31,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
         'client' => ClientController::class,
         'department' => DepartmentController::class,
         'expenses' => ExpensesController::class,
+
 
 
     ]);

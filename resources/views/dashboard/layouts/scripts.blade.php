@@ -8,12 +8,10 @@
     <script src="{{asset('dashboard_assets/js/custom.min.js')}}"></script>
 
     <script src="{{asset('dashboard_assets/vendor/chartist/js/chartist.min.js')}}"></script>
-    <script src="{{asset('dashboard_assets/vendor/chartist/js/chartist.min.js')}}"></script>
 
-    <script src="{{asset('dashboard_assets/vendor/pg-calendar/js/pignose.calendar.min.js')}}"></script>
+    <script src="{{asset('dashboard_assets/vendor/moment/moment.min.js')}}"></script>
 
-
-    <script src="{{asset('dashboard_assets/js/dashboard/dashboard-2.js')}}"></script>
+    {{-- <script src="{{asset('dashboard_assets/js/dashboard/dashboard-2.js')}}"></script> --}}
 
 
     <!-- Daterangepicker -->
