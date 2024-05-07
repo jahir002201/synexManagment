@@ -4,12 +4,17 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
+                <img class="logo-abbr" src="{{asset('dashboard_assets/images/logo_sd.png')}}" alt="">
+                <img class="logo-compact" src="{{asset('dashboard_assets/images/logo_synex_digital.png')}}" alt="">
+                <img class="brand-title" src="{{asset('dashboard_assets/images/logo_synex_digital.png')}}" alt="">
+            </a>
+            {{-- <a href="index.html" class="brand-logo">
 
                 <img class="logo-abbr "   src="{{asset('dashboard_assets/images/logo-text.png')}}" alt="">
 
                 <img class="logo-compact" src="{{asset('dashboard_assets/images/logo-text.png')}}" alt="">
                 <p class="brand-title">Hennry </p>
-            </a>
+            </a> --}}
 
             <div class="nav-control">
                 <div class="hamburger">
@@ -107,18 +112,19 @@
                                     <i class="mdi mdi-account"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="{{ route('employee.show', 1) }}" class="dropdown-item">
+                                    <a href="{{ route('employee.show', 1) }}" class="dropdown-item border-bottom ">
                                         <i class="icon-user"></i>
                                         <span class="ml-2">Profile </span>
                                     </a>
-                                    <a href="./email-inbox.html" class="dropdown-item">
+                                    {{-- <a href="./email-inbox.html" class="dropdown-item">
                                         <i class="icon-envelope-open"></i>
                                         <span class="ml-2">Inbox </span>
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    </a> --}}
+
+                                    <a class="dropdown-item mt-1 " href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                       <i class="icon-logout"> </i>  <span class="ml-2">Logout </span>
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

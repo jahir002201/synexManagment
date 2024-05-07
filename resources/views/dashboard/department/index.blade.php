@@ -39,6 +39,27 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($departments as $data )
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$data->department}}</td>
+                                    <td>
+                                        <span>
+                                            <a  href="javascript:void()" class="mr-4 edit"  data-toggle="modal" data-target="#editModal" data-placement="top" data-value="{{$data->id}}" title="Edit"><i class="fa fa-pencil  text-primary "></i></a>
+
+
+                                        <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteModal" data-placement="top" title="Delete" class="delt">
+                                       <i class="fa fa-close text-danger "></i>
+                                            </a></span>
+                                    </td>
+                                    {{-- <td><span><a href="javascript:void()" class="mr-4"  title="Edit"><i
+                                            class="fa fa-pencil btn btn-primary btn-sm text-white"></i> </a><a
+                                        href="javascript:void()"
+                                       title="Delete"><i
+                                            class="fa fa-close btn btn-danger btn-sm text-white"></i></a></span>
+                                    </td> --}}
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -73,9 +94,7 @@
         </div>
     </div>
 </div>
-
-
-{{-- modals --}}
+{{-- department modal --}}
 <div class="modal fade" id="createModal">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
@@ -85,16 +104,44 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{route('department.store')}}" method="POST">
+                    @csrf
                     <div class="">
-                        <label for="" class="form-label font-weight-bold">Department Name :</label>
-                        <input type="text" class="form-control" placeholder="">
+                        <label for="" class="form-label font-weight-bold">Department :</label>
+                        <input type="text" name="department" class="form-control" placeholder="Department Name">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add </button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add </button>
+
+        </div>
+    </div>
+</div>
+{{-- edit department modal --}}
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Department</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                <form id="departmentForm" action="{{route('department.update',0)}}" method="POST" >
+                    @csrf
+                    @method('PUT')
+                    <div class="">
+                        <label for="" class="form-label font-weight-bold">Department :</label>
+                        <input type="text" name="department" id="department" class="form-control" placeholder="Department Name">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn  btn-outline-primary float-right" style="font-size: 11px;">Update </button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
@@ -130,9 +177,81 @@
         </div>
     </div>
 </div>
+{{-- delete modal --}}
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This will delete 'Designation' data too. Are you sure you want to delete this?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                <form id="deleteForm" action="{{route('department.destroy',0)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">YES</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @endsection
 
 @section('script')
+
+<script>
+
+    $(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('body').on('click', '.edit', function () {
+        var id = $(this).data('value');
+
+    // Construct the route dynamically
+        var route = "{{ route('department.edit', ['department' => ':id']) }}";
+        route = route.replace(':id', id);
+        $.get(route, function(data) {
+            $('#department').val(data.department);
+        });
+        var form = $('#departmentForm');
+            var action = form.attr('action');
+            // Replace the last part of the action attribute with the new id
+            action = action.substring(0, action.lastIndexOf('/') + 1) + id;
+            form.attr('action', action);
+    });
+    $('body').on('click', '.delt', function () {
+        var id = $(this).data('value');
+
+        var form = $('#deleteForm');
+            var action = form.attr('action');
+            // Replace the last part of the action attribute with the new id
+            action = action.substring(0, action.lastIndexOf('/') + 1) + id;
+            form.attr('action', action);
+
+    });
+});
+
+
+
+  </script>
     <!-- Datatable -->
     <script src="{{asset('dashboard_assets/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('dashboard_assets/js/plugins-init/datatables.init.js')}}"></script>

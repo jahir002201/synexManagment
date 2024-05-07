@@ -258,32 +258,33 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{route('employee.store')}}" method="POST">
+                    @csrf
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Full Name :</label>
-                            <input type="text" class="form-control" placeholder="Enter  Full Name">
+                            <input type="text" name="name" class="form-control" placeholder="Enter  Full Name">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Email :</label>
-                          <input type="password" class="form-control" id="inputPassword4" placeholder="Enter Email">
+                          <input type="email" name="email" class="form-control"  placeholder="Enter Email">
                         </div>
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Phone :</label>
-                            <input type="text" class="form-control" placeholder="Enter Contact Number">
+                            <input type="number" name="phone" class="form-control" placeholder="Enter Contact Number">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Start Date :</label>
-                          <input type="date" class="form-control" id="inputPassword4" placeholder="Enter Email">
+                          <input type="date" name="start_date" class="form-control" id="inputPassword4" placeholder="Enter Email">
                         </div>
                     </div>
 
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Department :</label>
-                            <select class="single-select">
+                            <select name="department" class="single-select">
                                 <option>Department</option>
                                 <option>Developer</option>
                                 <option>Designer</option>
@@ -292,7 +293,7 @@
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Designation :</label>
-                          <select class="single-select">
+                          <select name="designation" class="single-select">
                             <option>Desegination</option>
                             <option>Developer</option>
                             <option>Designer</option>
@@ -304,21 +305,21 @@
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Password :</label>
-                            <input type="text" class="form-control" placeholder="Enter Password">
+                            <input type="text" name="password" class="form-control" placeholder="Enter Password">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Confirm Password :</label>
-                          <input type="password" class="form-control" id="inputPassword4" placeholder="Confirm  Password">
+                          <input type="password" name="confirm_password" class="form-control" id="inputPassword4" placeholder="Confirm  Password">
                         </div>
 
                     </div>
 
-
+                    <div class="modal-footer">
+                        <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Employee</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Employee</button>
-            </div>
+
         </div>
     </div>
 </div>

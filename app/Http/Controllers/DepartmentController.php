@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class DepartmentController extends Controller
 {
@@ -11,7 +14,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('dashboard.department.index');
+        $departments = Department::all();
+        return view('dashboard.department.index',['departments' => $departments,]);
     }
 
     /**
@@ -27,7 +31,22 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        try {
+            // Validate the request
+            $request->validate([
+                'department' =>'required',
+            ]);
+            Department::create($request->all());
+            toastr()->success('Department Added successfully!','Added');
+
+            return back();
+
+        } catch (ValidationException $e) {
+            toastr()->error('Department Name Required!');
+
+            return back();
+        }
     }
 
     /**
@@ -43,7 +62,9 @@ class DepartmentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $data = Department::find($id);
+        return response()->json($data);
     }
 
     /**
@@ -51,7 +72,11 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Department::find($id)->update([
+            'department' => $request->department,
+        ]);
+        toastr()->success('Department Updated successfully!','Updated');
+        return back();
     }
 
     /**
@@ -59,6 +84,8 @@ class DepartmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Department::find($id)->delete();
+        toastr()->success('Deparment Deleted!', 'Deleted');
+        return back();
     }
 }

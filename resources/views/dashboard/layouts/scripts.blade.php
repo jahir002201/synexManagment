@@ -21,3 +21,8 @@
 
     <script src="{{asset('dashboard_assets/vendor/circle-progress/circle-progress.min.js')}}"></script>
 
+
+    <!-- Toastr -->
+    <script src="{{asset('dashboard_assets/vendor/toastr/js/toastr.min.js')}}"></script>
+    <!-- All init script -->
+    <script src="{{asset('dashboard_assets/js/plugins-init/toastr-init.js')}}"></script>
