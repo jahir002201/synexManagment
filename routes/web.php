@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ExpensesController;
 
 
@@ -23,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
+    Route::get('/get-designations/{departmentId}', [EmployeeController::class, 'getDesignations']);
     Route::get('/users', [HomeController::class, 'users'])->name('users');
     Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');
     Route::resources([
@@ -31,9 +32,8 @@ Route::middleware(['auth'])->group(function () {
         'employee' => EmployeeController::class,
         'client' => ClientController::class,
         'department' => DepartmentController::class,
+        'designation' => DesignationController::class,
         'expenses' => ExpensesController::class,
-
-
 
     ]);
 });

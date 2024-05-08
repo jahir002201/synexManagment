@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Designation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Validation\ValidationException;
 
 class DepartmentController extends Controller
@@ -14,8 +15,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
-        return view('dashboard.department.index',['departments' => $departments,]);
+        $departments = Department::aLL();
+        $designations = Designation::all();
+        return view('dashboard.department.index',['departments' => $departments,'designations' => $designations,]);
     }
 
     /**
@@ -38,15 +40,11 @@ class DepartmentController extends Controller
                 'department' =>'required',
             ]);
             Department::create($request->all());
-            toastr()->success('Department Added successfully!','Added');
-
-            return back();
-
+            toastr()->success('Department Added successfully!','Done');
         } catch (ValidationException $e) {
-            toastr()->error('Department Name Required!');
-
-            return back();
+            toastr()->error('Department Name Required!', 'Invalid');
         }
+        return back();
     }
 
     /**
@@ -72,10 +70,18 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Department::find($id)->update([
-            'department' => $request->department,
-        ]);
-        toastr()->success('Department Updated successfully!','Updated');
+        try {
+            // Validate the request
+            $request->validate([
+                'department' =>'required',
+            ]);
+            Department::find($id)->update([
+                'department' => $request->department,
+            ]);
+            toastr()->success('Department Updated successfully!','Updated');
+        } catch (ValidationException $e) {
+            toastr()->error('Department Name Required!', 'Invalid');
+        }
         return back();
     }
 

@@ -284,23 +284,22 @@
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Department :</label>
-                            <select name="department" class="single-select">
-                                <option>Department</option>
-                                <option>Developer</option>
-                                <option>Designer</option>
-                                <option>Writer</option>
+                            <select name="department" id="department" class="single-select">
+                                <option value="">SELECT DEPARTMENT</option>
+                                @foreach ($departments as $data )
+                                    <option value="{{$data->id}}">{{$data->department}} </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="font-weight-bold">Designation :</label>
-                          <select name="designation" class="single-select">
-                            <option>Desegination</option>
-                            <option>Developer</option>
-                            <option>Designer</option>
-                            <option>Writer</option>
-                          </select>
+                            <label for="inputPassword4" class="font-weight-bold">Designation :</label>
+                            <select name="designation" id="designation" class="single-select">
+                                <option value="">Designation</option>
+                                <option value="Developer">Developer</option>
+                                <option value="Designer">Designer</option>
+                                <option value="Writer">Writer</option>
+                            </select>
                         </div>
-
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
@@ -326,6 +325,31 @@
 
 @endsection
 @section('script')
+<script>
+    $(document).ready(function(){
+        $('#department').change(function(){
+            var departmentId = $(this).val();
+            if(departmentId){
+                $.ajax({
+                    type:"GET",
+                    url:"/get-designations/"+departmentId,
+                    success:function(res){
+                        if(res){
+                            $("#designation").empty();
+                            $.each(res,function(key,value){
+                                $("#designation").append('<option value="'+value.id+'">'+value.designation+'</option>');
+                            });
+                        }else{
+                            $("#designation").empty();
+                        }
+                    }
+                });
+            }else{
+                $("#designation").empty();
+            }
+        });
+    });
+</script>
 <script src="{{asset('dashboard_assets/vendor/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('dashboard_assets/js/plugins-init/select2-init.js')}}"></script>
 @endsection

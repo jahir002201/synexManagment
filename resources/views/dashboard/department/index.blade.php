@@ -87,6 +87,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($designations as $data )
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$data->department->department}}</td>
+                                    <td> {{$data->designation}} </td>
+                                    <td>
+                                        <span>
+                                            <a  href="javascript:void()" class="mr-4 editDesig"  data-toggle="modal" data-target="#editDesigModal" data-placement="top" data-value="{{$data->id}}" title="Edit"><i class="fa fa-pencil  text-primary "></i></a>
+
+
+                                        <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteDesigModal" data-placement="top" title="Delete" class="deltDesg">
+                                       <i class="fa fa-close text-danger "></i>
+                                            </a></span>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -155,25 +171,61 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{route('designation.store')}}" method="POST">
+                    @csrf
                     <div class="form-group ">
                         <label for="" class="form-label font-weight-bold">Department :</label>
-                        <select class="single-select">
-                            <option>Department</option>
-                            <option>Developer</option>
-                            <option>Designer</option>
-                            <option>Writer</option>
+                        <select id="department" name="department_id" class="single-select">
+                            <option value="">SELECT DEPARTMENT</option>
+                            @foreach ($departments as $data )
+                                <option value="{{$data->id}}">{{$data->department}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="">
-                        <label for="" class="form-label font-weight-bold">Designation Name :</label>
-                        <input type="text" class="form-control" placeholder="">
+                        <label for="" class="form-label font-weight-bold">Designation :</label>
+                        <input type="text" id="" name="designation" class="form-control" placeholder="Designation Name" value="{{old('designation')}}">
                     </div>
-                </form>
+
             </div>
             <div class="modal-footer">
                 <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add </button>
             </div>
+        </form>
+        </div>
+    </div>
+</div>
+{{-- edit designation modal --}}
+<div class="modal fade" id="editDesigModal">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Designation</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('designation.store')}}" method="POST">
+                    @csrf
+                    <div class="form-group ">
+                        <label for="" class="form-label font-weight-bold">Department :</label>
+                        <select  name="department_id" class="single-select">
+                            <option value="">SELECT DEPARTMENT</option>
+                            @foreach ($departments as $data )
+                                <option class="desigOption" value="{{$data->id}}">{{$data->department}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="">
+                        <label for="" class="form-label font-weight-bold">Designation :</label>
+                        <input type="text" id="designation" name="designation" class="form-control" placeholder="Designation Name" value="{{old('designation')}}">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add </button>
+            </div>
+        </form>
         </div>
     </div>
 </div>
@@ -200,15 +252,16 @@
         </div>
     </div>
 </div>
-@if ($errors->any())
+{{-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+                {{toastr()->error($error)}}
+
             @endforeach
         </ul>
     </div>
-@endif
+@endif --}}
 
 @endsection
 
@@ -232,6 +285,66 @@
             $('#department').val(data.department);
         });
         var form = $('#departmentForm');
+            var action = form.attr('action');
+            // Replace the last part of the action attribute with the new id
+            action = action.substring(0, action.lastIndexOf('/') + 1) + id;
+            form.attr('action', action);
+    });
+
+
+    $('body').on('click', '.delt', function () {
+        var id = $(this).data('value');
+
+        var form = $('#deleteForm');
+            var action = form.attr('action');
+            // Replace the last part of the action attribute with the new id
+            action = action.substring(0, action.lastIndexOf('/') + 1) + id;
+            form.attr('action', action);
+
+    });
+
+    //designation
+    $('body').on('click', '.editDesig', function () {
+        var id = $(this).data('value');
+        var givenId = 2;
+        // Loop through each option
+        // var options = document.getElementsByClassName("desigOption");
+
+        // for (var i = 0; i < options.length; i++) {
+        //     var option = options[i];
+
+        //     // Check if the option's value matches the given ID
+        //     if (option.value == 1) {
+        //         // Set the option as selected
+        //         option.selected = true;
+        //         // Optionally, you can break the loop if you only want to select the first matching option
+        //         // break;
+        //     }
+        // }
+
+    // Construct the route dynamically
+        var route = "{{ route('designation.edit', ['designation' => ':id']) }}";
+        route = route.replace(':id', id);
+        $.get(route, function(data) {
+            $('#designation').val(data.designation);
+            var departmentId = data.department_id;
+            $('.desigOption[value="' + departmentId + '"]').prop('selected', true);
+             // Set the selected department option
+            // givenId = data.department_id;
+
+            var departmentId = data.department_id;
+            console.log("Department ID from data:", departmentId);
+
+            // Select the option based on the department ID
+            $('.desigOption').prop('selected', false); // Deselect all options first
+            $('.desigOption[value="' + departmentId + '"]').prop('selected', true);
+
+            // Log the number of selected options
+            console.log("Number of selected options:", $('.desigOption:selected'));
+        });
+
+
+            var form = $('#departmentForm');
             var action = form.attr('action');
             // Replace the last part of the action attribute with the new id
             action = action.substring(0, action.lastIndexOf('/') + 1) + id;
