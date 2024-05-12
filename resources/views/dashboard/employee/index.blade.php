@@ -308,7 +308,7 @@
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Confirm Password :</label>
-                          <input type="password" name="confirm_password" class="form-control" id="inputPassword4" placeholder="Confirm  Password">
+                          <input type="password" name="password_confirmation" class="form-control" id="inputPassword4" placeholder="Confirm  Password">
                         </div>
 
                     </div>

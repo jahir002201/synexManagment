@@ -77,7 +77,29 @@ class DesignationController extends Controller
      */
     public function update(Request $request, Designation $designation)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'department_id' => 'required',
+            'designation' => 'required',
+        ],[
+            'department_id'=> 'Please Select Department!',
+            'designation'=> 'Please Provide Designation!',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->messages() as  $messages) {
+                foreach ($messages as $message) {
+                    toastr()->error($message, 'Invalid');
+                }
+            }
+            return back()->withErrors($validator)->withInput();
+        }
+
+
+       $designation->department_id = $request->department_id;
+       $designation->designation = $request->designation;
+       toastr()->success('Designaiton Updated successfully!','Updated');
+       $designation->save();
+       return back();
     }
 
     /**
@@ -85,6 +107,8 @@ class DesignationController extends Controller
      */
     public function destroy(Designation $designation)
     {
-        //
+        $designation->delete();
+        toastr()->success('Designation Deleted!', 'Deleted');
+        return back();
     }
 }

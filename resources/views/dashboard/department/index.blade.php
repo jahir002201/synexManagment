@@ -97,7 +97,7 @@
                                             <a  href="javascript:void()" class="mr-4 editDesig"  data-toggle="modal" data-target="#editDesigModal" data-placement="top" data-value="{{$data->id}}" title="Edit"><i class="fa fa-pencil  text-primary "></i></a>
 
 
-                                        <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteDesigModal" data-placement="top" title="Delete" class="deltDesg">
+                                        <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteDesigModal" data-placement="top" title="Delete" class="deltDesig">
                                        <i class="fa fa-close text-danger "></i>
                                             </a></span>
                                     </td>
@@ -205,15 +205,17 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('designation.store')}}" method="POST">
+                <form id="designationForm" action="{{route('designation.update',0)}}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="form-group ">
                         <label for="" class="form-label font-weight-bold">Department :</label>
                         <select  name="department_id" class="single-select">
-                            <option value="">SELECT DEPARTMENT</option>
+
                             @foreach ($departments as $data )
                                 <option class="desigOption" value="{{$data->id}}">{{$data->department}}</option>
-                            @endforeach
+                                @endforeach
+
                         </select>
                     </div>
                     <div class="">
@@ -229,7 +231,7 @@
         </div>
     </div>
 </div>
-{{-- delete modal --}}
+{{--department delete modal --}}
 <div class="modal fade" id="deleteModal">
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content">
@@ -244,6 +246,29 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
                 <form id="deleteForm" action="{{route('department.destroy',0)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">YES</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- designation delete modal --}}
+<div class="modal fade" id="deleteDesigModal">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This will delete 'Designation' data. Are you sure you want to delete this?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                <form id="desigDeleteForm" action="{{route('designation.destroy',0)}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">YES</button>
@@ -291,7 +316,7 @@
             form.attr('action', action);
     });
 
-
+    //update form id change
     $('body').on('click', '.delt', function () {
         var id = $(this).data('value');
 
@@ -305,55 +330,37 @@
 
     //designation
     $('body').on('click', '.editDesig', function () {
-        var id = $(this).data('value');
-        var givenId = 2;
-        // Loop through each option
-        // var options = document.getElementsByClassName("desigOption");
+    var id = $(this).data('value');
+    var route = "{{ route('designation.edit', ['designation' => ':id']) }}";
+    route = route.replace(':id', id);
+    $.get(route, function(data) {
+        $('#designation').val(data.designation);
 
-        // for (var i = 0; i < options.length; i++) {
-        //     var option = options[i];
-
-        //     // Check if the option's value matches the given ID
-        //     if (option.value == 1) {
-        //         // Set the option as selected
-        //         option.selected = true;
-        //         // Optionally, you can break the loop if you only want to select the first matching option
-        //         // break;
-        //     }
-        // }
-
-    // Construct the route dynamically
-        var route = "{{ route('designation.edit', ['designation' => ':id']) }}";
-        route = route.replace(':id', id);
-        $.get(route, function(data) {
-            $('#designation').val(data.designation);
-            var departmentId = data.department_id;
-            $('.desigOption[value="' + departmentId + '"]').prop('selected', true);
-             // Set the selected department option
-            // givenId = data.department_id;
-
-            var departmentId = data.department_id;
-            console.log("Department ID from data:", departmentId);
-
-            // Select the option based on the department ID
-            $('.desigOption').prop('selected', false); // Deselect all options first
-            $('.desigOption[value="' + departmentId + '"]').prop('selected', true);
-
-            // Log the number of selected options
-            console.log("Number of selected options:", $('.desigOption:selected'));
+        // Set the selected option in the select element
+        $('.single-select option').each(function() {
+            if ($(this).val() == data.department_id) {
+                $(this).prop('selected', true);
+            } else {
+                $(this).prop('selected', false);
+            }
         });
 
+        // Trigger the change event on the select element
+        $('.single-select').change();
 
-            var form = $('#departmentForm');
+        var form = $('#designationForm');
             var action = form.attr('action');
             // Replace the last part of the action attribute with the new id
             action = action.substring(0, action.lastIndexOf('/') + 1) + id;
             form.attr('action', action);
+        });
     });
-    $('body').on('click', '.delt', function () {
-        var id = $(this).data('value');
 
-        var form = $('#deleteForm');
+
+
+    $('body').on('click', '.deltDesig', function () {
+        var id = $(this).data('value');
+        var form = $('#desigDeleteForm');
             var action = form.attr('action');
             // Replace the last part of the action attribute with the new id
             action = action.substring(0, action.lastIndexOf('/') + 1) + id;
