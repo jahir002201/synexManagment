@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -13,10 +15,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = User::find(Auth::user()->id);
-        return view('dashboard.profile',[
-            'user'=>$user,
-        ]);
+
+        return view('dashboard.profile');
     }
 
     /**
@@ -56,7 +56,42 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user= User::find(Auth::user()->id);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'. Auth::user()->id,
+        ]);
+        if($request->old_password){
+            $validator = Validator::make($request->all(), [
+                'old_password' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if (!Hash::check($value, Auth::user()->password)) {
+                            $fail('The current password is incorrect.');
+                        }
+                    },
+                ],
+                'password' => 'required|confirmed|min:6',
+                'password_confirmation' => 'required',
+            ]);
+            $user->password = Hash::make($request->password_confirmation);
+        }
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->messages() as  $messages) {
+                foreach ($messages as $message) {
+                    toastr()->error($message, 'Invalid');
+                }
+            }
+            return back()->withErrors($validator)->withInput();
+        }
+
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+        return back();
+
     }
 
     /**
