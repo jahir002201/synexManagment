@@ -14,17 +14,28 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('phone');
+            $table->string('phone',14);
             $table->string('start_date');
-            $table->string('department');
-            $table->string('designation');
+            $table->unsignedBigInteger('department_id')->nullable()->default(null);
+            $table->unsignedBigInteger('designation_id')->nullable()->default(null);
+            $table->string('image')->nullable();
             $table->timestamps();
 
-              // Define foreign key constraint
+              // users
               $table->foreign('user_id')
               ->references('id')
               ->on('users')
-              ->onDelete('cascade'); // This will delete associated designations if the referenced  is deleted
+              ->onDelete('cascade');
+              //department
+              $table->foreign('department_id')
+              ->references('id')
+              ->on('departments')
+              ->onDelete('set null');
+              //designation
+              $table->foreign('designation_id')
+              ->references('id')
+              ->on('designations')
+              ->onDelete('set null');
 
         });
     }

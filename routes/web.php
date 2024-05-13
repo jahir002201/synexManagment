@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+    Route::get('/search/employee', [EmployeeController::class, 'searchEmployee'])->name('searchEmployee');
     Route::get('/get-designations/{departmentId}', [EmployeeController::class, 'getDesignations']);
     Route::get('/users', [HomeController::class, 'users'])->name('users');
     Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');

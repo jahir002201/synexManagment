@@ -17,8 +17,12 @@ class EmployeeController extends Controller
      */
     public function index()
     {   $deparments = Department::all();
+        $users = User::all();
+        $employee = Employee::all();
         return view('dashboard.employee.index',[
             'departments' => $deparments,
+            'users' => $users,
+            'employee' => $employee,
         ]);
     }
 
@@ -38,7 +42,7 @@ class EmployeeController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required',
+            'phone' => 'required|max:14',
             'start_date' => 'required',
             'department' => 'required',
             'designation' => 'required',
@@ -64,8 +68,8 @@ class EmployeeController extends Controller
         $employee->user_id = $user->id;
         $employee->phone = $request->phone;
         $employee->start_date = $request->start_date;
-        $employee->department = $request->department;
-        $employee->designation = $request->designation;
+        $employee->department_id = $request->department;
+        $employee->designation_id = $request->designation;
         $employee->save();
         return back();
 
@@ -101,7 +105,9 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::find($id)->delete();
+        toastr()->success('Employee Deleted!', 'Deleted');
+        return back();
     }
     public function getDesignations($departmentId)
     {
@@ -110,5 +116,17 @@ class EmployeeController extends Controller
 
         // Return the designations as JSON response
         return response()->json($designations);
+    }
+    public function searchEmployee(Request $request)
+    {
+        $searchKeyword = $request->input('name');
+
+        $results = User::where('name', 'like', '%' . $searchKeyword . '%')->get();
+
+        // Pass $results to your view or do further processing
+        return view('dashboard.employee.index', [
+            'resluts' =>$results,
+        ]);
+
     }
 }
