@@ -56,17 +56,18 @@
         </div>
 
        @foreach ($users as $data )
-       <div class="col-md-3 mb-4">
+      @if ($data->employees)
+      <div class="col-md-3 mb-4">
         <div class="card position-relative">
             <a href="{{ route('employee.show', 1) }}">
-                @if ($data->employees->image == null)
+                @if ( $data->employees->image == null)
                 <img src="https://ui-avatars.com/api/?name={{$data->name}}&background=random" class="card-img-top rounded-circle mx-auto d-block" alt="" style="max-width: 150px; margin-top: 20px;">
                 @else
                 <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
                 @endif
                 <div class="card-body text-center">
                     <h5 class="card-title">{{$data->name}} </h5>
-                    <p class="card-text text-muted">{{$data->designations->designation}}</p>
+                    <p class="card-text text-muted">{{$data->employees->designations->designation}}</p>
                 </div>
             </a>
           <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
@@ -87,6 +88,7 @@
           </div>
         </div>
     </div>
+      @endif
        @endforeach
 
     </div>

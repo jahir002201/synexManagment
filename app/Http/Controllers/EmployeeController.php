@@ -18,11 +18,11 @@ class EmployeeController extends Controller
     public function index()
     {   $deparments = Department::all();
         $users = User::all();
-        $employee = Employee::all();
+
         return view('dashboard.employee.index',[
             'departments' => $deparments,
             'users' => $users,
-            'employee' => $employee,
+
         ]);
     }
 
@@ -119,13 +119,15 @@ class EmployeeController extends Controller
     }
     public function searchEmployee(Request $request)
     {
+        $deparments = Department::all();
         $searchKeyword = $request->input('name');
 
         $results = User::where('name', 'like', '%' . $searchKeyword . '%')->get();
 
         // Pass $results to your view or do further processing
         return view('dashboard.employee.index', [
-            'resluts' =>$results,
+            'users' =>$results,
+            'deparments' =>$deparments,
         ]);
 
     }
