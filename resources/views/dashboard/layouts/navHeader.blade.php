@@ -112,7 +112,7 @@
                                     <i class="mdi mdi-account"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="{{ route('employee.show', 1) }}" class="dropdown-item border-bottom ">
+                                    <a href="{{ route('profile.index') }}" class="dropdown-item border-bottom ">
                                         <i class="icon-user"></i>
                                         <span class="ml-2">Profile </span>
                                     </a>

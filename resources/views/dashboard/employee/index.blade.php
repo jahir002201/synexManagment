@@ -35,19 +35,14 @@
 
                       </div>
 
-                        <div class="col-lg-3 col-md-2 mb-2">
-                            <input type="search" name="name" class="form-control" placeholder="Employee Name">
-                        </div>
-                        <div class="col-lg-3 col-md-2 mb-2">
-                            <select name="designation" class="single-select">
-                                <option>Desegination</option>
-                                <option>Developer</option>
-                                <option>Designer</option>
-                                <option>Writer</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2 col-md-2 mb-2 text-center">
-                        <button type="submit" class="btn btn-primary  w-100" style="font-size: 11px;">Search</button>
+                        <div class="col-lg-8 float-right d-flex justify-content-end align-items-center">
+                            <div class=" mb-2 mr-3">
+                                <input type="search" name="name" class="form-control " placeholder="Employee Name">
+                            </div>
+
+                            <div class=" mb-2 text-center ">
+                            <button type="submit" class="btn btn-primary   float-right" style="font-size: 11px;">Search</button>
+                            </div>
                         </div>
 
                     </div>
@@ -55,11 +50,11 @@
             </div>
         </div>
 
-       @foreach ($users as $data )
+    @foreach ($users as $data )
       @if ($data->employees)
       <div class="col-md-3 mb-4">
         <div class="card position-relative">
-            <a href="{{ route('employee.show', 1) }}">
+            <a href="{{ route('employee.show', $data->id) }}">
                 @if ( $data->employees->image == null)
                 <img src="https://ui-avatars.com/api/?name={{$data->name}}&background=random" class="card-img-top rounded-circle mx-auto d-block" alt="" style="max-width: 150px; margin-top: 20px;">
                 @else
@@ -89,7 +84,8 @@
         </div>
     </div>
       @endif
-       @endforeach
+    @endforeach
+
 
     </div>
 

@@ -10,7 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ExpensesController;
-
+use App\Http\Controllers\ProfileController;
 
 Auth::routes();
 
@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resources([
         'project' => ProjectController::class,
         'employee' => EmployeeController::class,
+        'profile' => ProfileController::class,
         'client' => ClientController::class,
         'department' => DepartmentController::class,
         'designation' => DesignationController::class,

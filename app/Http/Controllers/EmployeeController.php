@@ -16,11 +16,12 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   $deparments = Department::all();
+    {   $departments = Department::all();
+
         $users = User::all();
 
         return view('dashboard.employee.index',[
-            'departments' => $deparments,
+            'departments' => $departments,
             'users' => $users,
 
         ]);
@@ -81,7 +82,10 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        return view('dashboard.employee.profile');
+        $user = User::find($id);
+        return view('dashboard.employee.profile',[
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -119,15 +123,16 @@ class EmployeeController extends Controller
     }
     public function searchEmployee(Request $request)
     {
-        $deparments = Department::all();
+        $departments = Department::all();
         $searchKeyword = $request->input('name');
-
         $results = User::where('name', 'like', '%' . $searchKeyword . '%')->get();
-
+        if (empty($searchKeyword)) {
+            return redirect(route('employee.index'));
+        }
         // Pass $results to your view or do further processing
         return view('dashboard.employee.index', [
+            'departments' =>$departments,
             'users' =>$results,
-            'deparments' =>$deparments,
         ]);
 
     }

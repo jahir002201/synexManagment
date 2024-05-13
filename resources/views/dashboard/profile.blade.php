@@ -10,12 +10,12 @@
                 <div class="photo-content">
                     <div class="cover-photo"></div>
                     <div class="profile-photo">
-                        @if ( $user->employees->image == null)
+                        {{-- @if ( $user->employees->image == null)
                         <img src="https://ui-avatars.com/api/?name={{$user->name}}&background=random" class="rounded-circle " style="width: 150px; height: auto;"  alt="" >
-                        {{-- <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="img-fluid rounded-circle" alt=""> --}}
+                        {{-- <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="img-fluid rounded-circle" alt="">
                         @else
                         <img src="{{ asset('uploads/client') }}/{{$user->employees->image}}" class="img-fluid rounded-circle" alt="">
-                        @endif
+                        @endif --}}
 
                     </div>
                 </div>

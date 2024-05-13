@@ -44,12 +44,16 @@
                   </form>
             </div>
         </div>
+        @foreach ($clients as $data )
         <div class="col-md-3 mb-4">
             <div class="card position-relative">
-
-                <img src="https://ui-avatars.com/api/?background=random{{ Auth::user()->name }}" class="card-img-top rounded-circle mx-auto d-block" alt="" style="max-width: 150px; margin-top: 20px;">
+                @if($data->image == null)
+                    <img src="https://ui-avatars.com/api/?name={{$data->name}}&background=random" class="card-img-top rounded-circle mx-auto d-block" alt="" style="max-width: 150px; margin-top: 20px;">
+                @else
+                    <img src="{{ asset('uploads/client') }}/{{$data->image}}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
+                @endif
                     <div class="card-body text-center">
-                        <h5 class="card-title">John Doe</h5>
+                        <h5 class="card-title">{{$data->name}}</h5>
                         <a class="btn btn-outline-dark " style="font-size: 11px;" href="{{ route('client.show', 1) }}">View Profile</a>
                     </div>
 
@@ -67,177 +71,9 @@
               </div>
             </div>
         </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
+        @endforeach
 
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <img src="https://ui-avatars.com/api/?background=random{{ Auth::user()->name }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
 
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
-
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
-
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <a href="{{ route('employee.show', 1) }}">
-                    <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">John Doe</h5>
-                        <p class="card-text text-muted">Web Designer</p>
-                    </div>
-                </a>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
-
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
-
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
-
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
-
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card position-relative">
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
-              <div class="card-body text-center">
-                <h5 class="card-title">John Doe</h5>
-                <p class="card-text text-muted">Web Designer</p>
-              </div>
-              <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
-                <div class="dropdown custom-dropdown">
-                    <div data-toggle="dropdown">
-                        <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
-
-                    </div>
-                </div>
-              </div>
-            </div>
-        </div>
     </div>
 
 
@@ -251,44 +87,46 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{route('client.store')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-row mb-3">
                         <div class="form-group col-md-12">
-                            <label for="" class="form-label font-weight-bold">Name :</label>
-                            <input type="text" class="form-control" placeholder="Enter  Full Name">
+                            <label for="" class="form-label font-weight-bold">Name <span class="text-danger">*</span> </label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter  Full Name" required>
                         </div>
 
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
-                            <label for="" class="form-label font-weight-bold">Phone :</label>
-                            <input type="text" class="form-control" placeholder="Enter Contact Number">
+                            <label for="" class="form-label font-weight-bold">Phone <span class="text-danger">*</span></label>
+                            <input type="number" name="phone" class="form-control" placeholder="Enter Contact Number" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="font-weight-bold">Email :</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Enter Email">
+                            <label for="inputPassword4" class="font-weight-bold">Email </label>
+                            <input type="email" name="email" class="form-control" id="inputPassword4" placeholder="Enter Email">
                           </div>
                     </div>
 
 
                    <div class="mb-3">
-                        <label for="" class="form-label font-weight-bold">Image :</label>
+                        <label for="" class="form-label font-weight-bold">Image <span  style="font-size: 9px; color: #ffa9a9;">150 x 150</span> </label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input">
-                            <label class="custom-file-label">Upload Image</label>
+                            <input type="file" name="image" class="custom-file-input" accept="image/*">
+                            <label class="custom-file-label">Upload Image  </label>
                         </div>
                    </div>
                    <div class="mb-3">
-                        <label for="" class="form-label font-weight-bold">Address :</label>
-                        <textarea class="form-control" name="" id="" cols="30" rows="5"></textarea>
+                        <label for="" class="form-label font-weight-bold">Address </label>
+                        <textarea class="form-control" name="address" id="" cols="30" rows="5" placeholder="Enter Address"></textarea>
                    </div>
 
 
-                </form>
+
             </div>
             <div class="modal-footer">
-                <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Client</button>
+                <button type="submit" class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Client</button>
             </div>
+        </form>
         </div>
     </div>
 </div>
