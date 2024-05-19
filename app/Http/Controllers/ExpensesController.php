@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Employee;
+use App\Models\Expenses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ExpensesController extends Controller
 {
@@ -11,7 +15,12 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        return view('dashboard.expenses.index');
+        $employees =  User::has('employees')->pluck('name', 'id')->toArray();
+        $expenses = Expenses::all();
+        return view('dashboard.expenses.index',[
+            'employees' => $employees,
+            'expenses' => $expenses,
+        ]);
     }
 
     /**
@@ -27,7 +36,37 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'type' => 'required',
+            'amount' => 'required|numeric',
+            'purchased_by' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->messages() as  $messages) {
+                foreach ($messages as $message) {
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
+                }
+            }
+            return back()->withErrors($validator)->withInput();
+        }
+        $expenses = new Expenses();
+        $expenses->type = $request->type;
+        $expenses->employee_id = $request->employee_id;
+        $expenses->date = $request->date;
+        $expenses->purchase_by = $request->purchased_by;
+        $expenses->amount = $request->amount;
+        $expenses->note = $request->note;
+        $expenses->save();
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Expense added successfully');
+        return back();
+
+
     }
 
     /**

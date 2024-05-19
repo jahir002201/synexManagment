@@ -147,7 +147,12 @@
                             </div>
                             <div class="form-group col-md-4">
                               <label for="inputPassword4" class="font-weight-bold">Client / Stakeholder :</label>
-                              <input type="password" class="form-control" id="inputPassword4" placeholder="Enter Client Name">
+                              <select id="" name="client_id" class="single-select">
+                                <option value="">SELECT NAME</option>
+                                @foreach ($client as $data )
+                                    <option value="{{$data->id}}">{{$data->name}}</option>
+                                @endforeach
+                            </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label font-weight-bold">Timeline :</label>
@@ -166,9 +171,11 @@
                             <div class="form-group col-lg-4">
                                 <label for="currency" class="font-weight-bold">Currency Type :</label>
                                 <select class="form-control" id="currencySelect">
-                                    <option value="USD">USD</option>
+                                    <option value="">SELECT TYPE</option>
                                     <option value="BDT">BDT</option>
+                                    <option value="USD">USD</option>
                                     <option value="EURO">EURO</option>
+
                                 </select>
                             </div>
                             <div class="form-group col-lg-4">
@@ -216,6 +223,9 @@
                         </div>
 
                         <div class="mb-3">
+
+
+
                             <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Create Project</button>
                         </div>
                     </form>
@@ -223,6 +233,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 @section('script')
 <script src="{{asset('dashboard_assets/vendor/select2/js/select2.full.min.js')}}"></script>

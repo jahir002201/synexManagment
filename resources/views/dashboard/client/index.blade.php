@@ -6,6 +6,9 @@
         #add{
             width: 96%;
         }
+        .src{
+            width: 100%;
+        }
     }
 </style>
 
@@ -13,10 +16,10 @@
 @section('content')
 
 <div class="row ">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-5 col-sm-5">
         <h3 class="display-5">Clients</h3>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-7 col-sm-7">
         <ol class="breadcrumb " style="float:inline-end; background-color: transparent;">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
             {{-- <li class="breadcrumb-item">Employee</li> --}}
@@ -28,14 +31,15 @@
     <div class="row mb-5">
         <div class="col-lg-12 mb-3">
             <div class="  mb-4 bg-white rounded shadow-sm" style="padding-top:14px; padding-left: 16px; padding-bottom: 3px;">
-                <form class="">
+                <form action="{{route('searchClient')}}" method="GET">
+
                     <div class=" row ">
-                        <div class="col-lg-4 col-md-6 mb-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 mb-2">
                           <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Client</button>
                         </div>
 
-                          <div class="col-lg-8 col-md-6 float-right d-flex justify-content-end align-items-center">
-                              <div class=" mb-2 mr-3">
+                          <div class="col-lg-8 col-md-8 col-sm-8 float-right d-flex justify-content-end align-items-center">
+                              <div class=" mb-2 mr-3 src">
                                   <input type="search" name="name" class="form-control " placeholder="Clent Name">
                               </div>
 
@@ -59,7 +63,7 @@
                 @endif
                     <div class="card-body text-center">
                         <h5 class="card-title">{{$data->name}}</h5>
-                        <a class="btn btn-outline-dark " style="font-size: 11px;" href="{{ route('client.show', 1) }}">View Profile</a>
+                        <a class="btn btn-outline-dark " style="font-size: 11px;" href="{{ route('client.show', $data->id) }}">View Profile</a>
                     </div>
 
               <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
@@ -68,8 +72,12 @@
                         <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
                     </div>
                     <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
-                        <a class="dropdown-item border-bottom py-1" href="#">Edit</a>
-                        <a class="dropdown-item py-1" href="#">Delete</a>
+                        <a class="dropdown-item border-bottom py-1" href="{{ route('client.edit', $data->id) }}">Edit</a>
+                        <form id="desigDeleteForm" action="{{route('client.destroy',$data->id)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="dropdown-item py-1" >Delete </button>
+                        </form>
 
                     </div>
                 </div>

@@ -6,10 +6,10 @@
 @section('content')
 
 <div class="row ">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-5 col-sm-5">
         <h3 class="display-5">Expenses</h3>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-7 col-sm-7">
         <ol class="breadcrumb " style="float:inline-end; background-color: transparent;">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
             <li class="breadcrumb-item">Expenses</li>
@@ -32,16 +32,34 @@
                         <table id="example" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
-                                    <th>Project Name</th>
-                                    <th>Leader</th>
-                                    <th>Deadline</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
+                                    <th>Type</th>
+                                    <th>Purchased By</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                @forelse ($expenses as $data )
+                                    <tr class="text-dark">
+                                        <td >{{ $data->type }}</td>
+                                        <td>{{ $data->purchase_by }}</td>
+                                        <td>{{ $data->amount }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->date)->format('d-m-y') }}</td>
+                                        <td>{{ $data->date ? \Carbon\Carbon::parse($data->date)->format('d-m-y') : 'NO-DATA' }}</td>
+                                        <td>
+                                            <a href="{{ route('project.show', 1) }}" class=" btn btn-primary btn-sm   ">
+                                                <i class="fa fa-eye "></i>
+                                            </a>
+                                            <a href="" class=" btn btn-danger btn-sm   ">
+                                                <i class="fa fa-trash "></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+
+                                @endforelse
+                                {{-- <tr>
                                     <td>Synex Management</td>
                                     <td>Imran</td>
                                     <td>5 April</td>
@@ -55,7 +73,7 @@
                                             <i class="fa fa-trash "></i>
                                         </a>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
 
                         </table>
@@ -74,11 +92,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{ route('expenses.store') }}" method="POST">
+                    @csrf
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="" class="form-label font-weight-bold">Expenses Type </label>
-                            <input type="text" class="form-control" placeholder="Salary, Software Purchase, Tools, Others">
+                            <label for="" class="form-label font-weight-bold">Expenses Type <span class="text-danger">*</span>  </label>
+                            <input type="text" name="type" class="form-control" placeholder="Salary, Software Purchase, Tools, Others">
                         </div>
                         {{-- <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Email :</label>
@@ -87,42 +106,37 @@
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label font-weight-bold">Employee</label>
-                        <select class="single-select">
-                            <option>None</option>
-                            <option>Imran</option>
-                            <option>Esmail</option>
-                            <option>Johir</option>
-                            <option>Jobayer</option>
+                        <select name="employee" class="single-select">
+                            <option>NONE</option>
+                            @foreach ($employees as $id => $name  )
+                                <option value="{{ $id }}">{{$name}}</option>
+                            @endforeach
                         </select>
                     </div>
-
                     <div class="form-row ">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="font-weight-bold">Purchase Date</label>
-                            <input type="date" class="form-control" id="inputPassword4" >
+                            <input type="date" name="date" class="form-control" id="inputPassword4" >
                           </div>
                         <div class="form-group col-md-6">
-                            <label for="" class="form-label font-weight-bold">Purchased By</label>
-                            <input type="text" class="form-control" placeholder="Name">
+                            <label for="" class="form-label font-weight-bold">Purchased By <span class="text-danger">*</span></label>
+                            <input type="text" name="purchased_by" class="form-control" placeholder="Name">
                         </div>
 
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label font-weight-bold">Ammount</label>
-                        <input type="number" class="form-control " min="0" placeholder="৳">
+                        <label for="" class="form-label font-weight-bold">Ammount <span class="text-danger">*</span></label>
+                        <input type="number" name="amount" class="form-control " min="0" placeholder="৳">
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label font-weight-bold">Note</label>
-                       <textarea name="" id="" class="form-control "  placeholder="Description" cols="30" rows="5"></textarea>
+                       <textarea  name="note" id="" class="form-control "  placeholder="Description" cols="30" rows="5"></textarea>
                     </div>
-
-
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Expenses</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Expenses</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

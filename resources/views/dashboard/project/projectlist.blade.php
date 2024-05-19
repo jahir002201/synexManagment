@@ -5,10 +5,10 @@
 @section('content')
 
 <div class="row ">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-5 col-sm-5">
         <h3 class="display-5">Projects</h3>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-7 col-sm-7">
         <ol class="breadcrumb " style="float:inline-end; background-color: transparent;">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
             <li class="breadcrumb-item">Projects</li>

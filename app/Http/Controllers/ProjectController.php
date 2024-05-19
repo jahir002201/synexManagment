@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Client;
+use Akaunting\Money\Money;
 use Illuminate\Http\Request;
+
+use Akaunting\Money\Currency;
+use Kantorge\CurrencyExchangeRates\Facades\CurrencyExchangeRates;
 
 class ProjectController extends Controller
 {
@@ -19,7 +25,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('dashboard.project.create');
+
+        $client = Client::all();
+        return view('dashboard.project.create',[
+            'client' => $client,
+        ]);
     }
 
     /**
