@@ -4,7 +4,7 @@
 <style>
     @media (max-width: 576px) {
         #add{
-            width: 100%;
+            width: 96%;
         }
     }
 </style>
@@ -27,20 +27,25 @@
 </div>
     <div class="row mb-5">
         <div class="col-lg-12 mb-3">
-            <div class="p-3 mb-4 bg-white rounded shadow-sm ">
-                <form>
-                    <div class="row">
-                      <div class="col-lg-7 col-md-7 col-sm-7 mb-2">
-                        <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Client</button>
+            <div class="  mb-4 bg-white rounded shadow-sm" style="padding-top:14px; padding-left: 16px; padding-bottom: 3px;">
+                <form class="">
+                    <div class=" row ">
+                        <div class="col-lg-4 col-md-6 mb-2">
+                          <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Client</button>
+                        </div>
+
+                          <div class="col-lg-8 col-md-6 float-right d-flex justify-content-end align-items-center">
+                              <div class=" mb-2 mr-3">
+                                  <input type="search" name="name" class="form-control " placeholder="Clent Name">
+                              </div>
+
+                              <div class=" mb-2 text-center mr-3 ">
+                              <button type="submit" class="btn btn-primary   float-right" style="font-size: 11px;">Search</button>
+                              </div>
+                          </div>
 
                       </div>
-                      <div class="col-lg-3 col-md-3 col-sm-3 mb-2">
-                        <input type="search" class="form-control" placeholder="Client Name">
-                      </div>
-                      <div class="col-lg-2 col-md-2 mb-2 col-sm-2   ">
-                       <button type="submit" class="btn btn-primary  w-100" style="font-size: 11px;">Search</button>
-                      </div>
-                    </div>
+
                   </form>
             </div>
         </div>

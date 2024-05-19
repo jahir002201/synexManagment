@@ -30,12 +30,12 @@
             <div class="p-3 mb-4 bg-white rounded shadow-sm ">
                 <form action="{{route('searchEmployee')}}" method="GET" >
                     <div class="row">
-                      <div class="col-lg-4 col-md-6 mb-2">
+                      <div class="col-lg-4 col-md-4 col-sm-4 mb-2">
                         <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Employee</button>
 
                       </div>
 
-                        <div class="col-lg-8 float-right d-flex justify-content-end align-items-center">
+                        <div class="col-lg-8 col-md-8 col-sm-8 float-right d-flex justify-content-end align-items-center">
                             <div class=" mb-2 mr-3">
                                 <input type="search" name="name" class="form-control " placeholder="Employee Name">
                             </div>
