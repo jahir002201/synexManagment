@@ -40,7 +40,9 @@ class DesignationController extends Controller
             $errors = $validator->errors();
             foreach ($errors->messages() as  $messages) {
                 foreach ($messages as $message) {
-                    toastr()->error($message, 'Invalid');
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
                 }
             }
             return back()->withErrors($validator)->withInput();
@@ -50,7 +52,9 @@ class DesignationController extends Controller
        $designation->department_id = $request->department_id;
        $designation->designation = $request->designation;
        $designation->save();
-       toastr()->success('Designation Added Successfully', 'Done');
+       flash()->options([
+                        'position' => 'bottom-right',
+                    ])->success('Designation Added Successfully');
        return back();
 
     }
@@ -88,7 +92,9 @@ class DesignationController extends Controller
             $errors = $validator->errors();
             foreach ($errors->messages() as  $messages) {
                 foreach ($messages as $message) {
-                    toastr()->error($message, 'Invalid');
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
                 }
             }
             return back()->withErrors($validator)->withInput();
@@ -97,7 +103,9 @@ class DesignationController extends Controller
 
        $designation->department_id = $request->department_id;
        $designation->designation = $request->designation;
-       toastr()->success('Designaiton Updated successfully!','Updated');
+       flash()->options([
+                        'position' => 'bottom-right',
+                    ])->success('Designaiton Updated successfully!');
        $designation->save();
        return back();
     }
@@ -108,7 +116,9 @@ class DesignationController extends Controller
     public function destroy(Designation $designation)
     {
         $designation->delete();
-        toastr()->success('Designation Deleted!', 'Deleted');
+        flash()->options([
+                        'position' => 'bottom-right',
+                    ])->success('Designation Deleted!');
         return back();
     }
 }

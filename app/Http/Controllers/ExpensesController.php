@@ -16,7 +16,8 @@ class ExpensesController extends Controller
     public function index()
     {
         $employees =  User::has('employees')->pluck('name', 'id')->toArray();
-        $expenses = Expenses::all();
+        $expenses = Expenses::orderBy('id', 'desc')->get();
+
         return view('dashboard.expenses.index',[
             'employees' => $employees,
             'expenses' => $expenses,
@@ -36,6 +37,7 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'type' => 'required',
             'amount' => 'required|numeric',
@@ -82,7 +84,12 @@ class ExpensesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $employees = User::has('employees')->pluck('name', 'id')->toArray();
+        $expenses = expenses::find($id);
+        return view('dashboard.expenses.edit',[
+            'expenses' => $expenses,
+            'employees' => $employees,
+        ]);
     }
 
     /**
@@ -90,7 +97,35 @@ class ExpensesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'type' => 'required',
+            'amount' => 'required|numeric',
+            'purchased_by' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->messages() as  $messages) {
+                foreach ($messages as $message) {
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
+                }
+            }
+            return back()->withErrors($validator)->withInput();
+        }
+        $expenses = expenses::find($id);
+        $expenses->type = $request->type;
+        $expenses->employee_id = $request->employee_id;
+        $expenses->date = $request->date;
+        $expenses->purchase_by = $request->purchased_by;
+        $expenses->amount = $request->amount;
+        $expenses->note = $request->note;
+        $expenses->save();
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Expense updated successfully');
+        return redirect(route('expenses.index'));
     }
 
     /**
@@ -98,6 +133,10 @@ class ExpensesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Expenses::find($id)->delete();
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Expense deleted successfully');
+        return back();
     }
 }

@@ -55,7 +55,9 @@ class EmployeeController extends Controller
             $errors = $validator->errors();
             foreach ($errors->messages() as  $messages) {
                 foreach ($messages as $message) {
-                    toastr()->error($message, 'Invalid');
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
                 }
             }
             return back()->withErrors($validator)->withInput();
@@ -72,6 +74,9 @@ class EmployeeController extends Controller
         $employee->department_id = $request->department;
         $employee->designation_id = $request->designation;
         $employee->save();
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Employee Added Successfully!');
         return back();
 
 
@@ -110,7 +115,9 @@ class EmployeeController extends Controller
     public function destroy(string $id)
     {
         User::find($id)->delete();
-        toastr()->success('Employee Deleted!', 'Deleted');
+        flash()->options([
+                        'position' => 'bottom-right',
+                    ])->success('Employee Deleted!');
         return back();
     }
     public function getDesignations($departmentId)

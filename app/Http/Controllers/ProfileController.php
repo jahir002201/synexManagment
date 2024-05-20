@@ -80,7 +80,9 @@ class ProfileController extends Controller
             $errors = $validator->errors();
             foreach ($errors->messages() as  $messages) {
                 foreach ($messages as $message) {
-                    toastr()->error($message, 'Invalid');
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
                 }
             }
             return back()->withErrors($validator)->withInput();

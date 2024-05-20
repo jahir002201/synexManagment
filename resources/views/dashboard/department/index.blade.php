@@ -124,7 +124,7 @@
                     @csrf
                     <div class="">
                         <label for="" class="form-label font-weight-bold">Department :</label>
-                        <input type="text" name="department" class="form-control" placeholder="Department Name">
+                        <input type="text" name="department" class="form-control" placeholder="Department Name" required>
                     </div>
                     <div class="modal-footer">
                         <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add </button>
@@ -150,7 +150,7 @@
                     @method('PUT')
                     <div class="">
                         <label for="" class="form-label font-weight-bold">Department :</label>
-                        <input type="text" name="department" id="department" class="form-control" placeholder="Department Name">
+                        <input type="text" name="department" id="department" class="form-control" placeholder="Department Name" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn  btn-outline-primary float-right" style="font-size: 11px;">Update </button>
@@ -175,7 +175,7 @@
                     @csrf
                     <div class="form-group ">
                         <label for="" class="form-label font-weight-bold">Department :</label>
-                        <select id="department" name="department_id" class="single-select">
+                        <select id="department" name="department_id" class="single-select" required>
                             <option value="">SELECT DEPARTMENT</option>
                             @foreach ($departments as $data )
                                 <option value="{{$data->id}}">{{$data->department}}</option>
@@ -184,7 +184,7 @@
                     </div>
                     <div class="">
                         <label for="" class="form-label font-weight-bold">Designation :</label>
-                        <input type="text" id="" name="designation" class="form-control" placeholder="Designation Name" value="{{old('designation')}}">
+                        <input type="text" id="" name="designation" class="form-control" placeholder="Designation Name" value="{{old('designation')}}" required>
                     </div>
 
             </div>
@@ -210,7 +210,7 @@
                     @method('PUT')
                     <div class="form-group ">
                         <label for="" class="form-label font-weight-bold">Department :</label>
-                        <select  name="department_id" class="single-select">
+                        <select  name="department_id" class="single-select" required>
 
                             @foreach ($departments as $data )
                                 <option class="desigOption" value="{{$data->id}}">{{$data->department}}</option>
@@ -220,7 +220,7 @@
                     </div>
                     <div class="">
                         <label for="" class="form-label font-weight-bold">Designation :</label>
-                        <input type="text" id="designation" name="designation" class="form-control" placeholder="Designation Name" value="{{old('designation')}}">
+                        <input type="text" id="designation" name="designation" class="form-control" placeholder="Designation Name" value="{{old('designation')}}" required>
                     </div>
 
             </div>

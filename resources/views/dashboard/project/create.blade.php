@@ -139,36 +139,34 @@
                 </div>
                 <div class=" mt-2 border-bottom"></div>
                 <div class="card-body">
-                    <form action="">
+                    <form action="{{route('project.store')}}" method="POST">
+                        @csrf
                         <div class="form-row mb-3">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-8">
                                 <label for="" class="form-label font-weight-bold">Project Name :</label>
-                                <input type="text" class="form-control" placeholder="Enter Project Name">
+                                <input type="text" name="name" class="form-control" placeholder="Enter Project Name" value="{{old('name')}}" required>
                             </div>
-                            <div class="form-group col-md-4">
-                              <label for="inputPassword4" class="font-weight-bold">Client / Stakeholder :</label>
-                              <select id="" name="client_id" class="single-select">
-                                <option value="">SELECT NAME</option>
-                                @foreach ($client as $data )
-                                    <option value="{{$data->id}}">{{$data->name}}</option>
-                                @endforeach
-                            </select>
-                            </div>
+
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label font-weight-bold">Timeline :</label>
-                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="">
+                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="{{old('daterange')}}" required>
                             </div>
-                        </div>
-                        <div id="snote" class="mb-3">
-                            <label for="" class="form-label font-weight-bold">Project Description :</label>
-                            <textarea name="" id="summernote" class="form-control " cols="30" rows="10"></textarea>
                         </div>
                         <div class="form-row mb-3">
-                            <div class="form-group  col-lg-4">
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4" class="font-weight-bold">Client / Stakeholder :</label>
+                                <select id="" name="client_id" class="single-select" required>
+                                  <option value="">SELECT CLIENT</option>
+                                  @foreach ($client as $data )
+                                      <option value="{{$data->id}}">{{$data->name}}</option>
+                                  @endforeach
+                              </select>
+                              </div>
+                            <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Budget :</label>
-                                <input type="number" name="budget" id="" class="form-control" >
+                                <input type="number" min="0" name="budget" id="" class="form-control" placeholder="৳" value="{{old('budget')}}" required>
                             </div>
-                            <div class="form-group col-lg-4">
+                            {{-- <div class="form-group col-lg-4">
                                 <label for="currency" class="font-weight-bold">Currency Type :</label>
                                 <select class="form-control" id="currencySelect">
                                     <option value="">SELECT TYPE</option>
@@ -177,27 +175,34 @@
                                     <option value="EURO">EURO</option>
 
                                 </select>
-                            </div>
-                            <div class="form-group col-lg-4">
+                            </div> --}}
+                            {{-- <div class="form-group col-lg-4">
                                 <label for="rate" class="font-weight-bold">Exchange Rate :</label>
                                 <input type="text" class="form-control" id="exchangeRateInput" readonly>
-                            </div>
+                            </div> --}}
                         </div>
+                        <div id="snote" class="mb-3">
+                            <label for="" class="form-label font-weight-bold">Project Description :</label>
+                            <textarea name="description" id="summernote" class="form-control " cols="30" rows="10" ></textarea>
+                        </div>
+
                         <div class="form-row mb-3">
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Leader :</label>
-                                <select class="multi-select" name="states[]" multiple="multiple">
-                                    <option value="AL">Alabama</option>
-                                    <option value="WY">Wyoming</option>
-                                    <option value="UI">dlf</option>
+                                <select class="multi-select" name="leader[]" multiple="multiple" required>
+
+                                    @foreach ($employees as $id => $name  )
+                                        <option value="{{ $id }}">{{$name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Member :</label>
-                                <select class="multi-select" name="states[]" multiple="multiple">
-                                    <option value="AL">Alabama</option>
-                                    <option value="WY">Wyoming</option>
-                                    <option value="UI">dlf</option>
+                                <select class="multi-select" name="member[]" multiple="multiple" required>
+
+                                    @foreach ($employees as $id => $name  )
+                                        <option value="{{ $id }}">{{$name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -206,7 +211,7 @@
                         <div class="form-row mb-3">
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Status :</label>
-                                <select class="single-select">
+                                <select name="status" class="single-select" value="{{old('status')}}">
                                     <option selected>INPROGRESS</option>
                                     <option>ON-HOLD</option>
                                     <option>COMPLETED</option>
@@ -214,9 +219,9 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Priority :</label>
-                                <select class="single-select">
+                                <select name="priority" class="single-select" value="{{old('priority')}}">
                                     <option>LOW</option>
-                                    <option>MEDIUM</option>
+                                    <option selected >MEDIUM</option>
                                     <option>HIGH</option>
                                 </select>
                             </div>
@@ -269,8 +274,9 @@
 
 
          $('#summernote').summernote({
+            placeholder: 'Optional Description',
            tabsize: 2,
-           height: 320,
+           height: 220,
            toolbar: [
              ['style', ['style']],
              ['font', ['bold', 'underline', 'clear']],

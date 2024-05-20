@@ -2,6 +2,7 @@
 @section('style')
 <link href="{{asset('dashboard_assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('dashboard_assets/vendor/select2/css/select2.min.css')}}">
+
 @endsection
 @section('content')
 
@@ -12,7 +13,7 @@
     <div class="col-lg-6 col-md-7 col-sm-7">
         <ol class="breadcrumb " style="float:inline-end; background-color: transparent;">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item">Expenses</li>
+            <li class="breadcrumb-item"><a class="text-primary">Expenses</a></li>
             {{-- <li class="breadcrumb-item " ><a class="text-primary">Project List</a></li> --}}
         </ol>
     </div>
@@ -32,28 +33,46 @@
                         <table id="example" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
                                     <th>Type</th>
                                     <th>Purchased By</th>
                                     <th>Amount</th>
-                                    <th>Date</th>
+                                    <th>Note</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($expenses as $data )
                                     <tr class="text-dark">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $data->date ? \Carbon\Carbon::parse($data->date)->format('d-m-y') : 'NO-DATA' }}</td>
                                         <td >{{ $data->type }}</td>
                                         <td>{{ $data->purchase_by }}</td>
-                                        <td>{{ $data->amount }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($data->date)->format('d-m-y') }}</td>
-                                        <td>{{ $data->date ? \Carbon\Carbon::parse($data->date)->format('d-m-y') : 'NO-DATA' }}</td>
-                                        <td>
-                                            <a href="{{ route('project.show', 1) }}" class=" btn btn-primary btn-sm   ">
-                                                <i class="fa fa-eye "></i>
+                                        <td>৳{{ $data->amount }}</td>
+
+                                            {{-- {{ $data->employee_id ? $data->users->name : 'no data' }} --}}
+
+                                            <td>
+                                                <a
+                                                   data-toggle="tooltip"
+                                                   data-html="true"
+                                                   data-placement="left"
+                                                   title="{{ $data->employee_id ? 'Employee: '. $data->users->name . '<br>Note: ' . nl2br(e($data->note)) : 'Employee: Null<br>Note: ' . nl2br(e($data->note)) }}">
+                                                    {{ substr($data->note, 0, 10) . '...' }}
+                                                </a>
+                                            </td>
+                                        <td class="d-flex">
+                                            <a href="{{route('expenses.edit',$data->id)}}" class=" btn btn-primary btn-sm mr-2  ">
+                                                <i class="fa fa-pencil text-white "></i>
                                             </a>
-                                            <a href="" class=" btn btn-danger btn-sm   ">
-                                                <i class="fa fa-trash "></i>
-                                            </a>
+                                            <form action="{{route('expenses.destroy',$data->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button  type="submit" class=" btn btn-danger btn-sm   ">
+                                                    <i class="fa fa-trash "></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty
@@ -106,8 +125,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label font-weight-bold">Employee</label>
-                        <select name="employee" class="single-select">
-                            <option>NONE</option>
+                        <select name="employee_id" class="single-select">
+                            <option value="">NONE</option>
                             @foreach ($employees as $id => $name  )
                                 <option value="{{ $id }}">{{$name}}</option>
                             @endforeach
@@ -143,7 +162,11 @@
 @endsection
 
 @section('script')
-
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
     <!-- Datatable -->
     <script src="{{asset('dashboard_assets/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('dashboard_assets/js/plugins-init/datatables.init.js')}}"></script>

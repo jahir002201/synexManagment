@@ -73,7 +73,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add Client</button>
+                    <button type="submit" class="btn  btn-outline-primary float-right" style="font-size: 11px;">Update</button>
                 </div>
             </form>
                 </div>

@@ -40,9 +40,13 @@ class DepartmentController extends Controller
                 'department' =>'required',
             ]);
             Department::create($request->all());
-            toastr()->success('Department Added successfully!','Done');
+            flash()->options([
+                'position' => 'bottom-right',
+            ])->success('Department Added successfully!');
         } catch (ValidationException $e) {
-            toastr()->error('Department Name Required!', 'Invalid');
+            flash()->options([
+                'position' => 'bottom-right',
+            ])->error('Department Name Required!');
         }
         return back();
     }
@@ -78,9 +82,13 @@ class DepartmentController extends Controller
             Department::find($id)->update([
                 'department' => $request->department,
             ]);
-            toastr()->success('Department Updated successfully!','Updated');
+            flash()->options([
+                'position' => 'bottom-right',
+            ])->success('Department Updated successfully!');
         } catch (ValidationException $e) {
-            toastr()->error('Department Name Required!', 'Invalid');
+            flash()->options([
+                'position' => 'bottom-right',
+            ])->error('Department Name Required!');
         }
         return back();
     }
@@ -91,7 +99,9 @@ class DepartmentController extends Controller
     public function destroy(string $id)
     {
         Department::find($id)->delete();
-        toastr()->success('Deparment Deleted!', 'Deleted');
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Deparment Deleted!');
         return back();
     }
 }

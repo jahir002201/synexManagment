@@ -44,7 +44,9 @@ class ClientController extends Controller
             $errors = $validator->errors();
             foreach ($errors->messages() as  $messages) {
                 foreach ($messages as $message) {
-                    toastr()->error($message, 'Invalid');
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
                 }
             }
             return back()->withErrors($validator)->withInput();
@@ -63,7 +65,9 @@ class ClientController extends Controller
         $client->address = $request->address;
         $client->image = $image_name;
         $client->save();
-        toastr()->success('Client Added Successfully', 'Success');
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Client Added Successfully');
         return back();
     }
 
@@ -104,7 +108,9 @@ class ClientController extends Controller
             $errors = $validator->errors();
             foreach ($errors->messages() as  $messages) {
                 foreach ($messages as $message) {
-                    toastr()->error($message, 'Invalid');
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
                 }
             }
             return back()->withErrors($validator)->withInput();
@@ -126,7 +132,9 @@ class ClientController extends Controller
         $client->address = $request->address;
         $client->image = $image_name? $image_name : $client->image;
         $client->save();
-        toastr()->success('Client Updated Successfully', 'Success');
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Client Updated Successfully');
         return redirect(route('client.show', $client->id));
     }
 
@@ -143,7 +151,9 @@ class ClientController extends Controller
             }
         }
         $client->delete();
-        toastr()->success('Client Deleted Successfully', 'Success');
+        flash()->options([
+            'position' => 'bottom-right',
+        ])->success('Client Deleted Successfully');
         return back();
     }
 

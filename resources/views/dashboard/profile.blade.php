@@ -364,7 +364,7 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="form-label font-weight-bold">Confirm Password :</label>
-                                                                <input type="text" name="password_confirmation" placeholder="" class="form-control">
+                                                                <input type="password" name="password_confirmation" placeholder="" class="form-control">
                                                             </div>
 
 
