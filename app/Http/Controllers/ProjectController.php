@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 
+
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
-
-use Akaunting\Money\Money;
 use Illuminate\Http\Request;
-use Akaunting\Money\Currency;
 use Illuminate\Support\Facades\Validator;
-use Kantorge\CurrencyExchangeRates\Facades\CurrencyExchangeRates;
+
 
 class ProjectController extends Controller
 {
@@ -20,7 +18,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-       return view('dashboard.project.projectlist');
+        $projects = Project::orderBy('id', 'desc')->get();
+       return view('dashboard.project.projectlist',[
+           'projects' => $projects,
+       ]);
     }
 
     /**
@@ -63,31 +64,47 @@ class ProjectController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $leadersArray = $request->leader; // This should be an array
-        $leaders = $members = implode(',', $leadersArray);
-        $membersArray = $request->member; // This should be an array
-        $members = implode(',', $membersArray);
-
-
         $project = new Project();
         $project->name = $request->name;
         $project->client_id = $request->client_id;
         $project->budget = $request->budget;
+        $project->description = $request->description;
         $project->dateRange = $request->daterange;
-        $project->leader_id = $leaders;
-        $project->member_id = $members;
         $project->status = $request->status;
         $project->priority = $request->priority;
+        $project->leader_id = $request->leader;
+        $memberIds = implode(',', $request->member);
+        $project->member_id = $memberIds;
         $project->save();
-        return back();
+        flash()->success('Project created successfully');
+        return redirect()->route('project.show', $project->id);
+
+
+
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(String $id)
     {
-        return view('dashboard.project.project_overview');
+        $project = Project::find($id);
+        //leaders
+        $leaderIds = explode(',', $project->leader_id);
+        $leaders = User::whereIn('id', $leaderIds)->pluck('name')->toArray();
+        //members
+        $memberIds = explode(',', $project->member_id);
+        $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
+        $members = User::whereIn('id', $memberIds)->pluck('name')->toArray();
+
+
+
+        return view('dashboard.project.project_overview',[
+            'project' => $project,
+            'members' => $members,
+            'memberCount' => $memberCount,
+        ]);
     }
 
     /**

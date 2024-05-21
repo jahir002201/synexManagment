@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('status');
             $table->string('priority');
-            $table->unsignedBigInteger('leader_id')->nullable();
-            $table->unsignedBigInteger('member_id')->nullable();
+            $table->string('leader_id')->nullable();
+            $table->string('member_id')->nullable();
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');

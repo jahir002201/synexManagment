@@ -189,8 +189,8 @@
                         <div class="form-row mb-3">
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Leader :</label>
-                                <select class="multi-select" name="leader[]" multiple="multiple" required>
-
+                                <select class="multi-select" name="leader"  required>
+                                    <option value=""> SELECT LEADER</option>
                                     @foreach ($employees as $id => $name  )
                                         <option value="{{ $id }}">{{$name}}</option>
                                     @endforeach
