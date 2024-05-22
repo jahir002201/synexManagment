@@ -22,11 +22,12 @@ return new class extends Migration
             $table->string('priority');
             $table->string('leader_id')->nullable();
             $table->string('member_id')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
 
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
-            $table->foreign('leader_id')->references('id')->on('users')->onDelete('set null');
-            $table->foreign('member_id')->references('id')->on('users')->onDelete('set null');
+            // $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
+            // $table->foreign('leader_id')->references('id')->on('users')->onDelete('set null');
+            // $table->foreign('member_id')->references('id')->on('users')->onDelete('set null');
 
         });
     }

@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,6 +19,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
+
         $projects = Project::orderBy('id', 'desc')->get();
        return view('dashboard.project.projectlist',[
            'projects' => $projects,
@@ -42,7 +44,38 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        //project file updload
+        if ($request->has('file')) {
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|file|max:20000', // example validation, adjust as needed
+            ]);
+            if ($validator->fails()) {
+                    $errors = $validator->errors();
+                    foreach ($errors->messages() as  $messages) {
+                        foreach ($messages as $message) {
+                            flash()->options([
+                                'position' => 'bottom-right',
+                            ])->error($message);
+                        }
+                    }
+                return back()->withErrors($validator)->withInput();
+            }
+            $project = Project::find($request->project_id);
+            $file = $request->file('file');
+            $explode = explode('.', $file->getClientOriginalName());
+            $filename = $explode[0] . '_' . time() . '.' . $explode[1];
+            $file -> move(public_path('uploads/project/file/'), $filename);
+            $fileArray = json_decode($project->file, true) ?? [];
+            $fileArray[] = $filename;
+            $project->file = json_encode($fileArray);
+            $project->save();
+            flash()->options(['position' => 'bottom-right'])-> success('File Added successfully');
+            return back();
+        }
 
+
+
+        //project data upload
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'client_id' => 'required',
@@ -76,7 +109,7 @@ class ProjectController extends Controller
         $memberIds = implode(',', $request->member);
         $project->member_id = $memberIds;
         $project->save();
-        flash()->success('Project created successfully');
+        flash()->options(['position' => 'bottom-right'])-> success('Project created successfully');
         return redirect()->route('project.show', $project->id);
 
 
@@ -90,13 +123,13 @@ class ProjectController extends Controller
     public function show(String $id)
     {
         $project = Project::find($id);
-        //leaders
-        $leaderIds = explode(',', $project->leader_id);
-        $leaders = User::whereIn('id', $leaderIds)->pluck('name')->toArray();
+
+        //project file
+        $files = json_decode($project->file, true) ?? [];
         //members
         $memberIds = explode(',', $project->member_id);
         $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
-        $members = User::whereIn('id', $memberIds)->pluck('name')->toArray();
+        $members = User::whereIn('id', $memberIds)->get();
 
 
 
@@ -104,6 +137,9 @@ class ProjectController extends Controller
             'project' => $project,
             'members' => $members,
             'memberCount' => $memberCount,
+            'files' => $files,
+         
+
         ]);
     }
 
@@ -130,4 +166,37 @@ class ProjectController extends Controller
     {
         //
     }
+    public function fileDelete($id , $key){
+      $project = Project::find($id);
+      $fileArray = json_decode($project->file, true) ?? [];
+      if (isset($fileArray[$key])) {
+        $filename = $fileArray[$key];
+        unlink(public_path('uploads/project/file/' . $filename));
+        unset($fileArray[$key]);
+        $project->file = json_encode($fileArray);
+        $project->save();
+        flash()->options(['position' => 'bottom-right'])-> success('File Deleted');
+        return back();
+        }
+        flash()->options(['position' => 'bottom-right'])-> error('File not found');
+        return back();
+
+    }
+    public function downloadFile($filename){
+        // Assuming your files are stored in the storage/app/public directory
+        $filePath = public_path('uploads/project/file/' . $filename);
+
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            // Return the file for download with appropriate headers
+
+            return response()->download($filePath);
+        } else {
+            // Return a response if the file does not exist
+            flash()->options(['position' => 'bottom-right'])-> error('File not found');
+            return back();
+        }
+    }
+
+
 }

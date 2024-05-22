@@ -1,5 +1,5 @@
 @extends('dashboard.index')
-@php
+{{-- @php
         function startDate($date){
         // Assuming $data->dateRange contains the date string "05/21/2024 - 05/22/2024"
         $dateRange = $date;
@@ -22,7 +22,7 @@
         return  $end_date;
 
     }
-@endphp
+@endphp --}}
 @section('style')
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -53,6 +53,49 @@
             justify-content: space-around !important;
         }
     }
+
+
+    .file-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+    .file-upload input[type="file"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer !important;
+    }
+    .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            border: 2px solid #f3f3f3; /* Light grey */
+            border-top: 2px solid #6f00ff; /* Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
 </style>
 
 @endsection
@@ -104,18 +147,18 @@
                                 <div class="d-inline-block  ">
                                     <p class="mb-0">Leader</p>
                                     <h6>
-                                        <a class="text-dark" href="{{route('employee.show',$project->leader_id)}}" >{{$project->leader->name}}</a>
+                                        <a class="" href="{{route('employee.show',$project->leader_id)}}" >{{$project->leader->name}}</a>
                                     </h6>
                                 </div>
                                 <div class="float-right ">
                                     <p class="mb-0">Start Date</p>
-                                <h6 class="">{{startDate($project->dateRange)}}</h6>
+                                {{-- <h6 class="">{{startDate($project->dateRange)}}</h6> --}}
                                 </div>
                             </div>
                             <div class=" between col-lg-4 col-md-4 col-sm-4 d-flex ">
                                 <div class="d-inline-block ">
                                     <p class="mb-0">End Date</p>
-                                    <h6>{{endDate($project->dateRange)}}</h6>
+                                    {{-- <h6>{{endDate($project->dateRange)}}</h6> --}}
                                 </div>
                                 <div class="float-right ">
                                     <p class="mb-0">Members</p>
@@ -139,8 +182,39 @@
 
                 </div>
             </div>
+
         </div>
         <div class="col-lg-3">
+            <div class="card ">
+                <div class="card-header ">
+                   <h6 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Task</h6>
+                    <button type="button" id="add" class=" btn btn-primary " data-toggle="modal" data-target="#createTask" style="font-size: -2px !important;height: 23px;width: 39px;">
+                        <i class="fa fa-plus text-white" style="top: -5px; position: relative;"></i>
+                    </button>
+
+
+                </div>
+                <div class=" mt-2 border-bottom"></div>
+                <div class="">
+                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
+                        <p class=" text-dark pb-0 mb-0">Tasks</p>
+                        {{-- <p class="text-dark pb-0 mb-0">Designation</p> --}}
+                    </div>
+                    @foreach ($project->task as $data )
+
+                    <div class=" hover d-flex justify-content-between  pt-3 px-3 border-bottom">
+                        <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
+                        <div class="d-flex justify-content-end ">
+
+                        <p class="text-dark icon " style="display: none;"><i class=" hidden fa fa-exclamation badge badge-outline-{{$data->status == 0? 'danger text-danger': 'dark text-dark'}}" >  </i></p>
+                        <p class="text-dark ml-2"><i class="fa fa-exclamation badge badge-outline-{{$data->status == 0? 'danger text-danger': 'dark text-dark'}}">  </i></p>
+                        <p class="text-dark  ml-2"><i class="fa fa-check badge badge-outline-{{$data->status == 1? 'success text-success': 'dark text-dark'}}">  </i></p>
+                    </div>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
             <div class="card ">
                 <div class="card-header ">
                    <h6 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Members</h6>
@@ -152,85 +226,137 @@
                         <p class=" text-dark pb-0 mb-0">Name</p>
                         <p class="text-dark pb-0 mb-0">Designation</p>
                     </div>
+                    @foreach ($members as $data )
+
                     <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
-                        <p class=" text-dark">Isamil</p>
-                        <p class="text-dark"><i class="badge badge-outline-success text-success">Developer</i></p>
+                        <p ><a href="{{route('employee.show',$data->id)}}"class=" ">{{$data->name}}</a></p>
+
+                        <p class="text-dark"><i class="badge badge-outline-success text-success">  {{$data->employees->designations->designation}}</i></p>
                     </div>
-                    <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
-                        <p class=" text-dark">Jobayer</p>
-                        <p class="text-dark"><i class="badge badge-outline-success text-success">Designer</i></p>
-                    </div>
-                    <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
-                        <p class=" text-dark">Isamil</p>
-                        <p class="text-dark"><i class="badge badge-outline-success text-success">Developer</i></p>
-                    </div>
-                    <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
-                        <p class=" text-dark">Jobayer</p>
-                        <p class="text-dark"><i class="badge badge-outline-success text-success">Designer</i></p>
-                    </div>
-                    <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
-                        <p class=" text-dark">Isamil</p>
-                        <p class="text-dark"><i class="badge badge-outline-success text-success">Developer</i></p>
-                    </div>
-                    <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
-                        <p class=" text-dark">Jobayer</p>
-                        <p class="text-dark"><i class="badge badge-outline-success text-success">Designer</i></p>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
             <div class="card ">
-                <div class="card-header ">
-                   <h6 class="font-weight-bold mb-0" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Documents</h6>
-                   <a class="p-2 bg-primary" style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border-radius: 23%;
-                height: 23px;
-                width: 39px;
-               "><i class="fa fa-plus text-white"></i></a>
-
-
+                <div class="card-header">
+                    <h6 class="font-weight-bold mb-0">
+                        <span style="border-left: 4px solid #593bdb;"></span>&nbsp; Project Documents
+                    </h6>
+                    <div class="file-upload btn btn-primary p-2" style="border-radius: 11%; height: 23px; width: 39px; coursor: pointer;">
+                        <i class="fa fa-plus text-white" style="top: -7px; position: relative;"></i>
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <form id="fileForm" action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            <input type="file" name="file" id="hiddenFileInput" onchange="submitForm()">
+                        </form>
+                    </div>
                 </div>
                 <div class=" mt-2 border-bottom"></div>
                 <div class="">
+                    @forelse ($files as $key=> $data )
                     <div class="d-flex justify-content-between py-2 px-3 border-bottom">
-                        <p class=" text-dark pb-0 mb-0">File.zip</p>
+                        <p class=" text-dark pb-0 mb-0">{{substr($data,0,20).'...'}}</p>
                         <p class="text-dark pb-0 mb-0">
-                            <a href="#" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
-                            <a href="#" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
+                            <a href="{{ route('download', ['filename' => $data]) }}" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
+                            <a href="{{route('projectFile.delete',['id' => $project->id, 'key' => $key])}}" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
                         </p>
                     </div>
-                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
-                        <p class=" text-dark pb-0 mb-0">photos.zip</p>
-                        <p class="text-dark pb-0 mb-0">
-                            <a href="#" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
-                            <a href="#" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
-                        </p>
+                    @empty
+                    <div class="text-center  py-2 px-3 border-bottom">
+                        <p class="   pb-0 mb-0">EMPTY</p>
+
                     </div>
-                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
-                        <p class=" text-dark pb-0 mb-0">logos.zip</p>
-                        <p class="text-dark pb-0 mb-0">
-                            <a href="#" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
-                            <a href="#" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
-                        </p>
-                    </div>
-                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
-                        <p class=" text-dark pb-0 mb-0">document.txt</p>
-                        <p class="text-dark pb-0 mb-0">
-                            <a href="#" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
-                            <a href="#" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
-                        </p>
-                    </div>
-                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
-                        <p class=" text-dark pb-0 mb-0">product.rar</p>
-                        <p class="text-dark pb-0 mb-0">
-                            <a href="#" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
-                            <a href="#" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
-                        </p>
-                    </div>
+                    @endforelse
+
+
                 </div>
             </div>
         </div>
     </div>
+    {{-- task modal --}}
+<div class="modal fade" id="createTask">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Task</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('task.store')}}" method="POST">
+                    @csrf
+                    <div class="">
+                        <input type="hidden" name="project_id" value="{{$project->id}}">
+                        <input type="text" name="task" class="form-control" placeholder="Task Name" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endsection
+@section('script')
+<script>
+    function submitForm() {
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        // Show loading overlay
+
+        // Submit the form
+        document.getElementById('fileForm').submit();
+    }
+</script>
+
+<script>
+    // Get all elements with the 'copyable' class
+    var copyableElements = document.querySelectorAll('.copyable');
+
+    // Add click event listener to each copyable element
+    copyableElements.forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            // Prevent the default behavior of the click event
+            event.preventDefault();
+
+            // Get the text to copy from the 'data-title' attribute
+            var text = this.getAttribute('data-title');
+
+            // Copy the text to the clipboard
+            navigator.clipboard.writeText(text).then(function() {
+                // Create a small note to indicate that the text has been copied
+                var note = document.createElement('span');
+                note.classList.add('copy-note');
+                note.textContent = 'Text copied';
+
+                // Apply styles to the note
+                note.style.backgroundColor = '#ffffff'; // White background
+                note.style.color = '#000000'; // Black text
+                note.style.border = '1px solid #000000'; // Black border
+                note.style.borderRadious = '4px'; // Black border
+                note.style.padding = '4px'; // Padding for spacing
+
+                // Position the note where the mouse cursor was clicked
+                note.style.position = 'absolute';
+                note.style.left = event.clientX + 'px';
+                note.style.top = event.clientY + 'px';
+
+                // Append the note to the body
+                document.body.appendChild(note);
+
+                // Remove the note after a short delay (e.g., 2 seconds)
+                setTimeout(function() {
+                    document.body.removeChild(note);
+                }, 1000);
+            }).catch(function(err) {
+                // Handle errors
+                console.error('Failed to copy text: ', err);
+            });
+        });
+    });
+</script>
 @endsection
