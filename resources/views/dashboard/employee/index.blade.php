@@ -65,7 +65,7 @@
                 @endif
                 <div class="card-body text-center">
                     <h5 class="card-title">{{$data->name}} </h5>
-                    <p class="card-text text-muted">{{$data->employees->designations->designation}}</p>
+                    <p class="card-text text-muted">{{$data->employees->designations? $data->employees->designations->designation : 'UNKNOWN'}}</p>
                 </div>
             </a>
           <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
@@ -129,6 +129,7 @@
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Department :</label>
+
                             <select name="department" id="department" class="single-select">
                                 <option value="">SELECT DEPARTMENT</option>
                                 @foreach ($departments as $data )
@@ -137,12 +138,12 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="font-weight-bold">Designation :</label>
+                            <label for="inputPassword4" class="font-weight-bold">Designation : </label>
+                            <a href="{{ route('department.index') }}" class="btn btn-outline-primary float-right" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -9px; left: -2px; position: relative; font-size:10px;"></i></a>
+
                             <select name="designation" id="designation" class="single-select">
                                 <option value="">Designation</option>
-                                <option value="Developer">Developer</option>
-                                <option value="Designer">Designer</option>
-                                <option value="Writer">Writer</option>
+
                             </select>
                         </div>
                     </div>

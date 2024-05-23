@@ -27,7 +27,7 @@
                                 <div class="col-xl-4 col-sm-4 border-right-1 prf-col">
                                     <div class="profile-name">
                                         <h4 class="text-primary">{{ $user->name}}</h4>
-                                        <p>{{$user->employees->departments->department}} / {{$user->employees->designations->designation}}</p>
+                                        <p>{{$user->employees->departments ? $user->employees->departments->department : 'UNKNOWN'}} / {{$user->employees->designations->designation}}</p>
                                     </div>
                                 </div>
                                 {{-- <div class="col-xl-4 col-sm-4 border-right-1 prf-col">

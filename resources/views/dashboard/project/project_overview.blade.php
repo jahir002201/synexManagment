@@ -1,5 +1,5 @@
 @extends('dashboard.index')
-{{-- @php
+@php
         function startDate($date){
         // Assuming $data->dateRange contains the date string "05/21/2024 - 05/22/2024"
         $dateRange = $date;
@@ -22,7 +22,7 @@
         return  $end_date;
 
     }
-@endphp --}}
+@endphp
 @section('style')
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -95,6 +95,9 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .hover:hover .icon {
+            display: inline !important;
+        }
 
 </style>
 
@@ -152,13 +155,13 @@
                                 </div>
                                 <div class="float-right ">
                                     <p class="mb-0">Start Date</p>
-                                {{-- <h6 class="">{{startDate($project->dateRange)}}</h6> --}}
+                                <h6 class="">{{startDate($project->dateRange)}}</h6>
                                 </div>
                             </div>
                             <div class=" between col-lg-4 col-md-4 col-sm-4 d-flex ">
                                 <div class="d-inline-block ">
                                     <p class="mb-0">End Date</p>
-                                    {{-- <h6>{{endDate($project->dateRange)}}</h6> --}}
+                                    <h6>{{endDate($project->dateRange)}}</h6>
                                 </div>
                                 <div class="float-right ">
                                     <p class="mb-0">Members</p>
@@ -196,19 +199,30 @@
                 </div>
                 <div class=" mt-2 border-bottom"></div>
                 <div class="">
-                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
-                        <p class=" text-dark pb-0 mb-0">Tasks</p>
-                        {{-- <p class="text-dark pb-0 mb-0">Designation</p> --}}
+                    @if ($project->task->count() == 0)
+                    <div class="text-center  py-2 px-3 border-bottom">
+                        <p class="   pb-0 mb-0">EMPTY</p>
                     </div>
+
+
+                    @endif
                     @foreach ($project->task as $data )
 
                     <div class=" hover d-flex justify-content-between  pt-3 px-3 border-bottom">
                         <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
                         <div class="d-flex justify-content-end ">
 
-                        <p class="text-dark icon " style="display: none;"><i class=" hidden fa fa-exclamation badge badge-outline-{{$data->status == 0? 'danger text-danger': 'dark text-dark'}}" >  </i></p>
-                        <p class="text-dark ml-2"><i class="fa fa-exclamation badge badge-outline-{{$data->status == 0? 'danger text-danger': 'dark text-dark'}}">  </i></p>
-                        <p class="text-dark  ml-2"><i class="fa fa-check badge badge-outline-{{$data->status == 1? 'success text-success': 'dark text-dark'}}">  </i></p>
+
+                        <p class="text-dark icon edit" data-value={{ $data->id }} style="display: none; cursor: pointer"><i class="mt-1 fa fa-pencil text-primary  ">  </i></p>
+
+                        <form id="taskDelete" action="{{ route('task.destroy', $data->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <p class="text-dark icon ml-2 delete"style="display: none; cursor: pointer"><i class="mt-1 fa fa-trash  text-danger ">  </i></p>
+
+                        </form>
+                        <p class="text-dark ml-3 "><i class=" fa fa-{{ $data->status == 0? 'exclamation' : 'check' }} {{$data->status == 0? 'text-danger': ' text-success'}} ">  </i></p>
+
                     </div>
                     </div>
                     @endforeach
@@ -231,7 +245,7 @@
                     <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
                         <p ><a href="{{route('employee.show',$data->id)}}"class=" ">{{$data->name}}</a></p>
 
-                        <p class="text-dark"><i class="badge badge-outline-success text-success">  {{$data->employees->designations->designation}}</i></p>
+                        <p class="text-dark"><i class="badge badge-outline-success text-success">  {{$data->employees->designations? $data->employees->designations->designation : 'UNKNOWN'}}</i></p>
                     </div>
                     @endforeach
 
@@ -258,7 +272,7 @@
                 <div class="">
                     @forelse ($files as $key=> $data )
                     <div class="d-flex justify-content-between py-2 px-3 border-bottom">
-                        <p class=" text-dark pb-0 mb-0">{{substr($data,0,20).'...'}}</p>
+                        <p class=" text-dark pb-0 mb-0">{{substr($data,0,15).'...'}}</p>
                         <p class="text-dark pb-0 mb-0">
                             <a href="{{ route('download', ['filename' => $data]) }}" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
                             <a href="{{route('projectFile.delete',['id' => $project->id, 'key' => $key])}}" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
@@ -294,6 +308,32 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Add </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    {{-- edit task modal --}}
+<div class="modal fade" id="editTask">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Task</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="taskUpdate" action="{{route('task.update', 0)}}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="">
+
+                        <input type="text" name="task" id="taskTitle"  class="form-control" placeholder="Task Name" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Update </button>
                     </div>
                 </form>
             </div>
@@ -358,5 +398,36 @@
             });
         });
     });
+</script>
+<script>
+     $(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('body').on('click', '.edit', function () {
+        var id = $(this).data('value');
+        modal = $('#editTask');
+        modal.modal('show');
+
+
+            // Construct the route dynamically
+        var route = "{{ route('task.edit', ['task' => ':id']) }}";
+        route = route.replace(':id', id);
+        $.get(route, function(data) {
+            $('#taskTitle').val(data.title);
+        });
+        var form = $('#taskUpdate');
+            var action = form.attr('action');
+            // Replace the last part of the action attribute with the new id
+            action = action.substring(0, action.lastIndexOf('/') + 1) + id;
+            form.attr('action', action);
+    });
+    $('body').on('click', '.delete', function () {
+        $('#taskDelete').submit();
+    });
+});
+
 </script>
 @endsection

@@ -59,7 +59,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return response()->json($task);
     }
 
     /**
@@ -67,7 +67,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $task->title = $request->task;
+        $task->save();
+        flash()->options([ 'position' => 'bottom-right'])->success('Task Updated successfully!');
+        return back();
     }
 
     /**
@@ -75,6 +78,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        flash()->options([ 'position' => 'bottom-right'])->success('Task Deleted successfully!');
+        return back();
     }
 }

@@ -155,6 +155,7 @@
                         <div class="form-row mb-3">
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4" class="font-weight-bold">Client / Stakeholder :</label>
+                                <a href="{{ route('client.index') }}" class="btn btn-outline-primary float-right mr-1" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -8px; left: -1px; position: relative; font-size:10px;"></i></a>
                                 <select id="" name="client_id" class="single-select" required>
                                   <option value="">SELECT CLIENT</option>
                                   @foreach ($client as $data )
@@ -198,6 +199,7 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Member :</label>
+                                <a href="{{ route('employee.index') }}" class="btn btn-outline-primary float-right" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -9px; left: -2px; position: relative; font-size:10px;"></i></a>
                                 <select class="multi-select" name="member[]" multiple="multiple" required>
 
                                     @foreach ($employees as $id => $name  )
