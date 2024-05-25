@@ -11,12 +11,11 @@
                 <div class="photo-content">
                     <div class="cover-photo"></div>
                     <div class="profile-photo">
-                        {{-- @if ( $user->employees->image == null)
-                        <img src="https://ui-avatars.com/api/?name={{$user->name}}&background=random" class="rounded-circle " style="width: 150px; height: auto;"  alt="" >
-                        {{-- <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="img-fluid rounded-circle" alt="">
+                        @if ( Auth::user()->employees->image == null)
+                        <img src="https://ui-avatars.com/api/?name={{Auth::user()->name}}&background=random" class="rounded-circle " style="width: 150px; height: auto;"  alt="" >
                         @else
-                        <img src="{{ asset('uploads/client') }}/{{$user->employees->image}}" class="img-fluid rounded-circle" alt="">
-                        @endif --}}
+                        <img src="{{ asset('uploads/client') }}/{{Auth::user()->employees->image}}" class="img-fluid rounded-circle" alt="">
+                        @endif
 
                     </div>
                 </div>
@@ -26,8 +25,8 @@
                             <div class="row">
                                 <div class="col-xl-4 col-sm-4 border-right-1 prf-col">
                                     <div class="profile-name">
-                                        <h4 class="text-primary">{{ $user->name}}</h4>
-                                        <p>{{$user->employees->departments ? $user->employees->departments->department : 'UNKNOWN'}} / {{$user->employees->designations? $user->employees->designations->designation : 'UNKNOWN'}}</p>
+                                        <h4 class="text-primary">{{ Auth::user()->name}}aaasss</h4>
+                                        <p>{{Auth::user()->employees->departments ? Auth::user()->employees->departments->department : 'UNKNOWN'}} / {{Auth::user()->employees->designations? Auth::user()->employees->designations->designation : 'UNKNOWN'}}</p>
                                     </div>
                                 </div>
                                 {{-- <div class="col-xl-4 col-sm-4 border-right-1 prf-col">
@@ -62,13 +61,13 @@
 
                                 <li class="nav-item ml-1"><a href="#about-me" data-toggle="tab" class="nav-link">About</a>
                                 </li>
-                                {{-- <li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Setting</a> </li> --}}
+                                <li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Setting</a> </li>
 
                             </ul>
                         </div>
                        </div>
                         <div class="tab-content ">
-                            <div id="about-me" class="tab-pane fade active show  shadow-sm rounded bg-white">
+                            <div id="about-me" class="tab-pane fade   shadow-sm rounded bg-white">
                                 <div class="profile-personal-info mt-4  pt-2 pl-4">
                                     <h4 class="text-primary mb-4 pt-4">Personal Information</h4>
                                     {{-- <div class="row mb-4">
@@ -84,14 +83,14 @@
                                             <h5 class="f-w-500">Email <span class="pull-right">:</span>
                                             </h5>
                                         </div>
-                                        <div class="col-8"><span> {{$user->email}} </span>
+                                        <div class="col-8"><span> {{Auth::user()->email}} </span>
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-4">
                                             <h5 class="f-w-500">Phone <span class="pull-right">:</span></h5>
                                         </div>
-                                        <div class="col-8"><span>{{$user->employees->phone}}</span>
+                                        <div class="col-8"><span>{{Auth::user()->employees->phone}}</span>
                                         </div>
                                     </div>
 
@@ -99,7 +98,7 @@
                                         <div class="col-4">
                                             <h5 class="f-w-500">Address <span class="pull-right">:</span></h5>
                                         </div>
-                                        <div class="col-8"><span>{{$user->employees->address}}</span>
+                                        <div class="col-8"><span>{{Auth::user()->employees->address}}</span>
 
                                         </div>
                                     </div>
@@ -118,12 +117,19 @@
                                 </div>
                             </div>
 
-                            {{-- <div id="profile-settings" class="tab-pane fade  ml-4">
+                      <div id="profile-settings" class="tab-pane active show fade  ml-4">
                                 <div class="">
                                     <div class="settings-form">
 
+                                        <form action="{{route('profile.update',Auth::user()->id)}}" method="POST">
+                                            @csrf
+                                            @method('PUT')
                                         <div class="row">
+
                                             <div class="col-lg-8  ml-0 pl-0">
+
+
+
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <h5>Update Social Links</h5>
@@ -158,79 +164,79 @@
                                                 <div class="card">
                                                     <div class="card-body">
                                                 <h4 class="text-primary mt-2 pt-1 mb-4">Update Personal Informations</h4>
-                                                <form class="mt-3">
+
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <label for="" class="form-label font-weight-bold">Full Name :</label>
-                                                            <input type="email" placeholder="" class="form-control">
+                                                            <input type="email" placeholder="" name="name" class="form-control">
                                                         </div>
 
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
                                                             <label for="" class="form-label font-weight-bold">Phone :</label>
-                                                            <input type="email" placeholder="" class="form-control">
+                                                            <input type="email" placeholder="" name="phone" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="" class="form-label font-weight-bold">Email :</label>
-                                                            <input type="email" placeholder="" class="form-control">
+                                                            <input type="email" placeholder="" name="email"  class="form-control">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="" class="form-label font-weight-bold" >Address</label>
-                                                        <textarea  class="form-control" name=""  id="" cols="30" rows="4"></textarea>
+                                                        <textarea  class="form-control" name="address"  id="" cols="30" rows="4"></textarea>
                                                     </div>
 
                                                     <button  class="btn btn-primary float-right " type="submit">Update</button>
-                                                </form>
+
                                             </div>
                                         </div>
                                             </div>
                                             <div class="col-lg-4">
                                                <div class="card">
                                                     <div class="card-body">
-                                                        <form action="">
+
                                                             <h4 class="text-primary mt-2 pt-1 mb-4">Update Profile Image</h4>
                                                             <div class="input-group mb-3">
                                                                 <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input">
+                                                                    <input type="file" name="image" class="custom-file-input">
                                                                     <label class="custom-file-label">Choose file</label>
                                                                 </div>
                                                                 <div class="input-group-append">
                                                                     <button type="submit" class="btn btn-primary">Update</button>
                                                                 </div>
                                                             </div>
-                                                        </form>
+
                                                     </div>
                                                </div>
                                                <div class="card">
                                                     <div class="card-body">
-                                                        <form action="">
+
                                                             <h4 class="text-primary mt-2 pt-1 mb-4">Update Password</h4>
                                                             <div class="mb-3">
                                                                 <label for="" class="form-label font-weight-bold">Current Password :</label>
-                                                                <input type="text" placeholder="" class="form-control">
+                                                                <input type="text" placeholder="" name="old_password" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="form-label font-weight-bold">New Password :</label>
-                                                                <input type="text" placeholder="" class="form-control">
+                                                                <input type="text" placeholder="" name="password" class="form-control">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="form-label font-weight-bold">Confirm Password :</label>
-                                                                <input type="text" placeholder="" class="form-control">
+                                                                <input type="text" placeholder="" name="password_confirmation" class="form-control">
                                                             </div>
                                                             <button  class="btn btn-primary float-right " type="submit">Update</button>
-                                                        </form>
+
                                                     </div>
                                                </div>
                                             </div>
 
                                         </div>
-
+                                    </form>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -303,7 +309,7 @@
                         </div>
                        </div>
                         <div class="tab-content ">
-                            <div id="about-me" class="tab-pane fade   shadow-sm rounded bg-white">
+                            <div id="about-me" class="tab-pane fade active show   shadow-sm rounded bg-white">
                                 <div class="profile-personal-info mt-4  pt-2 pl-4">
                                     <h4 class="text-primary mb-4 pt-4">Personal Information</h4>
                                     {{-- <div class="row mb-4">
@@ -330,7 +336,7 @@
                                 </div>
                             </div>
 
-                            <div id="profile-settings" class="tab-pane active show fade  ml-4">
+                            <div id="profile-settings" class="tab-pane  fade  ml-4">
                                 <div class="">
                                     <div class="settings-form">
                                         <div class="row">

@@ -15,7 +15,6 @@ class ProfileController extends Controller
      */
     public function index()
     {
-
         return view('dashboard.profile');
     }
 
@@ -56,6 +55,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        dd($request->all());
         $user= User::find(Auth::user()->id);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
