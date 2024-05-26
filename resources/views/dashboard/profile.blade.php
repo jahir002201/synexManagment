@@ -14,7 +14,7 @@
                         @if ( Auth::user()->employees->image == null)
                         <img src="https://ui-avatars.com/api/?name={{Auth::user()->name}}&background=random" class="rounded-circle " style="width: 150px; height: auto;"  alt="" >
                         @else
-                        <img src="{{ asset('uploads/client') }}/{{Auth::user()->employees->image}}" class="img-fluid rounded-circle" alt="">
+                        <img src="{{ asset('uploads/employee') }}/{{Auth::user()->employees->image}}" class="img-fluid rounded-circle" alt="">
                         @endif
 
                     </div>
@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col-xl-4 col-sm-4 border-right-1 prf-col">
                                     <div class="profile-name">
-                                        <h4 class="text-primary">{{ Auth::user()->name}}aaasss</h4>
+                                        <h4 class="text-primary">{{ Auth::user()->name}}</h4>
                                         <p>{{Auth::user()->employees->departments ? Auth::user()->employees->departments->department : 'UNKNOWN'}} / {{Auth::user()->employees->designations? Auth::user()->employees->designations->designation : 'UNKNOWN'}}</p>
                                     </div>
                                 </div>
@@ -107,10 +107,13 @@
                                             <h5 class="f-w-500">Socials <span class="pull-right">:</span></h5>
                                         </div>
                                         <div class="col-8 ">
-                                            <i class="fa fa-facebook-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
-                                            <i class="fa fa-github-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
-                                            <i class="fa fa-linkedin-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
-                                            <i class="fa fa-whatsapp  text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
+                                            @foreach (Auth::user()->socials as $data )
+                                                <a href="{{ $data->link }}" target="_blank" rel="noopener noreferrer">
+                                                    <i class="{{ $data->icon }} text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
+                                                </a>
+
+                                            @endforeach
+
                                         </div>
                                     </div>
 
@@ -121,7 +124,7 @@
                                 <div class="">
                                     <div class="settings-form">
 
-                                        <form action="{{route('profile.update',Auth::user()->id)}}" method="POST">
+                                        <form action="{{route('profile.update',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                         <div class="row">
@@ -168,27 +171,27 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <label for="" class="form-label font-weight-bold">Full Name :</label>
-                                                            <input type="email" placeholder="" name="name" class="form-control">
+                                                            <input type="text" placeholder="" name="name" class="form-control" value="{{Auth::user()->name}}">
                                                         </div>
 
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
                                                             <label for="" class="form-label font-weight-bold">Phone :</label>
-                                                            <input type="email" placeholder="" name="phone" class="form-control">
+                                                            <input type="number" placeholder="" name="phone" class="form-control" value="{{Auth::user()->employees->phone}}">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="" class="form-label font-weight-bold">Email :</label>
-                                                            <input type="email" placeholder="" name="email"  class="form-control">
+                                                            <input type="email" placeholder="" name="email"  class="form-control" value="{{Auth::user()->email}}">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="" class="form-label font-weight-bold" >Address</label>
-                                                        <textarea  class="form-control" name="address"  id="" cols="30" rows="4"></textarea>
+                                                        <textarea  class="form-control" name="address"  id="" cols="30" rows="4"  >{{ Auth::user()->employees->address }}</textarea>
                                                     </div>
 
-                                                    <button  class="btn btn-primary float-right " type="submit">Update</button>
+                                                    <button value='1' name="personal" class="btn btn-primary float-right " type="submit">Update</button>
 
                                             </div>
                                         </div>
@@ -197,14 +200,14 @@
                                                <div class="card">
                                                     <div class="card-body">
 
-                                                            <h4 class="text-primary mt-2 pt-1 mb-4">Update Profile Image</h4>
+                                                            <h4 class="text-primary mt-2 pt-1 mb-4">Update Profile Image <span  style="font-size: 9px; color: #ffa9a9;">150 x 150</span></h4>
                                                             <div class="input-group mb-3">
                                                                 <div class="custom-file">
-                                                                    <input type="file" name="image" class="custom-file-input">
+                                                                    <input type="file" name="image" class="custom-file-input" accept="image/*">
                                                                     <label class="custom-file-label">Choose file</label>
                                                                 </div>
                                                                 <div class="input-group-append">
-                                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                                    <button name="imgBtn" value="1" type="submit" class="btn btn-primary">Update</button>
                                                                 </div>
                                                             </div>
 
@@ -224,9 +227,9 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="form-label font-weight-bold">Confirm Password :</label>
-                                                                <input type="text" placeholder="" name="password_confirmation" class="form-control">
+                                                                <input type="password" placeholder="" name="password_confirmation" class="form-control">
                                                             </div>
-                                                            <button  class="btn btn-primary float-right " type="submit">Update</button>
+                                                            <button name="passBtn" value="1"  class="btn btn-primary float-right " type="submit">Update</button>
 
                                                     </div>
                                                </div>
@@ -374,7 +377,7 @@
                                                             </div>
 
 
-                                                            <button  class="btn btn-primary float-right " type="submit">Update</button>
+                                                            <button name="notEmployee" value="1" class="btn btn-primary float-right " type="submit">Update</button>
                                                         </form>
                                                     </div>
                                                 </div>

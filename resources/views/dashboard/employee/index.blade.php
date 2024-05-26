@@ -61,7 +61,7 @@
                 @if ( $data->employees->image == null)
                 <img src="https://ui-avatars.com/api/?name={{$data->name}}&background=random" class="card-img-top rounded-circle mx-auto d-block" alt="" style="max-width: 150px; margin-top: 20px;">
                 @else
-                <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
+                <img src="{{ asset('uploads/employee') }}/{{ $data->employees->image }}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
                 @endif
                 <div class="card-body text-center">
                     <h5 class="card-title">{{$data->name}} </h5>

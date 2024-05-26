@@ -24,12 +24,12 @@
       <div class="col-md-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Earnings<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
-            <p class="font-weight-bold" style="font-size: 23px; color: black">$1,42,300 </p>
+            <h5 class="card-title">Earnings<span class="badge float-right bg-primary text-white">{{ $percentageChange }}%</span></h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">৳{{ $current_month_budget }} </p>
             <div class="progress">
                 <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <p class="card-text"><span class="text-muted">Previous Month</span> $1,15,852</p>
+            <p class="card-text"><span class="text-muted">Previous Month</span> ৳{{ $last_month_budget }}</p>
           </div>
         </div>
       </div>
@@ -37,11 +37,11 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Expenses<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
-            <p class="font-weight-bold" style="font-size: 23px; color: black">$42,300 </p>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">৳42,300 </p>
             <div class="progress">
                 <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <p class="card-text"><span class="text-muted">Previous Month</span> $5,852</p>
+            <p class="card-text"><span class="text-muted">Previous Month</span> ৳5,852</p>
           </div>
         </div>
       </div>
@@ -49,11 +49,11 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Profit<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
-            <p class="font-weight-bold" style="font-size: 23px; color: black">$42,300 </p>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">৳42,300 </p>
             <div class="progress">
                 <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <p class="card-text"><span class="text-muted">Previous Month</span> $5,852</p>
+            <p class="card-text"><span class="text-muted">Previous Month</span> ৳5,852</p>
           </div>
         </div>
       </div>
@@ -145,7 +145,7 @@
                                             Salary
                                         </td>
                                         <td>
-                                            $2000
+                                            ৳2000
                                         </td>
                                         <td>
                                             <span class="badge badge-primary">Paid</span>
@@ -163,7 +163,7 @@
                                             Salary
                                         </td>
                                         <td>
-                                            $2000
+                                            ৳2000
                                         </td>
                                         <td>
                                             <span class="badge badge-warning">Pending</span>
@@ -181,7 +181,7 @@
                                             Salary
                                         </td>
                                         <td>
-                                            $2000
+                                            ৳2000
                                         </td>
                                         <td>
                                             <span class="badge badge-primary">Paid</span>
@@ -199,7 +199,7 @@
                                             Salary
                                         </td>
                                         <td>
-                                            $2000
+                                            ৳2000
                                         </td>
                                         <td>
                                             <span class="badge badge-danger">Due</span>
@@ -217,7 +217,7 @@
                                             Salary
                                         </td>
                                         <td>
-                                            $2000
+                                            ৳2000
                                         </td>
                                         <td>
                                             <span class="badge badge-primary">Paid</span>
@@ -754,7 +754,7 @@
                                     Salary
                                 </td>
                                 <td>
-                                    $2000
+                                    ৳2000
                                 </td>
                                 <td>
                                     <span class="badge badge-primary">Paid</span>
@@ -772,7 +772,7 @@
                                     Salary
                                 </td>
                                 <td>
-                                    $2000
+                                    ৳2000
                                 </td>
                                 <td>
                                     <span class="badge badge-warning">Pending</span>
@@ -790,7 +790,7 @@
                                     Salary
                                 </td>
                                 <td>
-                                    $2000
+                                    ৳2000
                                 </td>
                                 <td>
                                     <span class="badge badge-primary">Paid</span>
@@ -808,7 +808,7 @@
                                     Salary
                                 </td>
                                 <td>
-                                    $2000
+                                    ৳2000
                                 </td>
                                 <td>
                                     <span class="badge badge-danger">Due</span>
@@ -826,7 +826,7 @@
                                     Salary
                                 </td>
                                 <td>
-                                    $2000
+                                    ৳2000
                                 </td>
                                 <td>
                                     <span class="badge badge-primary">Paid</span>

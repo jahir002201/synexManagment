@@ -135,6 +135,9 @@
                     <div class="row mt-4  ml-1">
                         <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6> <a href="{{route('client.show',$project->client_id)}}" class="" style="margin-bottom: 0.5rem;"> {{ $project->client->name}}</a>
                     </div>
+                    <div class="row   ml-1">
+                        <h6 class="" style=" margin-right: 3px">Budget :</h6> <span style="position: relative; top: -2.5px">৳{{ $project->budget }}</span>
+                    </div>
                     <div class="row mt-1 ml-1">
                         <h6 class="">Project Description:</h6>
                     </div>

@@ -13,6 +13,9 @@ class User extends Authenticatable
     public function employees(){
         return $this->hasOne(Employee::class );
      }
+    public function socials(){
+        return $this->hasMany(Social::class, 'user_id');
+     }
 
 
     /**

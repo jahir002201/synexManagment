@@ -18,24 +18,19 @@ return new class extends Migration
             $table->string('start_date');
             $table->unsignedBigInteger('department_id')->nullable()->default(null);
             $table->unsignedBigInteger('designation_id')->nullable()->default(null);
+            $table->string('address')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
 
               // users
-              $table->foreign('user_id')
-              ->references('id')
-              ->on('users')
-              ->onDelete('cascade');
+              $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
               //department
-              $table->foreign('department_id')
-              ->references('id')
-              ->on('departments')
-              ->onDelete('set null');
+              $table->foreign('department_id') ->references('id') ->on('departments') ->onDelete('set null');
               //designation
-              $table->foreign('designation_id')
-              ->references('id')
-              ->on('designations')
-              ->onDelete('set null');
+              $table->foreign('designation_id') ->references('id')->on('designations') ->onDelete('set null');
+
+
+
 
         });
     }

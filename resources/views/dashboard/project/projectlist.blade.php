@@ -1,5 +1,5 @@
 @extends('dashboard.index')
-@php
+{{-- @php
     function dateLeft($dbDate, $status){
         if ($status == 'COMPLETED') {
             return "End";
@@ -46,7 +46,7 @@
 
     }
 
-@endphp
+@endphp --}}
 @section('style')
 <link href="{{asset('dashboard_assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 @endsection
@@ -89,7 +89,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($projects as $data )
+                                {{-- @foreach ($projects as $data )
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$data->name}} </td>
@@ -99,7 +99,7 @@
                                            <span class="badge badge-light text-info badge-xs"> {{ dateLeft($data->dateRange, $data->status) }}</span>
 
                                         </td>
-                                        {{-- <td>{{$data->dateRange}} </td> --}}
+                                      
                                         <td><span class="badge badge-light text-warning">{{$data->priority}}</span> </td>
                                         <td> <span class="badge badge-light text-success">{{$data->status}}</span> </td>
                                         <td>
@@ -112,7 +112,7 @@
                                         </td>
 
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
 
                             </tbody>
 
