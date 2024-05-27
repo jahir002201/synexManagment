@@ -1,4 +1,4 @@
-@extends('dashboard.index')
+@extends('dashboard.layouts.app')
 @section('style')
 <link href="{{asset('dashboard_assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('dashboard_assets/vendor/select2/css/select2.min.css')}}">

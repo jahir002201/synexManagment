@@ -1,5 +1,5 @@
 
-@extends('dashboard.index')
+@extends('dashboard.layouts.app')
 @section('content')
 
 @if (Auth::user()->employees)

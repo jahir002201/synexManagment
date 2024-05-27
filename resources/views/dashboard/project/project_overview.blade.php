@@ -1,4 +1,4 @@
-@extends('dashboard.index')
+@extends('dashboard.layouts.app')
 @php
         function startDate($date){
         // Assuming $data->dateRange contains the date string "05/21/2024 - 05/22/2024"

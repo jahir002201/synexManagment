@@ -1,5 +1,5 @@
 
-@extends('dashboard.index')
+@extends('dashboard.layouts.app')
 @section('content')
 <div class="row ">
     <div class="col-lg-6">

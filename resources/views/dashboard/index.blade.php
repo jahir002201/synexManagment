@@ -1,4 +1,19 @@
 @extends('dashboard.layouts.app')
+@php
+
+        function endDate($date){
+        // Assuming $data->dateRange contains the date string "05/21/2024 - 05/22/2024"
+        $dateRange = $date;
+        // Explode the date string into an array
+        $dates = explode(" - ", $dateRange);
+        // Convert the dates into the desired format
+
+        $end_date = DateTime::createFromFormat('m/d/Y', $dates[1])->format('d-M-y');
+        return  $end_date;
+
+    }
+@endphp
+
 @section('style')
 
 <link href="{{asset('dashboard_assets/vendor/pg-calendar/css/pignose.calendar.min.css')}}" rel="stylesheet">
@@ -24,11 +39,9 @@
       <div class="col-md-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Earnings<span class="badge float-right bg-primary text-white">{{ $percentageChange }}%</span></h5>
+            <h5 class="card-title">Earnings<span class="badge float-right bg-primary text-white">{{ $percentageBudget }}%</span></h5>
             <p class="font-weight-bold" style="font-size: 23px; color: black">৳{{ $current_month_budget }} </p>
-            <div class="progress">
-                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            <div class="border-bottom mb-1">  </div>
             <p class="card-text"><span class="text-muted">Previous Month</span> ৳{{ $last_month_budget }}</p>
           </div>
         </div>
@@ -36,24 +49,22 @@
       <div class="col-md-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Expenses<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
-            <p class="font-weight-bold" style="font-size: 23px; color: black">৳42,300 </p>
-            <div class="progress">
-                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <p class="card-text"><span class="text-muted">Previous Month</span> ৳5,852</p>
+            <h5 class="card-title">Expenses<span class="badge float-right bg-primary text-white">{{ $percentageAmount }}%</span></h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">৳{{ $current_month_amount }} </p>
+            <div class="border-bottom mb-1">  </div>
+
+
+            <p class="card-text"><span class="text-muted">Previous Month</span> ৳{{ $last_month_amount }}</p>
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Profit<span class="badge float-right bg-primary text-white">+12.5%</span></h5>
-            <p class="font-weight-bold" style="font-size: 23px; color: black">৳42,300 </p>
-            <div class="progress">
-                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <p class="card-text"><span class="text-muted">Previous Month</span> ৳5,852</p>
+            <h5 class="card-title">Profit<span class="badge float-right bg-primary text-white">{{ $percentageProfit }}%</span></h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">৳{{ $current_profit }} </p>
+            <div class="border-bottom mb-1">  </div>
+            <p class="card-text"><span class="text-muted">Previous Month</span> ৳{{ $last_profit  }}</p>
           </div>
         </div>
       </div>
@@ -62,12 +73,10 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Projects</h5>
-            <p class="font-weight-bold" style="font-size: 23px; color: black">300 </p>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">{{ $project_count }} </p>
 
-            {{-- <div class="progress">
-                <div class="progress-bar progress-bar-primary w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-            </div> --}}
-            <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> 52</span> </p>
+            <div class="border-bottom mb-1">  </div>
+            <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> {{ $project_pending }}</span> </p>
           </div>
         </div>
       </div>
@@ -77,194 +86,59 @@
 
 
  <div class="row">
-    <div class="col-lg-7">
+    <div class="col-lg-5">
         <div class="row">
-            <div class="col-lg-4 col-sm-6">
+            <div class="col-lg-6 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block">
+                        <div class="stat-icon d-inline-block" ">
                             <i class="ti-user text-success border-success"></i>
                         </div>
-                        <div class="stat-content d-inline-block">
+                        <div class="stat-content d-inline-block" style="margin-left:16px!important;">
                             <div class="stat-text">Employee</div>
 
-                            <div class="stat-digit">1,012</div>
+                            <div class="stat-digit">{{ $employee }}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="col-lg-6 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block">
+                        <div class="stat-icon d-inline-block" ">
                             <i class="ti-headphone-alt text-warning border-warning"></i>
                         </div>
-                        <div class="stat-content d-inline-block">
+                        <div class="stat-content d-inline-block" style="margin-left:16px!important;">
                             <div class="stat-text">Client </div>
-                            <div class="stat-digit">961</div>
+                            <div class="stat-digit">{{ $client }}</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block">
-                            <i class="ti-notepad text-primary border-primary"></i>
-                        </div>
-                        <div class="stat-content d-inline-block">
-                            <div class="stat-text">Task</div>
-                            <div class="stat-digit">770</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">All Expense</h4>
-                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table student-data-table m-t-20">
-                                <thead>
-                                    <tr>
-                                        <th>Expense Type</th>
-                                        <th>Amount</th>
-                                        <th>Status</th>
-                                        <th>Email</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-
-                                        <td>
-                                            Salary
-                                        </td>
-                                        <td>
-                                            ৳2000
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-primary">Paid</span>
-                                        </td>
-                                        <td>
-                                            edumin@gmail.com
-                                        </td>
-                                        <td>
-                                            10/05/2017
-                                        </td>
-                                    </tr>
-                                    <tr>
-
-                                        <td>
-                                            Salary
-                                        </td>
-                                        <td>
-                                            ৳2000
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-warning">Pending</span>
-                                        </td>
-                                        <td>
-                                            edumin@gmail.com
-                                        </td>
-                                        <td>
-                                            10/05/2017
-                                        </td>
-                                    </tr>
-                                    <tr>
-
-                                        <td>
-                                            Salary
-                                        </td>
-                                        <td>
-                                            ৳2000
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-primary">Paid</span>
-                                        </td>
-                                        <td>
-                                            edumin@gmail.com
-                                        </td>
-                                        <td>
-                                            10/05/2017
-                                        </td>
-                                    </tr>
-                                    <tr>
-
-                                        <td>
-                                            Salary
-                                        </td>
-                                        <td>
-                                            ৳2000
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-danger">Due</span>
-                                        </td>
-                                        <td>
-                                            edumin@gmail.com
-                                        </td>
-                                        <td>
-                                            10/05/2017
-                                        </td>
-                                    </tr>
-                                    <tr>
-
-                                        <td>
-                                            Salary
-                                        </td>
-                                        <td>
-                                            ৳2000
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-primary">Paid</span>
-                                        </td>
-                                        <td>
-                                            edumin@gmail.com
-                                        </td>
-                                        <td>
-                                            10/05/2017
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="year-calendar"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-5">
-            <div class="card">
-                <div class="card-body">
-                    <div class="year-calendar"></div>
-                </div>
-            </div>
-            <!-- /# card -->
-    </div>
+    <div class="col-lg-7">
 
-</div>
-<div class="row">
-
-
-</div>
-
-{{-- recent projects --}}
-<div class="row">
-  <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
             <h5>Recent Projects</h5>
+            <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New </a>
         </div>
         <div class="card-body">
            <div class="table-responsive">
             <table class="table " >
                 <thead>
                     <tr class="text-dark">
-                        <th>#</th>
+
                         <th>Project Name</th>
                         <th>Leader</th>
 
@@ -275,41 +149,133 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Synex Management</td>
-                        <td>Imran</td>
-                        <td>5 April</td>
+                    @forelse ($projects as $data )
+                        <tr>
 
-                        <td>On-Going</td>
-                        <td>
-                            <a href="{{ route('project.show', 1) }}" class=" btn btn-primary btn-sm   ">
-                                <i class="fa fa-eye "></i>
-                            </a>
+                            <td>{{ $data->name }}</td>
+                            <td><a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a></td>
+                            <td>
+                                {{ endDate($data->dateRange) }}
+                            </td>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
+                            <td style="font-size: 10px;">
+                                <span class="badge
+                                    @if ($data->status == 'INPROGRESS')
+                                        badge-secondary
+                                    @elseif ($data->status == 'ON-HOLD')
+                                        badge-warning
+                                    @elseif ($data->status == 'COMPLETED')
+                                        badge-success
+                                    @endif
+                                    ">
+                                {{ $data->status }}
+                            </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('project.show', $data->id) }}" class="btn btn-outline-primary btn-sm " style="height: 24px">
+                                 <span style="font-size: 10px; position: relative; top: -5px">view</span>
+                                </a>
 
-                        <td>Synex Management</td>
-                        <td>Imran</td>
-                        <td>5 April</td>
+                            </td>
+                        </tr>
+                    @empty
+                        NO DATA FOUND
+                    @endforelse
 
-                        <td>On-Going</td>
-                        <td>
-                            <a href="{{ route('project.show', 1) }}" class=" btn btn-primary btn-sm   ">
-                                <i class="fa fa-eye "></i>
-                            </a>
 
-                        </td>
-                    </tr>
                 </tbody>
 
             </table>
            </div>
         </div>
        </div>
+        <div class="row">
+             <div class="col-lg-6 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block" ">
+                            <i class="ti-money text-primary border-primary"></i>
+                        </div>
+                        <div class="stat-content d-inline-block" style="margin-left:16px!important;">
+                            <div class="stat-text">Total Earnings   </div>
+                            <div class="stat-digit">{{ $total_budget }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-lg-6 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block" ">
+                            <i class="ti-notepad text-primary border-primary"></i>
+                        </div>
+                        <div class="stat-content d-inline-block" style="margin-left:16px!important;">
+                            <div class="stat-text">Task</div>
+                            <div class="stat-digit">{{ $task }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+            <!-- /# card -->
+    </div>
+
+</div>
+
+
+{{-- recent projects --}}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">All Expense</h4>
+            <a href="{{ route('expenses.index') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table student-data-table m-t-20">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Expense Type</th>
+                            <th>Amount</th>
+                            <th>Purchased By</th>
+                            <th>Email</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($expenses as $data )
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($data->date)->format('d-M-y') }}
+                            </td>
+                            <td>
+                                {{ $data->type  }}
+                            </td>
+                            <td>
+                                ৳{{ $data->amount }}
+                            </td>
+
+                            <td>
+                               {{ $data->purchase_by }}
+                            </td>
+                            <td>
+                                10/05/2017
+                            </td>
+                        </tr>
+                        @empty
+                            NO DATA FOUND
+                        @endforelse
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
   </div>
 </div>
 {{-- <div class="row">
