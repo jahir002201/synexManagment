@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\Task;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
-use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -21,9 +22,14 @@ class ProjectController extends Controller
     {
 
         $projects = Project::orderBy('id', 'desc')->get();
-       return view('dashboard.project.projectlist',[
-           'projects' => $projects,
-       ]);
+        if(!Auth::user()->employees){
+            return view('dashboard.project.projectlist',[
+                'projects' => $projects,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**
@@ -33,10 +39,15 @@ class ProjectController extends Controller
     {
         $employees = User::has('employees')->pluck('name', 'id')->toArray();
         $client = Client::all();
-        return view('dashboard.project.create',[
-            'client' => $client,
-            'employees' => $employees,
-        ]);
+        if(!Auth::user()->employees){
+            return view('dashboard.project.create',[
+                'client' => $client,
+                'employees' => $employees,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**
@@ -131,16 +142,18 @@ class ProjectController extends Controller
         $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
         $members = User::whereIn('id', $memberIds)->get();
 
+        if(!Auth::user()->employees){
+            return view('dashboard.project.project_overview',[
+                'project' => $project,
+                'members' => $members,
+                'memberCount' => $memberCount,
+                'files' => $files,
+            ]);
+        }else{ return redirect(route('dashboard')); }
+
+       
 
 
-        return view('dashboard.project.project_overview',[
-            'project' => $project,
-            'members' => $members,
-            'memberCount' => $memberCount,
-            'files' => $files,
-
-
-        ]);
     }
 
     /**
@@ -165,8 +178,13 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Project::find($id);
-        dd( $project);
         $fileArray = json_decode($project->file, true) ?? [];
+        foreach($fileArray as $file){
+            unlink(public_path('uploads/project/file/' . $file));
+        }
+        $project->delete();
+        flash()->options(['position' => 'bottom-right'])->success('Project Deleted successfully!');
+        return back();
 
 
     }

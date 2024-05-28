@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Employee;
 use App\Models\Expenses;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ExpensesController extends Controller
@@ -20,11 +17,15 @@ class ExpensesController extends Controller
     {
         $employees =  User::has('employees')->pluck('name', 'id')->toArray();
         $expenses = Expenses::orderBy('id', 'desc')->get();
+        if(!Auth::user()->employees){
+            return view('dashboard.expenses.index',[
+                'employees' => $employees,
+                'expenses' => $expenses,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
 
-        return view('dashboard.expenses.index',[
-            'employees' => $employees,
-            'expenses' => $expenses,
-        ]);
     }
 
     /**
@@ -89,10 +90,15 @@ class ExpensesController extends Controller
     {
         $employees = User::has('employees')->pluck('name', 'id')->toArray();
         $expenses = expenses::find($id);
-        return view('dashboard.expenses.edit',[
-            'expenses' => $expenses,
-            'employees' => $employees,
-        ]);
+        if(!Auth::user()->employees){
+            return view('dashboard.expenses.edit',[
+                'expenses' => $expenses,
+                'employees' => $employees,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**

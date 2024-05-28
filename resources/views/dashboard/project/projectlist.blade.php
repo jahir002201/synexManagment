@@ -102,9 +102,14 @@
 
                                         <td><span class="badge badge-light text-warning">{{$data->priority}}</span> </td>
                                         <td> <span class="badge badge-light text-success">{{$data->status}}</span> </td>
-                                        <td>
-                                            <a href="{{route('project.show', $data->id) }}" class=" btn btn-primary btn-sm   "> <i class="fa fa-eye "></i></a>
-                                            <a href="{{route('project.destroy',$data->id)}}" class=" btn btn-danger btn-sm   "> <i class="fa fa-trash "></i></a>
+                                        <td class="d-flex justify-content-spacebetween">
+                                            <a href="{{route('project.show',$data->id) }}" class=" btn btn-primary btn-sm mr-1  "> <i class="fa fa-eye "></i></a>
+                                            <form action="{{route('project.destroy',$data->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button class=" btn btn-danger btn-sm   "> <i class="fa fa-trash "></i></button>
+                                            </form>
                                         </td>
 
                                     </tr>

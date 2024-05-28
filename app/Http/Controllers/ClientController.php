@@ -6,6 +6,7 @@ use App\Models\Client;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,9 +18,14 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::all();
-        return view('dashboard.client.index',[
-            'clients' => $clients,
-        ]);
+        if(!Auth::user()->employees){
+            return view('dashboard.client.index',[
+                'clients' => $clients,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**
@@ -77,9 +83,14 @@ class ClientController extends Controller
     public function show(string $id)
     {
         $client = Client::find($id);
-        return view('dashboard.client.profile',[
-            'client' => $client,
-        ]);
+         if(!Auth::user()->employees){
+            return view('dashboard.client.profile',[
+                'client' => $client,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**
@@ -88,9 +99,14 @@ class ClientController extends Controller
     public function edit(string $id)
     {
         $client = Client::find($id);
-        return view('dashboard.client.edit',[
-            'client' => $client,
-        ]);
+         if(!Auth::user()->employees){
+            return view('dashboard.client.edit',[
+                'client' => $client,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**

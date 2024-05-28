@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Department;
 use App\Models\Designation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,15 +17,19 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   $departments = Department::all();
-
+    {
+        $departments = Department::all();
         $users = User::all();
+        if(!Auth::user()->employees){
+            return view('dashboard.employee.index',[
+                'departments' => $departments,
+                'users' => $users,
 
-        return view('dashboard.employee.index',[
-            'departments' => $departments,
-            'users' => $users,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
 
-        ]);
     }
 
     /**
@@ -88,9 +93,14 @@ class EmployeeController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
-        return view('dashboard.employee.profile',[
-            'user' => $user,
-        ]);
+        if(!Auth::user()->employees){
+            return view('dashboard.employee.profile',[
+                'user' => $user,
+            ]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**

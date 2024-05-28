@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Designation;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class DepartmentController extends Controller
@@ -17,7 +18,12 @@ class DepartmentController extends Controller
     {
         $departments = Department::aLL();
         $designations = Designation::all();
-        return view('dashboard.department.index',['departments' => $departments,'designations' => $designations,]);
+        if(!Auth::user()->employees){
+            return view('dashboard.department.index',['departments' => $departments,'designations' => $designations,]);
+        }else{
+            return redirect(route('dashboard'));
+        }
+
     }
 
     /**
