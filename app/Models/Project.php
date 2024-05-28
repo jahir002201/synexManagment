@@ -18,6 +18,6 @@ class Project extends Model
         return $this->belongsTo(Client::class,'client_id','id');
     }
     public function task(){
-        return $this->hasMany(Task::class,'project_id','id');
+        return $this->hasMany(Task::class,'project_id');
     }
 }

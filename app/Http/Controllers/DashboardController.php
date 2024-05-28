@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Task;
 use App\Models\Project;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,9 +79,19 @@ class DashboardController extends Controller
             ]);
         }else{
             $userId = Auth::user()->id;
-            $projects = DB::table('projects')->where('leader_id', $userId)->orWhere('member_id', $userId)->get();
+            $projects = Project::with('task')->where('leader_id', $userId)->orWhere('member_id', $userId)->get();
+
             $projectCount = DB::table('projects') ->where('leader_id', $userId)->orWhere('member_id', $userId) ->distinct()->count();
+
             $porjectPending = DB::table('projects')->where('status','!=','COMPLETED')->where('leader_id', $userId)->orWhere('member_id', $userId)->count();
+
+            $taskCount = 0;
+            foreach ($projects as $project){
+                $task[] = $project->task;
+                $taskCount = Task::where('project_id', $project->id)->count();
+
+            }
+            // dd($taskCount);
 
 
 

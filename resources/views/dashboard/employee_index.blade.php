@@ -22,32 +22,112 @@
 
 
 <div class="row">
+    <div class="col-lg-5">
+        <div class="row">
+            <div class=" col-lg-6 col-sm-6 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">Projects</h5>
+                    <p class="font-weight-bold" style="font-size: 23px; color: black">Total: {{ $projectCount }} </p>
 
+                    <div class="border-bottom mb-1">  </div>
+                    <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> {{ $porjectPending }}</span> </p>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-lg-6 col-sm-6 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">Tasks</h5>
+                    <p class="font-weight-bold" style="font-size: 23px; color: black">Total:  </p>
 
-
-
-
-    <div class=" col-lg-3 col-sm-3 col-md-3">
-    <div class="card">
-        <div class="card-body">
-        <h5 class="card-title">Projects</h5>
-        <p class="font-weight-bold" style="font-size: 23px; color: black">Total: {{ $projectCount }} </p>
-
-        <div class="border-bottom mb-1">  </div>
-        <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> {{ $porjectPending }}</span> </p>
+                    <div class="border-bottom mb-1">  </div>
+                    <p class="card-text">Pending Tasks <span class="badge bg-primary text-white"> </span> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="year-calendar"></div>
+            </div>
         </div>
     </div>
-    </div>
-    <div class=" col-lg-3 col-sm-3 col-md-3">
-    <div class="card">
-        <div class="card-body">
-        <h5 class="card-title">Projects</h5>
-        <p class="font-weight-bold" style="font-size: 23px; color: black">Total: {{ 'da' }} </p>
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recent Projects</h5>
+                <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New </a>
+            </div>
+            <div class="card-body">
+               <div class="table-responsive">
+                <table class="table " >
+                    <thead>
+                        <tr class="text-dark">
 
-        <div class="border-bottom mb-1">  </div>
-        <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> {{ $porjectPending }}</span> </p>
+                            <th>Project Name</th>
+                            <th>Leader</th>
+
+                            <th>Deadline</th>
+
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($projects as $data )
+                            <tr>
+
+                                <td>{{ $data->name }}</td>
+                                {{-- <td><a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a></td> --}}
+                                <td>
+                                    {{-- {{ endDate($data->dateRange) }} --}}
+                                </td>
+
+                                <td style="font-size: 10px;">
+                                    <span class="badge
+                                        @if ($data->status == 'INPROGRESS')
+                                            badge-secondary
+                                        @elseif ($data->status == 'ON-HOLD')
+                                            badge-warning
+                                        @elseif ($data->status == 'COMPLETED')
+                                            badge-success
+                                        @endif
+                                        ">
+                                    {{ $data->status }}
+                                </span>
+                                </td>
+                                <td>
+                                    <a href="{{ route('project.show', $data->id) }}" class="btn btn-outline-primary btn-sm " style="height: 24px">
+                                     <span style="font-size: 10px; position: relative; top: -5px">view</span>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        @empty
+                           <tr>
+
+                               <td colspan="5" class="text-center">NO DATA FOUND</td>
+
+                           </tr>
+                        @endforelse
+                      
+
+                    </tbody>
+
+                </table>
+               </div>
+            </div>
+           </div>
+            <div class="row">
+
+
+
+            </div>
+
+                <!-- /# card -->
         </div>
-    </div>
+
     </div>
 
 
@@ -57,79 +137,7 @@
 
     <div class="col-lg-7">
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Recent Projects</h5>
-            <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New </a>
-        </div>
-        <div class="card-body">
-           <div class="table-responsive">
-            <table class="table " >
-                <thead>
-                    <tr class="text-dark">
 
-                        <th>Project Name</th>
-                        <th>Leader</th>
-
-                        <th>Deadline</th>
-
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($projects as $data )
-                        <tr>
-
-                            <td>{{ $data->name }}</td>
-                            {{-- <td><a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a></td> --}}
-                            <td>
-                                {{-- {{ endDate($data->dateRange) }} --}}
-                            </td>
-
-                            <td style="font-size: 10px;">
-                                <span class="badge
-                                    @if ($data->status == 'INPROGRESS')
-                                        badge-secondary
-                                    @elseif ($data->status == 'ON-HOLD')
-                                        badge-warning
-                                    @elseif ($data->status == 'COMPLETED')
-                                        badge-success
-                                    @endif
-                                    ">
-                                {{ $data->status }}
-                            </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('project.show', $data->id) }}" class="btn btn-outline-primary btn-sm " style="height: 24px">
-                                 <span style="font-size: 10px; position: relative; top: -5px">view</span>
-                                </a>
-
-                            </td>
-                        </tr>
-                    @empty
-                       <tr>
-
-                           <td colspan="5" class="text-center">NO DATA FOUND</td>
-
-                       </tr>
-                    @endforelse
-
-
-                </tbody>
-
-            </table>
-           </div>
-        </div>
-       </div>
-        <div class="row">
-
-
-
-        </div>
-
-            <!-- /# card -->
-    </div>
 
 </div>
 
