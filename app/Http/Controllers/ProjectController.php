@@ -138,7 +138,7 @@ class ProjectController extends Controller
             'members' => $members,
             'memberCount' => $memberCount,
             'files' => $files,
-         
+
 
         ]);
     }
@@ -164,7 +164,11 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::find($id);
+        dd( $project);
+        $fileArray = json_decode($project->file, true) ?? [];
+
+
     }
     public function fileDelete($id , $key){
       $project = Project::find($id);

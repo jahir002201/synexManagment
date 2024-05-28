@@ -179,7 +179,11 @@
                             </td>
                         </tr>
                     @empty
-                        NO DATA FOUND
+                       <tr>
+
+                           <td colspan="5" class="text-center">No Projects Found</td>
+
+                       </tr>
                     @endforelse
 
 
@@ -194,7 +198,7 @@
                 <div class="card">
                     <div class="stat-widget-one card-body">
                         <div class="stat-icon d-inline-block" ">
-                            <i class="ti-money text-primary border-primary"></i>
+                            <i class="ti-credit-card text-primary border-primary"></i>
                         </div>
                         <div class="stat-content d-inline-block" style="margin-left:16px!important;">
                             <div class="stat-text">Total Earnings   </div>

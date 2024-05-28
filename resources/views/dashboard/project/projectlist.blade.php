@@ -103,12 +103,8 @@
                                         <td><span class="badge badge-light text-warning">{{$data->priority}}</span> </td>
                                         <td> <span class="badge badge-light text-success">{{$data->status}}</span> </td>
                                         <td>
-                                            <a href="{{ route('project.show', $data->id) }}" class=" btn btn-primary btn-sm   ">
-                                                <i class="fa fa-eye "></i>
-                                            </a>
-                                            <a href="" class=" btn btn-danger btn-sm   ">
-                                                <i class="fa fa-trash "></i>
-                                            </a>
+                                            <a href="{{route('project.show', $data->id) }}" class=" btn btn-primary btn-sm   "> <i class="fa fa-eye "></i></a>
+                                            <a href="{{route('project.destroy',$data->id)}}" class=" btn btn-danger btn-sm   "> <i class="fa fa-trash "></i></a>
                                         </td>
 
                                     </tr>
