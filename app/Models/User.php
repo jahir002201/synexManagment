@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Collection;
 
 class User extends Authenticatable
 {
@@ -15,6 +16,32 @@ class User extends Authenticatable
      }
     public function socials(){
         return $this->hasMany(Social::class, 'user_id');
+     }
+     public function leadingProjects()
+     {
+         return $this->hasMany(Project::class, 'leader_id');
+     }
+
+     public function memberProjects()
+     {
+         return Project::withMember($this->id);
+     }
+
+     public function allProjects()
+     {
+         // Get all leading projects
+         $leadingProjects = $this->leadingProjects;
+
+         // Get all member projects
+         $memberProjects = $this->memberProjects()->get();
+
+         // Merge and get unique projects by ID
+         $allProjects = $leadingProjects->merge($memberProjects)->unique('id');
+         $sortedProjects = $allProjects->sortByDesc('id');
+
+         return $sortedProjects;
+
+        //  return new Collection($allProjects);
      }
 
 

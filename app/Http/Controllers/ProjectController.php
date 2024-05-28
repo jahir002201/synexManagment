@@ -27,7 +27,11 @@ class ProjectController extends Controller
                 'projects' => $projects,
             ]);
         }else{
-            return redirect(route('dashboard'));
+            $user = Auth::user();
+            $projects = $user->allProjects();
+            return view('dashboard.project.projectlist',[
+                'projects' => $projects,
+            ]);
         }
 
     }
@@ -134,7 +138,6 @@ class ProjectController extends Controller
     public function show(String $id)
     {
         $project = Project::find($id);
-
         //project file
         $files = json_decode($project->file, true) ?? [];
         //members
@@ -142,16 +145,16 @@ class ProjectController extends Controller
         $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
         $members = User::whereIn('id', $memberIds)->get();
 
-        if(!Auth::user()->employees){
+
             return view('dashboard.project.project_overview',[
                 'project' => $project,
                 'members' => $members,
                 'memberCount' => $memberCount,
                 'files' => $files,
             ]);
-        }else{ return redirect(route('dashboard')); }
 
-       
+
+
 
 
     }

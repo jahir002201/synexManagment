@@ -23,7 +23,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-
+//task
+    Route::get('/task/status/update/{id}', [TaskController::class, 'taskStatus'])->name('task.status.update');
 //search
     Route::get('/search/employee', [EmployeeController::class, 'searchEmployee'])->name('searchEmployee');
     Route::get('/search/client', [ClientController::class, 'searchClient'])->name('searchClient');

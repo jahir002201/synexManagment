@@ -14,10 +14,22 @@ class Project extends Model
     public function leader(){
         return $this->belongsTo(User::class,'leader_id','id');
     }
+
+    public function members(){
+        return $this->belongsTo(User::class,'member_id','id');
+    }
+
     public function client(){
         return $this->belongsTo(Client::class,'client_id','id');
     }
-    public function task(){
-        return $this->hasMany(Task::class,'project_id');
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'project_id', 'id');
     }
+    public function scopeWithMember($query, $userId)
+    {
+        return $query->whereRaw("FIND_IN_SET(?, member_id)", [$userId]);
+    }
+
+
 }

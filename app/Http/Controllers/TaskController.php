@@ -67,10 +67,15 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $task->title = $request->task;
-        $task->save();
-        flash()->options([ 'position' => 'bottom-right'])->success('Task Updated successfully!');
-        return back();
+
+
+            $task->title = $request->task;
+            $task->save();
+            flash()->options([ 'position' => 'bottom-right'])->success('Task Updated successfully!');
+            return back();
+
+
+
     }
 
     /**
@@ -80,6 +85,14 @@ class TaskController extends Controller
     {
         $task->delete();
         flash()->options([ 'position' => 'bottom-right'])->success('Task Deleted successfully!');
+        return back();
+    }
+    public function taskStatus($id)
+    {
+       $task = Task::find($id);
+        $task->status = $task->status == 0 ? 1 : 0;
+        $task->save();
+        flash()->options([ 'position' => 'bottom-right'])->success('Task Updated successfully!');
         return back();
     }
 }

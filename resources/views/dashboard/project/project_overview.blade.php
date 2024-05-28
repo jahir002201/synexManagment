@@ -103,6 +103,7 @@
 
 @endsection
 @section('content')
+@if (!Auth::user()->employees)
 <div class="row ">
     <div class="col-lg-6">
         <h3 class="display-5"> Project Overview</h3>
@@ -202,33 +203,34 @@
                 </div>
                 <div class=" mt-2 border-bottom"></div>
                 <div class="">
-                    @if ($project->task->count() == 0)
+                    @if ($project->tasks->count() == 0)
                     <div class="text-center  py-2 px-3 border-bottom">
                         <p class="   pb-0 mb-0">EMPTY</p>
                     </div>
-
-
                     @endif
-                    @foreach ($project->task as $data )
 
-                    <div class=" hover d-flex justify-content-between  pt-3 px-3 border-bottom">
-                        <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
-                        <div class="d-flex justify-content-end ">
+                   @foreach ($project->tasks as $data )
+
+                   <div class=" hover d-flex justify-content-between  pt-3 px-3 border-bottom">
+                       <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
+                       <div class="d-flex justify-content-end ">
 
 
-                        <p class="text-dark icon edit" data-value={{ $data->id }} style="display: none; cursor: pointer"><i class="mt-1 fa fa-pencil text-primary  ">  </i></p>
+                       <p class="text-dark icon edit" data-value={{ $data->id }} style="display: none; cursor: pointer"><i class="mt-1 fa fa-pencil text-primary  ">  </i></p>
 
-                        <form id="taskDelete" action="{{ route('task.destroy', $data->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <p class="text-dark icon ml-2 delete"style="display: none; cursor: pointer"><i class="mt-1 fa fa-trash  text-danger ">  </i></p>
+                       <form id="taskDelete" action="{{ route('task.destroy', $data->id) }}" method="POST">
+                           @csrf
+                           @method('DELETE')
+                           <p class="text-dark icon ml-2 delete"style="display: none; cursor: pointer"><i class="mt-1 fa fa-trash  text-danger ">  </i></p>
 
-                        </form>
-                        <p class="text-dark ml-3 "><i class=" fa fa-{{ $data->status == 0? 'exclamation' : 'check' }} {{$data->status == 0? 'text-danger': ' text-success'}} ">  </i></p>
+                       </form>
+                       <p class="text-dark ml-3 "><i class=" fa fa-{{ $data->status == 0? 'exclamation' : 'check' }} {{$data->status == 0? 'text-danger': ' text-success'}} ">  </i></p>
 
-                    </div>
-                    </div>
-                    @endforeach
+                   </div>
+                   </div>
+                   @endforeach
+
+
 
                 </div>
             </div>
@@ -332,7 +334,7 @@
                     @csrf
                     @method('PUT')
                     <div class="">
-
+                        <input type="hidden" name="taskUpdate" value="true">
                         <input type="text" name="task" id="taskTitle"  class="form-control" placeholder="Task Name" required>
                     </div>
                     <div class="modal-footer">
@@ -344,6 +346,178 @@
         </div>
     </div>
 </div>
+@else
+<div class="row ">
+    <div class="col-lg-6">
+        <h3 class="display-5"> Project Overview</h3>
+    </div>
+    <div class="col-lg-6">
+        <ol class="breadcrumb " style="float:inline-end; background-color: transparent;">
+            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{route('project.index')}}">Projects</a></li>
+            <li class="breadcrumb-item " ><a class="text-primary"> Project Overview</a></li>
+        </ol>
+    </div>
+
+</div>
+    <div class="row mb-5">
+        <div class="col-lg-9 mb-5">
+            <div class="card ">
+                <div class="card-header ">
+                   <h6 class="font-weight-bold mb-0" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Details</h6>
+
+
+                </div>
+                <div class=" mt-2 border-bottom"></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="d-flex ml-3">
+                            <i class="fa fa-circle text-info  m-auto " style="font-size:9px;"></i>
+                            <h4 class="ml-2 mb-0">{{$project->name}}</h4>
+                        </div>
+                    </div>
+                    <div class="row mt-4  ml-1">
+                        <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6> <span class="" style="margin-bottom: 0.5rem;"> {{ $project->client->name}}</span>
+                    </div>
+
+                    <div class="row mt-1 ml-1">
+                        <h6 class="">Project Description:</h6>
+                    </div>
+                    <p class="ml-1">
+
+                        {!!$project->description!!}
+                    </p>
+                    <hr>
+
+                    <div class="row">
+
+                            <div class=" between col-lg-4 col-md-4 col-sm-4 d-flex ">
+                                <div class="d-inline-block  ">
+                                    <p class="mb-0">Leader</p>
+                                    <h6>
+                                        {{$project->leader->name}}
+                                    </h6>
+                                </div>
+                                <div class="float-right ">
+                                    <p class="mb-0">Start Date</p>
+                                <h6 class="">{{startDate($project->dateRange)}}</h6>
+                                </div>
+                            </div>
+                            <div class=" between col-lg-4 col-md-4 col-sm-4 d-flex ">
+                                <div class="d-inline-block ">
+                                    <p class="mb-0">End Date</p>
+                                    <h6>{{endDate($project->dateRange)}}</h6>
+                                </div>
+                                <div class="float-right ">
+                                    <p class="mb-0">Members</p>
+                                <h6 class="ml-4">
+                                    {{$memberCount >= 5 ? '5+' : $memberCount}}
+                                </h6>
+                                </div>
+                            </div>
+                            <div class=" between col-lg-4  col-md-4 col-sm-4 d-flex ">
+                                <div class="d-inline-block ">
+                                    <p class="mb-0">Status</p>
+                                    <p class="badge badge-light text-warning"> {{$project->status}} </p>
+                                </div>
+                                <div class="float-right ">
+                                    <p class="mb-0">Priority</p>
+                                    <p class="badge badge-light text-info"> {{$project->priority}} </p>
+                                </div>
+                            </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-3">
+            <div class="card ">
+                <div class="card-header ">
+                   <h6 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Task</h6>
+
+
+
+                </div>
+                <div class=" mt-2 border-bottom"></div>
+                <div class="">
+                    @if ($project->tasks->count() == 0)
+                    <div class="text-center  py-2 px-3 border-bottom">
+                        <p class="   pb-0 mb-0">EMPTY</p>
+                    </div>
+                    @endif
+
+                   @foreach ($project->tasks as $data )
+
+                   <div class=" hover d-flex justify-content-between  pt-3 px-3 border-bottom">
+                       <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
+                       <div class="d-flex justify-content-end ">
+                            <a href="{{ route('task.status.update', $data->id) }}" >
+                                <p class="text-dark  ml-2 update" style=" cursor: pointer"><i class="mt-1 fa fa-{{ $data->status == 1? 'check' : 'exclamation' }}  text-{{ $data->status == 1? 'success': 'danger' }} ">  </i></p>
+                            </a>
+                        </div>
+                   </div>
+                   @endforeach
+
+
+
+                </div>
+            </div>
+            <div class="card ">
+                <div class="card-header ">
+                   <h6 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Members</h6>
+
+                </div>
+                <div class=" mt-2 border-bottom"></div>
+                <div class="">
+                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
+                        <p class=" text-dark pb-0 mb-0">Name</p>
+                        <p class="text-dark pb-0 mb-0">Designation</p>
+                    </div>
+                    @foreach ($members as $data )
+
+                    <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
+                        <p >{{$data->name}}</p>
+
+                        <p class="text-dark"><i class="badge badge-outline-success text-success">  {{$data->employees->designations? $data->employees->designations->designation : 'UNKNOWN'}}</i></p>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+            <div class="card ">
+                <div class="card-header">
+                    <h6 class="font-weight-bold mb-0">
+                        <span style="border-left: 4px solid #593bdb;"></span>&nbsp; Project Documents
+                    </h6>
+
+                </div>
+                <div class=" mt-2 border-bottom"></div>
+                <div class="">
+                    @forelse ($files as $key=> $data )
+                    <div class="d-flex justify-content-between py-2 px-3 border-bottom">
+                        <p class=" text-dark pb-0 mb-0">{{substr($data,0,15).'...'}}</p>
+                        <p class="text-dark pb-0 mb-0">
+                            <a href="{{ route('download', ['filename' => $data]) }}" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
+
+                        </p>
+                    </div>
+                    @empty
+                    <div class="text-center  py-2 px-3 border-bottom">
+                        <p class="   pb-0 mb-0">EMPTY</p>
+
+                    </div>
+                    @endforelse
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@endif
 @endsection
 @section('script')
 <script>
@@ -429,6 +603,9 @@
     });
     $('body').on('click', '.delete', function () {
         $('#taskDelete').submit();
+    });
+    $('body').on('click', '.update', function () {
+        $('#taskUpdate').submit();
     });
 });
 

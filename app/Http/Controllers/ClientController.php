@@ -83,6 +83,8 @@ class ClientController extends Controller
     public function show(string $id)
     {
         $client = Client::find($id);
+       
+
          if(!Auth::user()->employees){
             return view('dashboard.client.profile',[
                 'client' => $client,

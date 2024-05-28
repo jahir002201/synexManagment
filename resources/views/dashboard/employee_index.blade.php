@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.app')
-{{-- @php
+@php
 
         function endDate($date){
         // Assuming $data->dateRange contains the date string "05/21/2024 - 05/22/2024"
@@ -12,7 +12,7 @@
         return  $end_date;
 
     }
-@endphp --}}
+@endphp
 
 @section('style')
 
@@ -28,10 +28,10 @@
                 <div class="card">
                     <div class="card-body">
                     <h5 class="card-title">Projects</h5>
-                    <p class="font-weight-bold" style="font-size: 23px; color: black">Total: {{ $projectCount }} </p>
+                    <p class="font-weight-bold" style="font-size: 23px; color: black">Total: {{ $totalProjects }} </p>
 
                     <div class="border-bottom mb-1">  </div>
-                    <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> {{ $porjectPending }}</span> </p>
+                    <p class="card-text">Pending Projects <span class="badge bg-primary text-white"> {{ $pendingProject }}</span> </p>
                     </div>
                 </div>
             </div>
@@ -39,10 +39,10 @@
                 <div class="card">
                     <div class="card-body">
                     <h5 class="card-title">Tasks</h5>
-                    <p class="font-weight-bold" style="font-size: 23px; color: black">Total:  </p>
+                    <p class="font-weight-bold" style="font-size: 23px; color: black">Total: {{ $tasks->count() }}  </p>
 
                     <div class="border-bottom mb-1">  </div>
-                    <p class="card-text">Pending Tasks <span class="badge bg-primary text-white"> </span> </p>
+                    <p class="card-text">Pending Tasks <span class="badge bg-primary text-white">{{ $pendingTask }} </span> </p>
                     </div>
                 </div>
             </div>
@@ -56,8 +56,51 @@
     <div class="col-lg-7">
         <div class="card">
             <div class="card-header">
+                <h5>Recent Tasks</h5>
+
+            </div>
+            <div class="card-body">
+               <div class="table-responsive">
+                <table class="table  " >
+                    <thead>
+                        <tr class="text-dark">
+
+                            <th>Task Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($taskFour as $data )
+                            <tr>
+                                <td class="w-100">{{ substr($data->title,0,40) .'...' }}</td>
+                                <td>
+                                    <a href="{{ route('task.status.update', $data->id) }}" >
+                                        <p class="text-dark  ml-2 " style=" cursor: pointer"><i class="mt-1 fa fa-{{ $data->status == 1? 'check' : 'exclamation' }}  text-{{ $data->status == 1? 'success': 'danger' }} ">  </i></p>
+                                    </a>
+                                </td>
+
+
+                            </tr>
+                        @empty
+                           <tr>
+
+                               <td colspan="5" class="text-center">NO DATA FOUND</td>
+
+                           </tr>
+                        @endforelse
+
+
+                    </tbody>
+
+                </table>
+               </div>
+            </div>
+           </div>
+
+        <div class="card">
+            <div class="card-header">
                 <h5>Recent Projects</h5>
-                <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New </a>
+
             </div>
             <div class="card-body">
                <div class="table-responsive">
@@ -75,13 +118,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($projects as $data )
+                        @forelse ($projectSix as $data )
                             <tr>
 
                                 <td>{{ $data->name }}</td>
-                                {{-- <td><a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a></td> --}}
+                                <td>{{ $data->leader->name  }}</td>
                                 <td>
-                                    {{-- {{ endDate($data->dateRange) }} --}}
+                                    {{ endDate($data->dateRange) }}
                                 </td>
 
                                 <td style="font-size: 10px;">
@@ -111,7 +154,7 @@
 
                            </tr>
                         @endforelse
-                      
+
 
                     </tbody>
 

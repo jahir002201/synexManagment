@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Task;
 use App\Models\Project;
-
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,27 +78,28 @@ class DashboardController extends Controller
                 'expenses' => $expenses
             ]);
         }else{
-            $userId = Auth::user()->id;
-            $projects = Project::with('task')->where('leader_id', $userId)->orWhere('member_id', $userId)->get();
+            $user = Auth::user();
 
-            $projectCount = DB::table('projects') ->where('leader_id', $userId)->orWhere('member_id', $userId) ->distinct()->count();
-
-            $porjectPending = DB::table('projects')->where('status','!=','COMPLETED')->where('leader_id', $userId)->orWhere('member_id', $userId)->count();
-
-            $taskCount = 0;
-            foreach ($projects as $project){
-                $task[] = $project->task;
-                $taskCount = Task::where('project_id', $project->id)->count();
-
-            }
-            // dd($taskCount);
+            $projects = $user->allProjects();
+            $projectSix = $projects->take(6);
+            $totalProjects = $projects->count();
+            $pendingProject = $projects->where('status','!=','COMPLETED')->count();
+            $projectIds = $projects->pluck('id');
+            $tasks = Task::whereIn('project_id', $projectIds)->get();
+            $taskFour = $tasks->take(4);
+            $pendingTask = $tasks->where('status',' =','0')->count();
 
 
 
             return view('dashboard.employee_index',[
                 'projects' => $projects,
-                'projectCount' => $projectCount,
-                'porjectPending' => $porjectPending,
+                'projectSix' => $projectSix,
+                'totalProjects' => $totalProjects,
+                'pendingProject' => $pendingProject,
+                'tasks' => $tasks,
+                'taskFour' => $taskFour,
+                'pendingTask' => $pendingTask,
+
             ]);
         }
 
