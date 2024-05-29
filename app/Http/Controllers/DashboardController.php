@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Task;
-use App\Models\Project;
 use App\Models\User;
+use App\Models\Project;
+use App\Models\AppSetting;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class DashboardController extends Controller
 {
@@ -104,4 +108,50 @@ class DashboardController extends Controller
         }
 
     }
+
+    public function showAppSetting(){
+        return view('dashboard.app_setting.index');
+    }
+
+    public function logoIcon_store(Request $request){
+
+        if($request->logoIcon){
+            $file = $request->logoIcon;
+            $extension = $file->getClientOriginalExtension();
+            $logoIcon ='LOGO_ICON_'.Str::random(8).'.'.$extension;
+           Image::make($file)->save( public_path('uploads/logo/'.$logoIcon));
+           AppSetting::updateOrCreate(
+                ['id' => 1],
+                [
+                    'logoIcon' => $logoIcon,
+                ]
+            );
+
+
+        }
+        if($request->logoText){
+            $file = $request->logoText ;
+            $extension = $file->getClientOriginalExtension();
+            $logoText ='LOGO_TEXT_'.Str::random(8).'.'.$extension;
+           Image::make($file)->save( public_path('uploads/logo/'.$logoText));
+           AppSetting::updateOrCreate(
+                ['id' => 1],
+                [
+
+                    'logoText' => $logoText,
+                ]
+            );
+
+        }
+
+
+        flash()->options(['position' => 'bottom-right'])->success('Logo updated successfully');
+        return back();
+
+    }
+
+
+
+
+
 }

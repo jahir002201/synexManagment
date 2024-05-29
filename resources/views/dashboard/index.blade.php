@@ -12,6 +12,7 @@
         return  $end_date;
 
     }
+    $user = Auth::user();
 @endphp
 
 @section('style')
@@ -23,17 +24,19 @@
 
 <div class="row">
 
-
+    @if ($user->can('dashboard.earnings'))
     <div class="col-md-3">
-    <div class="card">
-        <div class="card-body">
-        <h5 class="card-title">Earnings<span class="badge float-right bg-primary text-white">{{ $percentageBudget }}%</span></h5>
-        <p class="font-weight-bold" style="font-size: 23px; color: black">৳{{ $current_month_budget }} </p>
-        <div class="border-bottom mb-1">  </div>
-        <p class="card-text"><span class="text-muted">Previous Month</span> ৳{{ $last_month_budget }}</p>
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Earnings<span class="badge float-right bg-primary text-white">{{ $percentageBudget }}%</span></h5>
+            <p class="font-weight-bold" style="font-size: 23px; color: black">৳{{ $current_month_budget }} </p>
+            <div class="border-bottom mb-1">  </div>
+            <p class="card-text"><span class="text-muted">Previous Month</span> ৳{{ $last_month_budget }}</p>
+            </div>
         </div>
     </div>
-    </div>
+    @endif
+    @if ($user->can('dashboard.expenses'))
     <div class="col-md-3">
     <div class="card">
         <div class="card-body">
@@ -46,6 +49,8 @@
         </div>
     </div>
     </div>
+    @endif
+    @if ($user->can('dashboard.profit'))
     <div class="col-md-3">
     <div class="card">
         <div class="card-body">
@@ -56,6 +61,7 @@
         </div>
     </div>
     </div>
+    @endif
 
     <div class="col-md-3">
     <div class="card">

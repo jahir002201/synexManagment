@@ -35,7 +35,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/download/{filename}', [ProjectController::class, 'downloadFile'])->name('download');
 //
     Route::get('/users', [HomeController::class, 'users'])->name('users');
+    Route::post('/user/store', [HomeController::class, 'userStore'])->name('user.store');
+//dashboard
     Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/app/setting',[DashboardController::class, 'showAppSetting'])->name('dashboard.showSetting');
+    Route::post('/app/setting/logoicon/store',[DashboardController::class, 'logoIcon_store'])->name('dashboard.logoIcon.store');
 //resource routes
     Route::resources([
         'project' => ProjectController::class,

@@ -1,12 +1,14 @@
-
+@php
+  $appSetting =  App\Models\AppSetting::first();
+@endphp
    <!--**********************************
             Nav header start
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="{{asset('dashboard_assets/images/logo_sd.png')}}" alt="">
-                <img class="logo-compact" src="{{asset('dashboard_assets/images/logo_synex_digital.png')}}" alt="">
-                <img class="brand-title" src="{{asset('dashboard_assets/images/logo_synex_digital.png')}}" alt="">
+                <img class="logo-abbr" src="{{asset('uploads/logo')}}/{{$appSetting ? $appSetting->logoIcon : ''}}" alt="">
+                <img class="logo-compact" src="{{asset('uploads/logo')}}/{{$appSetting ? $appSetting->logoText : ''}}" alt="">
+                <img class="brand-title" src="{{asset('uploads/logo')}}/{{$appSetting ? $appSetting->logoText : ''}}" alt="">
             </a>
             {{-- <a href="index.html" class="brand-logo">
 

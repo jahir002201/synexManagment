@@ -13,7 +13,6 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
-        // Use the factory to seed 100,000 records
-        Department::factory()->count(100000)->create();
+       
     }
 }
