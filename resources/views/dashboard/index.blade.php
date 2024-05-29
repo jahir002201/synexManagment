@@ -62,7 +62,7 @@
     </div>
     </div>
     @endif
-
+    @if ($user->can('dashboard.projects'))
     <div class="col-md-3">
     <div class="card">
         <div class="card-body">
@@ -74,12 +74,14 @@
         </div>
     </div>
     </div>
+    @endif
 
     <!-- Add similar divs for Expenses and Profit sections -->
 </div>
  <div class="row">
-    <div class="col-lg-5">
-        <div class="row">
+     <div class="col-lg-5">
+         <div class="row">
+            @if ($user->can('dashboard.employee'))
             <div class="col-lg-6 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-one card-body">
@@ -94,6 +96,8 @@
                     </div>
                 </div>
             </div>
+            @endif
+            @if ($user->can('dashboard.client'))
             <div class="col-lg-6 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-one card-body">
@@ -107,6 +111,7 @@
                     </div>
                 </div>
            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -118,114 +123,122 @@
             </div>
         </div>
     </div>
+
     <div class="col-lg-7">
+        @if ($user->can('project.view'))
+        <div class="card">
+            <div class="card-header">
+                <h5>Recent Projects</h5>
+                @if ($user->can('project.create'))
+                <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New </a>
+                @endif
+            </div>
+            <div class="card-body">
+            <div class="table-responsive">
+                <table class="table " >
+                    <thead>
+                        <tr class="text-dark">
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Recent Projects</h5>
-            <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New </a>
-        </div>
-        <div class="card-body">
-           <div class="table-responsive">
-            <table class="table " >
-                <thead>
-                    <tr class="text-dark">
+                            <th>Project Name</th>
+                            <th>Leader</th>
 
-                        <th>Project Name</th>
-                        <th>Leader</th>
+                            <th>Deadline</th>
 
-                        <th>Deadline</th>
+                            <th>Status</th>
+                            @if ($user->can('project.overview'))
 
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($projects as $data )
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($projects as $data )
+                            <tr>
+
+                                <td>{{ $data->name }}</td>
+                                <td><a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a></td>
+                                <td>
+                                    {{ endDate($data->dateRange) }}
+                                </td>
+
+                                <td style="font-size: 10px;">
+                                    <span class="badge
+                                        @if ($data->status == 'INPROGRESS')
+                                            badge-secondary
+                                        @elseif ($data->status == 'ON-HOLD')
+                                            badge-warning
+                                        @elseif ($data->status == 'COMPLETED')
+                                            badge-success
+                                        @endif
+                                        ">
+                                    {{ $data->status }}
+                                </span>
+                                </td>
+
+                            </tr>
+                        @empty
                         <tr>
 
-                            <td>{{ $data->name }}</td>
-                            <td><a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a></td>
-                            <td>
-                                {{ endDate($data->dateRange) }}
-                            </td>
+                            <td colspan="5" class="text-center">NO DATA FOUND</td>
 
-                            <td style="font-size: 10px;">
-                                <span class="badge
-                                    @if ($data->status == 'INPROGRESS')
-                                        badge-secondary
-                                    @elseif ($data->status == 'ON-HOLD')
-                                        badge-warning
-                                    @elseif ($data->status == 'COMPLETED')
-                                        badge-success
-                                    @endif
-                                    ">
-                                {{ $data->status }}
-                            </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('project.show', $data->id) }}" class="btn btn-outline-primary btn-sm " style="height: 24px">
-                                 <span style="font-size: 10px; position: relative; top: -5px">view</span>
-                                </a>
-
-                            </td>
                         </tr>
-                    @empty
-                       <tr>
-
-                           <td colspan="5" class="text-center">NO DATA FOUND</td>
-
-                       </tr>
-                    @endforelse
+                        @endforelse
 
 
-                </tbody>
+                    </tbody>
 
-            </table>
-           </div>
+                </table>
+            </div>
+            </div>
         </div>
-       </div>
-        <div class="row">
-             <div class="col-lg-6 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block" ">
-                            <i class="ti-credit-card text-primary border-primary"></i>
-                        </div>
-                        <div class="stat-content d-inline-block" style="margin-left:16px!important;">
-                            <div class="stat-text">Total Earnings   </div>
-                            <div class="stat-digit">{{ $total_budget }}</div>
+        @endif
+            <div class="row">
+                @if ($user->can('dashboard.earnings'))
+                <div class="col-lg-6 col-sm-6">
+                    <div class="card">
+                        <div class="stat-widget-one card-body">
+                            <div class="stat-icon d-inline-block" ">
+                                <i class="ti-credit-card text-primary border-primary"></i>
+                            </div>
+                            <div class="stat-content d-inline-block" style="margin-left:16px!important;">
+                                <div class="stat-text">Total Earnings   </div>
+                                <div class="stat-digit">{{ $total_budget }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-             <div class="col-lg-6 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block" ">
-                            <i class="ti-notepad text-primary border-primary"></i>
-                        </div>
-                        <div class="stat-content d-inline-block" style="margin-left:16px!important;">
-                            <div class="stat-text">Task</div>
-                            <div class="stat-digit">{{ $task }}</div>
+                @endif
+                @if($user->can('dashboard.expenses'))
+                <div class="col-lg-6 col-sm-6">
+                    <div class="card">
+                        <div class="stat-widget-one card-body">
+                            <div class="stat-icon d-inline-block" ">
+                                <i class="ti-notepad text-primary border-primary"></i>
+                            </div>
+                            <div class="stat-content d-inline-block" style="margin-left:16px!important;">
+                                <div class="stat-text">Task</div>
+                                <div class="stat-digit">{{ $task }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                @endif
+
             </div>
 
-        </div>
-
-            <!-- /# card -->
+                <!-- /# card -->
     </div>
 
 </div>
 {{-- recent projects --}}
+@if ($user->can('expenses.view'))
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">All Expense</h4>
+            @if ($user->can('expenses.create'))
             <a href="{{ route('expenses.index') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">New</a>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -236,8 +249,8 @@
                             <th>Expense Type</th>
                             <th>Amount</th>
                             <th>Purchased By</th>
-                            <th>Email</th>
-                            <th>Date</th>
+                            <th>Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -256,8 +269,13 @@
                                {{ $data->purchase_by }}
                             </td>
                             <td>
-                                10/05/2017
+                                @if ($user->can('expenses.overview'))
+                                    <a href="{{ route('project.show', $data->id) }}" class="btn btn-outline-primary btn-sm " style="height: 24px">
+                                    <span style="font-size: 10px; position: relative; top: -5px">view</span>
+                                    </a>
+                                    @endif
                             </td>
+
                         </tr>
                         @empty
                         <tr> <td colspan="5" class="text-center">NO DATA FOUND</td>  </tr>
@@ -272,7 +290,7 @@
     </div>
   </div>
 </div>
-
+@endif
 
 
 @endsection

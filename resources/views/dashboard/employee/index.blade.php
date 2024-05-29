@@ -1,4 +1,7 @@
 @extends('dashboard.layouts.app')
+@php
+    $user = Auth::user();
+@endphp
 @section('style')
 <link rel="stylesheet" href="{{asset('dashboard_assets/vendor/select2/css/select2.min.css')}}">
 <style>
@@ -34,7 +37,9 @@
                 <form action="{{route('searchEmployee')}}" method="GET" >
                     <div class="row">
                       <div class="col-lg-4 col-md-4 col-sm-4 mb-2">
+                        @if ($user->can('employee.create'))
                         <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Employee</button>
+                        @endif
 
                       </div>
 
@@ -69,6 +74,7 @@
                 </div>
             </a>
           <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
+            @if ($user->can('employee.delete'))
             <div class="dropdown custom-dropdown">
                 <div data-toggle="dropdown">
                     <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
@@ -83,6 +89,7 @@
 
                 </div>
             </div>
+            @endif
           </div>
         </div>
     </div>

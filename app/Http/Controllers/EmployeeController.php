@@ -21,11 +21,14 @@ class EmployeeController extends Controller
         $departments = Department::all();
         $users = User::all();
         if(!Auth::user()->employees){
-            return view('dashboard.employee.index',[
-                'departments' => $departments,
-                'users' => $users,
+            if(Auth::user()->can('employee.show')){
+                return view('dashboard.employee.index',[
+                    'departments' => $departments,
+                    'users' => $users,
 
-            ]);
+                ]);
+            }
+
         }else{
             return redirect(route('dashboard'));
         }
