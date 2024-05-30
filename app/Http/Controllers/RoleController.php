@@ -60,6 +60,8 @@ class RoleController extends Controller
             // Process Data
             $role = Role::create(['name' => $request->name, 'guard_name' => 'web']);
             $role->syncPermissions($permissions);
+            flash()->options(['position' => 'bottom-right'])->success('Role Created Successfully');
+            return back();
         }
         else{
             return back()->with('error','Select Permissions !!');
