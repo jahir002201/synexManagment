@@ -144,14 +144,16 @@ class ProjectController extends Controller
         $memberIds = explode(',', $project->member_id);
         $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
         $members = User::whereIn('id', $memberIds)->get();
-
-
+        if(Auth::user()->can('project.overView')){
             return view('dashboard.project.project_overview',[
                 'project' => $project,
                 'members' => $members,
                 'memberCount' => $memberCount,
                 'files' => $files,
             ]);
+
+        }else{return back();}
+
 
 
 
@@ -223,5 +225,22 @@ class ProjectController extends Controller
         }
     }
 
+    public function employeeProjectShow($id){
+        $project = Project::find($id);
+        //project file
+        $files = json_decode($project->file, true) ?? [];
+        //members
+        $memberIds = explode(',', $project->member_id);
+        $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
+        $members = User::whereIn('id', $memberIds)->get();
 
+
+            return view('dashboard.project.project_overview',[
+                'project' => $project,
+                'members' => $members,
+                'memberCount' => $memberCount,
+                'files' => $files,
+            ]);
+
+    }
 }

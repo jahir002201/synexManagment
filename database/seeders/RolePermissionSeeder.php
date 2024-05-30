@@ -85,6 +85,12 @@ class RolePermissionSeeder extends Seeder
                     'project.create',
                     'project.edit',
                     'project.delete',
+                    'project.task.add',
+                    'project.task.edit',
+                    'project.task.delete',
+                    'project.file.add',
+                    'project.file.delete',
+                    'project.file.download',
 
                 ]
             ],
@@ -118,7 +124,6 @@ class RolePermissionSeeder extends Seeder
                     'admin.create',
                     'admin.edit',
                     'admin.delete',
-                    'admin.approve',
                 ]
             ],
             [
@@ -126,10 +131,8 @@ class RolePermissionSeeder extends Seeder
                 'permissions' => [
                     // role Permissions
                     'role.create',
-                    'role.view',
-                    'role.edit',
                     'role.delete',
-                    'role.approve',
+
                 ]
             ],
 

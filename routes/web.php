@@ -11,6 +11,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 
 Auth::routes();
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
 //project file delete and downoad
     Route::get('project/file/delete/{id}/{key}', [ProjectController::class, 'fileDelete'])->name('projectFile.delete');
     Route::get('/download/{filename}', [ProjectController::class, 'downloadFile'])->name('download');
+    Route::get('/project_overview/{id}',[ProjectController::class, 'employeeProjectShow'])->name('employee.project.overview');
 //
     Route::get('/users', [HomeController::class, 'users'])->name('users');
     Route::post('/user/store', [HomeController::class, 'userStore'])->name('user.store');
@@ -50,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
         'designation' => DesignationController::class,
         'expenses' => ExpensesController::class,
         'task' => TaskController::class,
+        'role' => RoleController::class,
 
     ]);
 });

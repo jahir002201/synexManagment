@@ -71,8 +71,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Project List</h4>
-
-                        <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">Create Project</a>
+                        @if (Auth::user()->can('project.create'))
+                            <a href="{{ route('project.create') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">Create Project</a>
+                        @endif
 
                 </div>
                 <div class="card-body">
@@ -86,7 +87,10 @@
                                     <th>Deadline</th>
                                     <th>Priority</th>
                                     <th>Status</th>
+                                    @if (Auth::user()->can('project.edit') || Auth::user()->can('project.delete'))
+
                                     <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,15 +107,22 @@
 
                                         <td><span class="badge badge-light text-warning">{{$data->priority}}</span> </td>
                                         <td> <span class="badge badge-light text-success">{{$data->status}}</span> </td>
+                                        @if (Auth::user()->can('project.edit') || Auth::user()->can('project.delete'))
                                         <td class="d-flex justify-content-spacebetween">
+                                            @if (Auth::user()->can('project.edit'))
                                             <a href="{{route('project.show',$data->id) }}" class=" btn btn-primary btn-sm mr-1  "> <i class="fa fa-eye "></i></a>
+                                            @endif
+                                            @if (Auth::user()->can('project.delete'))
+
                                             <form action="{{route('project.destroy',$data->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
 
                                                 <button class=" btn btn-danger btn-sm   "> <i class="fa fa-trash "></i></button>
                                             </form>
+                                            @endif
                                         </td>
+                                        @endif
 
                                     </tr>
                                 @endforeach
@@ -175,8 +186,8 @@
                                         <td><span class="badge badge-light text-warning">{{$data->priority}}</span> </td>
                                         <td> <span class="badge badge-light text-success">{{$data->status}}</span> </td>
                                         <td class="d-flex justify-content-spacebetween">
-                                            <a href="{{route('project.show',$data->id) }}" class=" btn btn-primary btn-sm mr-1  "> <i class="fa fa-eye "></i></a>
-                                           
+                                            <a href="{{route('employee.project.overview',$data->id) }}" class=" btn btn-primary btn-sm mr-1  "> <i class="fa fa-eye "></i></a>
+
                                         </td>
 
                                     </tr>

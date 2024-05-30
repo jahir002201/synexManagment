@@ -1,4 +1,5 @@
 @extends('dashboard.layouts.app')
+
 @section('style')
 <link rel="stylesheet" href="{{asset('dashboard_assets/vendor/select2/css/select2.min.css')}}">
 <style>
@@ -35,7 +36,9 @@
 
                     <div class=" row ">
                         <div class="col-lg-4 col-md-4 col-sm-4 mb-2">
+                          @if (Auth::user()->can('client.create'))
                           <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Client</button>
+                          @endif
                         </div>
 
                           <div class="col-lg-8 col-md-8 col-sm-8 float-right d-flex justify-content-end align-items-center">
@@ -61,27 +64,34 @@
                 @else
                     <img src="{{ asset('uploads/client') }}/{{$data->image}}" class="card-img-top rounded-circle mx-auto d-block" alt="John Doe" style="max-width: 150px; margin-top: 20px;">
                 @endif
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{$data->name}}</h5>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{$data->name}}</h5>
+                    @if (Auth::user()->can('client.profile'))
                         <a class="btn btn-outline-dark " style="font-size: 11px;" href="{{ route('client.show', $data->id) }}">View Profile</a>
+                        @endif
                     </div>
-
+            @if (Auth::user()->can('client.edit') || Auth::user()->can('client.delete'))
               <div class=" position-absolute top-0 end-0  me-3" style="right:0;">
                 <div class="dropdown custom-dropdown">
                     <div data-toggle="dropdown">
                         <a href="" class="btn"><i class="fa fa-ellipsis-v"></i></a>
                     </div>
                     <div class="dropdown-menu dropdown-menu-right" style="min-width: 113px;">
+                        @if(Auth::user()->can('client.edit'))
                         <a class="dropdown-item border-bottom py-1" href="{{ route('client.edit', $data->id) }}">Edit</a>
+                        @endif
+                        @if (Auth::user()->can('client.delete'))
                         <form id="desigDeleteForm" action="{{route('client.destroy',$data->id)}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="dropdown-item py-1" >Delete </button>
                         </form>
+                        @endif
 
                     </div>
                 </div>
               </div>
+              @endif
             </div>
         </div>
         @endforeach

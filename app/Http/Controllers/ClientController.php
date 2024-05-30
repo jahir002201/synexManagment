@@ -19,12 +19,14 @@ class ClientController extends Controller
     {
         $clients = Client::all();
         if(!Auth::user()->employees){
+            if(Auth::user()->can('client.view')){
             return view('dashboard.client.index',[
                 'clients' => $clients,
             ]);
-        }else{
-            return redirect(route('dashboard'));
-        }
+            }else{return back();}
+        }else{return redirect(route('dashboard'));  }
+
+
 
     }
 
@@ -41,40 +43,42 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'phone' => 'required|max:14',
+        if(Auth::user()->can('client.create')){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'phone' => 'required|max:14',
 
-        ]);
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            foreach ($errors->messages() as  $messages) {
-                foreach ($messages as $message) {
-                    flash()->options([
-                        'position' => 'bottom-right',
-                    ])->error($message);
+            ]);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                foreach ($errors->messages() as  $messages) {
+                    foreach ($messages as $message) {
+                        flash()->options([
+                            'position' => 'bottom-right',
+                        ])->error($message);
+                    }
                 }
+                return back()->withErrors($validator)->withInput();
             }
-            return back()->withErrors($validator)->withInput();
-        }
-        $image_name = null;
-        if($request->image){
-            $file = $request->image;
-            $extension = $file->getClientOriginalExtension();
-            $image_name ='CLNT_'.Str::random(8).'.'.$extension;
-           Image::make($file)->resize(150,150)->save( public_path('uploads/client/'.$image_name));
-        }
-        $client = new Client();
-        $client->name = $request->name;
-        $client->phone = $request->phone;
-        $client->email = $request->email;
-        $client->address = $request->address;
-        $client->image = $image_name;
-        $client->save();
-        flash()->options([
-            'position' => 'bottom-right',
-        ])->success('Client Added Successfully');
-        return back();
+            $image_name = null;
+            if($request->image){
+                $file = $request->image;
+                $extension = $file->getClientOriginalExtension();
+                $image_name ='CLNT_'.Str::random(8).'.'.$extension;
+               Image::make($file)->resize(150,150)->save( public_path('uploads/client/'.$image_name));
+            }
+            $client = new Client();
+            $client->name = $request->name;
+            $client->phone = $request->phone;
+            $client->email = $request->email;
+            $client->address = $request->address;
+            $client->image = $image_name;
+            $client->save();
+            flash()->options([
+                'position' => 'bottom-right',
+            ])->success('Client Added Successfully');
+            return back();
+        }else{return back();}
     }
 
     /**
@@ -83,12 +87,12 @@ class ClientController extends Controller
     public function show(string $id)
     {
         $client = Client::find($id);
-       
-
          if(!Auth::user()->employees){
-            return view('dashboard.client.profile',[
-                'client' => $client,
-            ]);
+            if(Auth::user()->can('client.profile')){
+                return view('dashboard.client.profile',[
+                    'client' => $client,
+                ]);
+            }else{return back();}
         }else{
             return redirect(route('dashboard'));
         }
@@ -102,9 +106,11 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
          if(!Auth::user()->employees){
-            return view('dashboard.client.edit',[
-                'client' => $client,
-            ]);
+            if(Auth::user()->can('client.edit')){
+                return view('dashboard.client.edit',[
+                    'client' => $client,
+                ]);
+            }else{return back();}
         }else{
             return redirect(route('dashboard'));
         }

@@ -122,7 +122,10 @@
             <div class="card ">
                 <div class="card-header ">
                    <h6 class="font-weight-bold mb-0" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Details</h6>
+                   @if (Auth::user()->can('project.create'))
+
                    <a href="{{ route('project.create') }}" class=" btn btn-outline-primary  " style="font-size: 11px !important;">Create Project</a>
+                   @endif
 
                 </div>
                 <div class=" mt-2 border-bottom"></div>
@@ -195,9 +198,11 @@
             <div class="card ">
                 <div class="card-header ">
                    <h6 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp; Project Task</h6>
-                    <button type="button" id="add" class=" btn btn-primary " data-toggle="modal" data-target="#createTask" style="font-size: -2px !important;height: 23px;width: 39px;">
-                        <i class="fa fa-plus text-white" style="top: -5px; position: relative;"></i>
-                    </button>
+                   @if (Auth::user()->can('project.task.add'))
+                   <button type="button" id="add" class=" btn btn-primary " data-toggle="modal" data-target="#createTask" style="font-size: -2px !important;height: 23px;width: 39px;">
+                    <i class="fa fa-plus text-white" style="top: -5px; position: relative;"></i>
+                </button>
+                @endif
 
 
                 </div>
@@ -215,15 +220,19 @@
                        <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
                        <div class="d-flex justify-content-end ">
 
+                        @if (Auth::user()->can('project.task.edit'))
 
-                       <p class="text-dark icon edit" data-value={{ $data->id }} style="display: none; cursor: pointer"><i class="mt-1 fa fa-pencil text-primary  ">  </i></p>
+                        <p class="text-dark icon edit" data-value={{ $data->id }} style="display: none; cursor: pointer"><i class="mt-1 fa fa-pencil text-primary  ">  </i></p>
+                        @endif
+                        @if (Auth::user()->can('project.task.delete'))
 
-                       <form id="taskDelete" action="{{ route('task.destroy', $data->id) }}" method="POST">
-                           @csrf
-                           @method('DELETE')
-                           <p class="text-dark icon ml-2 delete"style="display: none; cursor: pointer"><i class="mt-1 fa fa-trash  text-danger ">  </i></p>
+                        <form id="taskDelete" action="{{ route('task.destroy', $data->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <p class="text-dark icon ml-2 delete"style="display: none; cursor: pointer"><i class="mt-1 fa fa-trash  text-danger ">  </i></p>
 
-                       </form>
+                        </form>
+                        @endif
                        <p class="text-dark ml-3 "><i class=" fa fa-{{ $data->status == 0? 'exclamation' : 'check' }} {{$data->status == 0? 'text-danger': ' text-success'}} ">  </i></p>
 
                    </div>
@@ -261,6 +270,7 @@
                     <h6 class="font-weight-bold mb-0">
                         <span style="border-left: 4px solid #593bdb;"></span>&nbsp; Project Documents
                     </h6>
+                    @if (Auth::user()->can('project.file.add'))
                     <div class="file-upload btn btn-primary p-2" style="border-radius: 11%; height: 23px; width: 39px; coursor: pointer;">
                         <i class="fa fa-plus text-white" style="top: -7px; position: relative;"></i>
                         <div class="loading-overlay" id="loadingOverlay">
@@ -272,6 +282,7 @@
                             <input type="file" name="file" id="hiddenFileInput" onchange="submitForm()">
                         </form>
                     </div>
+                    @endif
                 </div>
                 <div class=" mt-2 border-bottom"></div>
                 <div class="">
@@ -279,8 +290,12 @@
                     <div class="d-flex justify-content-between py-2 px-3 border-bottom">
                         <p class=" text-dark pb-0 mb-0">{{substr($data,0,15).'...'}}</p>
                         <p class="text-dark pb-0 mb-0">
+                            @if (Auth::user()->can('project.file.download'))
                             <a href="{{ route('download', ['filename' => $data]) }}" class="mr-2 badge badge-light"> <i class="fa fa-download text-primary "></i></a>
+                            @endif
+                            @if (Auth::user()->can('project.file.delete'))
                             <a href="{{route('projectFile.delete',['id' => $project->id, 'key' => $key])}}" class="badge badge-light"> <i class="fa fa-trash text-danger"></i></a>
+                            @endif
                         </p>
                     </div>
                     @empty

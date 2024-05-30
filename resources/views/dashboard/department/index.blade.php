@@ -25,7 +25,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Deparments</h4>
-                <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Department</button>
+                @if (Auth::user()->can('department.create'))
+                    <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Department</button>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -45,12 +47,15 @@
                                     <td>{{$data->department}}</td>
                                     <td>
                                         <span>
+                                            @if (Auth::user()->can('department.edit'))
+
                                             <a  href="javascript:void()" class="mr-4 edit"  data-toggle="modal" data-target="#editModal" data-placement="top" data-value="{{$data->id}}" title="Edit"><i class="fa fa-pencil  text-primary "></i></a>
-
-
-                                        <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteModal" data-placement="top" title="Delete" class="delt">
-                                       <i class="fa fa-close text-danger "></i>
-                                            </a></span>
+                                            @endif
+                                            @if (Auth::user()->can('department.delete'))
+                                            <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteModal" data-placement="top" title="Delete" class="delt">
+                                            <i class="fa fa-close text-danger "></i></a>
+                                            @endif
+                                        </span>
                                     </td>
                                     {{-- <td><span><a href="javascript:void()" class="mr-4"  title="Edit"><i
                                             class="fa fa-pencil btn btn-primary btn-sm text-white"></i> </a><a
@@ -72,7 +77,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Designations</h4>
+                @if (Auth::user()->can('department.create'))
                 <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal2" style="font-size: 11px !important;">Add Designation</button>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -94,12 +101,15 @@
                                     <td> {{$data->designation}} </td>
                                     <td>
                                         <span>
+                                            @if (Auth::user()->can('department.edit'))
                                             <a  href="javascript:void()" class="mr-4 editDesig"  data-toggle="modal" data-target="#editDesigModal" data-placement="top" data-value="{{$data->id}}" title="Edit"><i class="fa fa-pencil  text-primary "></i></a>
-
-
-                                        <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteDesigModal" data-placement="top" title="Delete" class="deltDesig">
-                                       <i class="fa fa-close text-danger "></i>
-                                            </a></span>
+                                            @endif
+                                            @if (Auth::user()->can('department.edit'))
+                                            <a href="javascript:void()" data-value="{{$data->id}}" data-toggle="modal" data-target="#deleteDesigModal" data-placement="top" title="Delete" class="deltDesig">
+                                            <i class="fa fa-close text-danger "></i>
+                                            </a>
+                                            @endif
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach

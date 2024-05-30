@@ -26,6 +26,7 @@
                         <i class="icon icon-single-04"></i><span class="nav-text">Settings</span></a>
                             <ul aria-expanded="false">
                                 <li><a href="{{route('users')}}">User</a></li>
+                                <li><a href="{{route('role.index')}}">Role Management</a></li>
                                 <li><a href="{{route('dashboard.showSetting')}}"> App Setting</a></li>
                                 {{-- <li><a href="./index2.html">Dashboard 2</a></li> --}}
                             </ul>

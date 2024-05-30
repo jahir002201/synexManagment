@@ -20,13 +20,16 @@ class EmployeeController extends Controller
     {
         $departments = Department::all();
         $users = User::all();
+        $user= Auth::user();
         if(!Auth::user()->employees){
-            if(Auth::user()->can('employee.show')){
+            if($user->can('employee.view')){
                 return view('dashboard.employee.index',[
                     'departments' => $departments,
                     'users' => $users,
 
                 ]);
+            }else{
+                return back();
             }
 
         }else{
@@ -48,44 +51,46 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|max:14',
-            'start_date' => 'required',
-            'department' => 'required',
-            'designation' => 'required',
-            'password' => 'required|confirmed |min:6',
-            'password_confirmation' => 'required',
+        if(Auth::user()->can('employee.create')){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required|max:14',
+                'start_date' => 'required',
+                'department' => 'required',
+                'designation' => 'required',
+                'password' => 'required|confirmed |min:6',
+                'password_confirmation' => 'required',
 
-        ]);
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            foreach ($errors->messages() as  $messages) {
-                foreach ($messages as $message) {
-                    flash()->options([
-                        'position' => 'bottom-right',
-                    ])->error($message);
+            ]);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                foreach ($errors->messages() as  $messages) {
+                    foreach ($messages as $message) {
+                        flash()->options([
+                            'position' => 'bottom-right',
+                        ])->error($message);
+                    }
                 }
+                return back()->withErrors($validator)->withInput();
             }
-            return back()->withErrors($validator)->withInput();
-        }
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
-        $employee = new Employee();
-        $employee->user_id = $user->id;
-        $employee->phone = $request->phone;
-        $employee->start_date = $request->start_date;
-        $employee->department_id = $request->department;
-        $employee->designation_id = $request->designation;
-        $employee->save();
-        flash()->options([
-            'position' => 'bottom-right',
-        ])->success('Employee Added Successfully!');
-        return back();
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+            $employee = new Employee();
+            $employee->user_id = $user->id;
+            $employee->phone = $request->phone;
+            $employee->start_date = $request->start_date;
+            $employee->department_id = $request->department;
+            $employee->designation_id = $request->designation;
+            $employee->save();
+            flash()->options([
+                'position' => 'bottom-right',
+            ])->success('Employee Added Successfully!');
+            return back();
+        }else{return back();}
 
 
     }
@@ -97,9 +102,11 @@ class EmployeeController extends Controller
     {
         $user = User::find($id);
         if(!Auth::user()->employees){
+            if(Auth::user()->can('employee.profile')){
             return view('dashboard.employee.profile',[
                 'user' => $user,
             ]);
+            }else{return back();}
         }else{
             return redirect(route('dashboard'));
         }
@@ -127,11 +134,13 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
+        if(Auth::user()->can('employee.delete')){
         User::find($id)->delete();
         flash()->options([
                         'position' => 'bottom-right',
                     ])->success('Employee Deleted!');
         return back();
+        }else{return back();}
     }
     public function getDesignations($departmentId)
     {

@@ -60,7 +60,7 @@ class HomeController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
-        flash()->success('User created successfully');
+        flash()->options(['position' => 'bottom-right'])->success('User created successfully');
         return back();
     }
 }

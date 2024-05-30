@@ -24,9 +24,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Expenses List</h4>
-
+                    @if (Auth::user()->can('expenses.create'))
                         <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add Expenses</button>
-
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -39,7 +39,9 @@
                                     <th>Purchased By</th>
                                     <th>Amount</th>
                                     <th>Note</th>
+                                    @if (Auth::user()->can('expenses.edit') || Auth::user()->can('expenses.delete'))
                                     <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,10 +64,18 @@
                                                     {{ substr($data->note, 0, 10) . '...' }}
                                                 </a>
                                             </td>
+
+                                        @if (Auth::user()->can('expenses.edit') || Auth::user()->can('expenses.delete'))
                                         <td class="d-flex">
+
+
+                                            @if (Auth::user()->can('expenses.edit'))
                                             <a href="{{route('expenses.edit',$data->id)}}" class=" btn btn-primary btn-sm mr-2  ">
                                                 <i class="fa fa-pencil text-white "></i>
                                             </a>
+                                            @endif
+                                            @if (Auth::user()->can('expenses.delete'))
+
                                             <form action="{{route('expenses.destroy',$data->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -73,7 +83,9 @@
                                                     <i class="fa fa-trash "></i>
                                                 </button>
                                             </form>
+                                            @endif
                                         </td>
+                                        @endif
                                     </tr>
                                 @empty
 
