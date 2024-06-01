@@ -19,10 +19,12 @@ class RoleController extends Controller
         $roles = Role::all();
         $all_permissions = Permission::all();
         $permission_groups = User::getpermissionGroups();
+        $users = User::whereDoesntHave('employees')->get();
         return view('dashboard.role.index',[
             'roles' => $roles,
             'all_permissions' => $all_permissions,
             'permission_groups' => $permission_groups,
+            'users' => $users
         ]);
     }
 
@@ -99,6 +101,49 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::find($id);
+        $role->syncPermissions([]);
+        $role->delete();
+        flash()->options(['position' => 'bottom-right'])->success('Role Deleted Successfully');
+        return back();
+        // $user = User::find($id);
+        // $user->syncRoles([]);
+        // $user->syncPermissions([]);
+        // $user->delete();
+        // flash()->options(['position' => 'bottom-right'])->success('User Deleted Successfully');
+        // return back();
     }
+
+    public function roleAssign_store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id'=>'required',
+            'role_id'=>'required',
+            ]);
+
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->messages() as  $messages) {
+                foreach ($messages as $message) {
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
+                }
+            }
+            return back()->withErrors($validator)->withInput();
+        }
+        $user = User::find($request->user_id);
+        $user->assignRole($request->role_id);
+        flash()->options(['position' => 'bottom-right'])->success('Role Assigned Successfully');
+        return back();
+    }
+    public function userRole_delete($id){
+        $user = User::find($id);
+        $user->syncRoles([]);
+        $user->syncPermissions([]);
+        $user->delete();
+        flash()->options(['position' => 'bottom-right'])->success('User(Role) Deleted Successfully');
+        return back();
+    }
+
 }

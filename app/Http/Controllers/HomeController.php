@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,8 +32,8 @@ class HomeController extends Controller
     public function users()
     {
         $users = User::whereDoesntHave('employees')->get();
-
-        return view('dashboard.user.index',compact('users'));
+        $roles = Role::all();
+        return view('dashboard.user.index',compact('users','roles'));
     }
 
     public function userStore(Request $request){
@@ -63,4 +64,9 @@ class HomeController extends Controller
         flash()->options(['position' => 'bottom-right'])->success('User created successfully');
         return back();
     }
+
+    public function userDelete($id){
+        dd($id);
+    }
+
 }

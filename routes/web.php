@@ -24,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
+//role
+    Route::post('/role/assign/store', [RoleController::class, 'roleAssign_store'])->name('roleAssign.store');
+    Route::get('/role/user/delete/{id}', [RoleController::class, 'userRole_delete'])->name('userRole.delete');
 //task
     Route::get('/task/status/update/{id}', [TaskController::class, 'taskStatus'])->name('task.status.update');
 //search
@@ -36,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/download/{filename}', [ProjectController::class, 'downloadFile'])->name('download');
     Route::get('/project_overview/{id}',[ProjectController::class, 'employeeProjectShow'])->name('employee.project.overview');
 //
+    Route::get('/user/delete/{id}', [HomeController::class, 'userDelete'])->name('user.delete');
     Route::get('/users', [HomeController::class, 'users'])->name('users');
     Route::post('/user/store', [HomeController::class, 'userStore'])->name('user.store');
 //dashboard

@@ -15,36 +15,38 @@
 
 </div>
     <div class="row">
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Add or Update Logo </h4>
-                </div>
-                <div class="card-body">
-                   <form action="{{route('dashboard.logoIcon.store')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
+       @if (Auth::user()->can('appLogo.add'))
+       <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add or Update Logo </h4>
+            </div>
+            <div class="card-body">
+               <form action="{{route('dashboard.logoIcon.store')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
 
-                        <div class="mb-3">
-                            <label for="" class="form-label font-weight-bold">Icon :</label>
-                            <div class="custom-file">
-                                <input type="file" name="logoIcon" class="custom-file-input" accept="image/*">
-                                <label class="custom-file-label">Upload Image  </label>
-                            </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label font-weight-bold">Icon :</label>
+                        <div class="custom-file">
+                            <input type="file" name="logoIcon" class="custom-file-input" accept="image/*">
+                            <label class="custom-file-label">Upload Image  </label>
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label font-weight-bold"> Logo Text :</label>
-                            <div class="custom-file">
-                                <input type="file" name="logoText" class="custom-file-input" accept="image/*">
-                                <label class="custom-file-label">Upload Image  </label>
-                            </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label font-weight-bold"> Logo Text :</label>
+                        <div class="custom-file">
+                            <input type="file" name="logoText" class="custom-file-input" accept="image/*">
+                            <label class="custom-file-label">Upload Image  </label>
                         </div>
-                        <div class="mb-3">
-                            <button class="btn btn-primary float-right">Save</button>
-                        </div>
-                   </form>
-                </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary float-right">Save</button>
+                    </div>
+               </form>
             </div>
         </div>
+    </div>
+       @endif
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">

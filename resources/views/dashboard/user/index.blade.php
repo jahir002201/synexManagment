@@ -1,4 +1,8 @@
 @extends('dashboard.layouts.app')
+@section('style')
+<link rel="stylesheet" href="{{asset('dashboard_assets/vendor/select2/css/select2.min.css')}}">
+
+@endsection
 @section('content')
 
 <div class="row ">
@@ -18,11 +22,13 @@
         <div class="col-lg-5">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Employees, Admins, and Managers</h4>
-                    <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add </button>
+                    <h4 class="card-title"> Admins, and Managers</h4>
+                    @if (Auth::user()->can('user.create'))
+                    <button type="button" id="add" class=" btn btn-outline-primary " data-toggle="modal" data-target="#createModal" style="font-size: 11px !important;">Add User</button>
+                    @endif
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-striped ">
+                    <table class="table  ">
                         <thead>
                             <th>#</th>
                             <th>Name</th>
@@ -31,16 +37,29 @@
                             <th>Action</th>
                         </thead>
                         <tbody>
-                           @foreach ($users as  $data)
+                           @foreach ($users as $key =>  $data)
                            <tr>
                             <td>{{ $loop->iteration }}</td>
 
                             <td>{{ $data->name }}</td>
-                            <td>{{$data->employees ? "Employee ": ''}} </td>
+                           @if ($data->getRoleNames()->isNotEmpty())
+                                @foreach ($data->getRoleNames() as $permission)
+                                    <td> <span class="badge badge-primary text-white mr-1">{{ $permission }}</span></td>
+                                @endforeach
+
+                            @else
+                            <td>Member</td>
+                           @endif
+
                             <td>{{ $data->email }}</td>
                             <td>
-                                <a href="" class="btn btn-primary btn-sm">View</a>
-
+                                @if ($key != 0)
+                                    @if (Auth::user()->can('user.delete'))
+                                    <a href="{{route('user.delete',$data->id)}}" class="btn btn-danger btn-sm"> <i class="fa fa-trash "></i></a>
+                                    @endif
+                                @else
+                                <span class="btn btn-dark btn-sm text-white"> <i class="fa fa-trash "></i></span>
+                                @endif
                             </td>
                         </tr>
                            @endforeach
@@ -48,6 +67,44 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-7">
+            @if (Auth::user()->can('role.assign'))
+            <div class="card">
+                <div class="card-header">
+                    <h4>Assign Role</h4>
+                    <a href="{{ route('role.index') }}" class=" btn btn-outline-primary " style="font-size: 11px !important;">Create Role </a>
+                </div>
+                <div class="card-body">
+                    <form action="{{route('roleAssign.store')}}" method="post">
+                        @csrf
+                        <div class="form-row mb-3">
+                            <div class="form-group col-md-6">
+                                <select name="user_id" class="single-select" id="">
+                                    <option value="">Select User</option>
+                                    @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <select name="role_id" class="single-select" id="">
+                                    <option value="">Select Role</option>
+                                    @foreach ($roles as $role)
+                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-primary float-right">Assign</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 
@@ -96,4 +153,8 @@
     </div>
 
 
+@endsection
+@section('script')
+<script src="{{asset('dashboard_assets/vendor/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('dashboard_assets/js/plugins-init/select2-init.js')}}"></script>
 @endsection
