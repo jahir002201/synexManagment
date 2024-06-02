@@ -28,7 +28,7 @@
                 @csrf
                 <div class="mb-3">
                     <label for="" class="form-label">Role Name</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" >
+                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required value="{{ old('name') }}" >
                     @error('name')<span class="text text-sm text-danger">{{ $message }}</span >  @enderror
 
 

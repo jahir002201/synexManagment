@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
+            $table->string('type', 255);
             $table->unsignedBigInteger('employee_id')->nullable();
             $table->string('purchase_by');
             $table->integer('amount');
-            $table->longText('note')->nullable();
+            $table->longText('note', 255)->nullable();
             $table->date('date')->nullable();
             $table->timestamps();
 

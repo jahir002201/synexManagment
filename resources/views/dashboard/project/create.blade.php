@@ -144,19 +144,19 @@
                         <div class="form-row mb-3">
                             <div class="form-group col-md-8">
                                 <label for="" class="form-label font-weight-bold">Project Name :</label>
-                                <input type="text" name="name" class="form-control" placeholder="Enter Project Name" value="{{old('name')}}" required>
+                                <input type="text" name="name" class="form-control" placeholder="Enter Project Name" value="{{old('name')}}" required value="{{old('name')}}">
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label font-weight-bold">Timeline :</label>
-                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="{{old('daterange')}}" required>
+                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="{{old('daterange')}}" required value="{{old('daterange')}}">
                             </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4" class="font-weight-bold">Client / Stakeholder :</label>
                                 <a href="{{ route('client.index') }}" class="btn btn-outline-primary float-right mr-1" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -8px; left: -1px; position: relative; font-size:10px;"></i></a>
-                                <select id="" name="client_id" class="single-select" required>
+                                <select id="" name="client_id" class="single-select" required >
                                   <option value="">SELECT CLIENT</option>
                                   @foreach ($client as $data )
                                       <option value="{{$data->id}}">{{$data->name}}</option>
@@ -167,30 +167,16 @@
                                 <label for="inputPassword4" class="font-weight-bold">Budget :</label>
                                 <input type="number" min="0" name="budget" id="" class="form-control" placeholder="৳" value="{{old('budget')}}" required>
                             </div>
-                            {{-- <div class="form-group col-lg-4">
-                                <label for="currency" class="font-weight-bold">Currency Type :</label>
-                                <select class="form-control" id="currencySelect">
-                                    <option value="">SELECT TYPE</option>
-                                    <option value="BDT">BDT</option>
-                                    <option value="USD">USD</option>
-                                    <option value="EURO">EURO</option>
-
-                                </select>
-                            </div> --}}
-                            {{-- <div class="form-group col-lg-4">
-                                <label for="rate" class="font-weight-bold">Exchange Rate :</label>
-                                <input type="text" class="form-control" id="exchangeRateInput" readonly>
-                            </div> --}}
                         </div>
                         <div id="snote" class="mb-3">
                             <label for="" class="form-label font-weight-bold">Project Description :</label>
-                            <textarea name="description" id="summernote" class="form-control " cols="30" rows="10" ></textarea>
+                            <textarea name="description" id="summernote" class="form-control " cols="30" rows="10" >{{old('description')}}</textarea>
                         </div>
 
                         <div class="form-row mb-3">
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Leader :</label>
-                                <select class="multi-select" name="leader"  required>
+                                <select class="multi-select" name="leader"  required value={{old('leader')}}}>
                                     <option value=""> SELECT LEADER</option>
                                     @foreach ($employees as $id => $name  )
                                         <option value="{{ $id }}">{{$name}}</option>
@@ -200,7 +186,7 @@
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Member :</label>
                                 <a href="{{ route('employee.index') }}" class="btn btn-outline-primary float-right" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -9px; left: -2px; position: relative; font-size:10px;"></i></a>
-                                <select class="multi-select" name="member[]" multiple="multiple" required>
+                                <select class="multi-select" name="member[]" multiple="multiple" required value="{{old('member[]')}}">
 
                                     @foreach ($employees as $id => $name  )
                                         <option value="{{ $id }}">{{$name}}</option>

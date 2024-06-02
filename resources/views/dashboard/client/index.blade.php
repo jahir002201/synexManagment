@@ -115,18 +115,18 @@
                     <div class="form-row mb-3">
                         <div class="form-group col-md-12">
                             <label for="" class="form-label font-weight-bold">Name <span class="text-danger">*</span> </label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter  Full Name" required>
+                            <input type="text" name="name" class="form-control" placeholder="Enter  Full Name" required value="{{old('name')}}">
                         </div>
 
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Phone <span class="text-danger">*</span></label>
-                            <input type="number" name="phone" class="form-control" placeholder="Enter Contact Number" required>
+                            <input type="number" name="phone" class="form-control" placeholder="Enter Contact Number" required value="{{old('phone')}}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="font-weight-bold">Email </label>
-                            <input type="email" name="email" class="form-control" id="inputPassword4" placeholder="Enter Email">
+                            <input type="email" name="email" class="form-control" id="inputPassword4" placeholder="Enter Email" value="{{old('email')}}" >
                           </div>
                     </div>
 
@@ -140,7 +140,7 @@
                    </div>
                    <div class="mb-3">
                         <label for="" class="form-label font-weight-bold">Address </label>
-                        <textarea class="form-control" name="address" id="" cols="30" rows="5" placeholder="Enter Address"></textarea>
+                        <textarea class="form-control" name="address" id="" cols="30" rows="5" placeholder="Enter Address">{{old('address')}}</textarea>
                    </div>
 
 

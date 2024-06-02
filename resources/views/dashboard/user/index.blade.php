@@ -123,21 +123,21 @@
                         <div class="form-row mb-3">
                             <div class="form-group col-md-6">
                                 <label for="" class="form-label font-weight-bold">Full Name :</label>
-                                <input type="text" name="name" class="form-control" placeholder="Enter  Full Name">
+                                <input type="text" name="name" class="form-control" placeholder="Enter  Full Name" required value="{{old('name')}}">
                             </div>
                             <div class="form-group col-md-6">
                               <label for="inputPassword4" class="font-weight-bold">Email :</label>
-                              <input type="email" name="email" class="form-control"  placeholder="Enter Email">
+                              <input type="email" name="email" class="form-control"  placeholder="Enter Email" required value="{{old('email')}}">
                             </div>
                         </div>
                         <div class="form-row mb-3">
                             <div class="form-group col-md-6">
                                 <label for="" class="form-label font-weight-bold">Password :</label>
-                                <input type="text" name="password" class="form-control" placeholder="Enter Password">
+                                <input type="text" name="password" class="form-control" placeholder="Enter Password" required value="{{old('password')}}">
                             </div>
                             <div class="form-group col-md-6">
                               <label for="inputPassword4" class="font-weight-bold">Confirm Password :</label>
-                              <input type="password" name="password_confirmation" class="form-control" id="inputPassword4" placeholder="Confirm  Password">
+                              <input type="password" name="password_confirmation" class="form-control" id="inputPassword4" placeholder="Confirm  Password" required>
                             </div>
 
                         </div>

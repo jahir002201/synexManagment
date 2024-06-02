@@ -45,7 +45,7 @@
 
                         <div class="col-lg-8 col-md-8 col-sm-8 float-right d-flex justify-content-end align-items-center">
                             <div class=" mb-2 mr-3 src">
-                                <input type="search" name="name" class="form-control " placeholder="Employee Name">
+                                <input type="search" name="name" class="form-control " placeholder="Employee Name" >
                             </div>
 
                             <div class=" mb-2 text-center mr-3">
@@ -115,21 +115,21 @@
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Full Name :</label>
-                            <input type="text" name="name" class="form-control" placeholder="Enter  Full Name">
+                            <input type="text" name="name" class="form-control" placeholder="Enter  Full Name" required value="{{old('name')}}" >
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Email :</label>
-                          <input type="email" name="email" class="form-control"  placeholder="Enter Email">
+                          <input type="email" name="email" class="form-control"  placeholder="Enter Email" required value="{{old('email')}}">
                         </div>
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Phone :</label>
-                            <input type="number" name="phone" class="form-control" placeholder="Enter Contact Number">
+                            <input type="number" name="phone" class="form-control" placeholder="Enter Contact Number" required value="{{old('phone')}}">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Start Date :</label>
-                          <input type="date" name="start_date" class="form-control" id="inputPassword4" placeholder="Enter Email">
+                          <input type="date" name="start_date" class="form-control" id="inputPassword4" placeholder="Enter Email" required value="{{old('start_date')}}">
                         </div>
                     </div>
 
@@ -137,7 +137,7 @@
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Department :</label>
 
-                            <select name="department" id="department" class="single-select">
+                            <select name="department" id="department" class="single-select" required >
                                 <option value="">SELECT DEPARTMENT</option>
                                 @foreach ($departments as $data )
                                     <option value="{{$data->id}}">{{$data->department}} </option>
@@ -148,7 +148,7 @@
                             <label for="inputPassword4" class="font-weight-bold">Designation : </label>
                             <a href="{{ route('department.index') }}" class="btn btn-outline-primary float-right" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -9px; left: -2px; position: relative; font-size:10px;"></i></a>
 
-                            <select name="designation" id="designation" class="single-select">
+                            <select name="designation" id="designation" class="single-select" required >
                                 <option value="">Designation</option>
 
                             </select>
@@ -157,11 +157,11 @@
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Password :</label>
-                            <input type="text" name="password" class="form-control" placeholder="Enter Password">
+                            <input type="text" name="password" class="form-control" placeholder="Enter Password" required  value="{{old('password')}}">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Confirm Password :</label>
-                          <input type="password" name="password_confirmation" class="form-control" id="inputPassword4" placeholder="Confirm  Password">
+                          <input type="password" name="password_confirmation" class="form-control" id="inputPassword4" placeholder="Confirm  Password"  required>
                         </div>
 
                     </div>

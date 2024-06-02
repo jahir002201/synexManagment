@@ -46,8 +46,12 @@ class ClientController extends Controller
         if(Auth::user()->can('client.create')){
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'phone' => 'required|max:14',
+                'phone' => 'required|min:10',
 
+            ],[
+
+                'phone.regex' => 'Phone number must start with 0',
+                'phone.min'   => 'Phone number minimum 10 digits',
             ]);
             if ($validator->fails()) {
                 $errors = $validator->errors();
@@ -125,8 +129,10 @@ class ClientController extends Controller
         $client = Client::find($id);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'phone' => 'required|max:14',
+            'phone' => 'required|min:10',
 
+        ],[
+            'phone.min'   => 'Phone number minimum 10 digits',
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();

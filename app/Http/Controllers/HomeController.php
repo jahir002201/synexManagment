@@ -66,7 +66,10 @@ class HomeController extends Controller
     }
 
     public function userDelete($id){
-        dd($id);
+        $user = User::find($id);
+        $user->delete();
+        flash()->options(['position' => 'bottom-right'])->success('User deleted successfully');
+        return back();
     }
 
 }

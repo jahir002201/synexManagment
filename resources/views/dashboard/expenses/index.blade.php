@@ -128,7 +128,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="" class="form-label font-weight-bold">Expenses Type <span class="text-danger">*</span>  </label>
-                            <input type="text" name="type" class="form-control" placeholder="Salary, Software Purchase, Tools, Others">
+                            <input type="text" name="type" class="form-control" placeholder="Salary, Software Purchase, Tools, Others" required value="{{old('type')}}">
                         </div>
                         {{-- <div class="form-group col-md-6">
                           <label for="inputPassword4" class="font-weight-bold">Email :</label>
@@ -147,21 +147,21 @@
                     <div class="form-row ">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="font-weight-bold">Purchase Date</label>
-                            <input type="date" name="date" class="form-control" id="inputPassword4" >
+                            <input type="date" name="date" class="form-control" id="inputPassword4" value="{{old('date')}}" >
                           </div>
                         <div class="form-group col-md-6">
                             <label for="" class="form-label font-weight-bold">Purchased By <span class="text-danger">*</span></label>
-                            <input type="text" name="purchased_by" class="form-control" placeholder="Name">
+                            <input type="text" name="purchased_by" class="form-control" placeholder="Name" required value="{{old('purchased_by')}}">
                         </div>
 
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label font-weight-bold">Ammount <span class="text-danger">*</span></label>
-                        <input type="number" name="amount" class="form-control " min="0" placeholder="৳">
+                        <input type="number" name="amount" class="form-control " min="0" placeholder="৳" required value="{{old('amount')}}">
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label font-weight-bold">Note</label>
-                       <textarea  name="note" id="" class="form-control "  placeholder="Description" cols="30" rows="5"></textarea>
+                       <textarea  name="note" id="" class="form-control "  placeholder="Description" cols="30" rows="5"> {{old('note')}} </textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
