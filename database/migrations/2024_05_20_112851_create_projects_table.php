@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id')->nullable();
             $table->string('dateRange');
             $table->integer('budget');
-            $table->string('description', 255)->nullable();
+            $table->longText('description')->nullable();
             $table->string('status');
             $table->string('priority');
             $table->string('leader_id')->nullable();
