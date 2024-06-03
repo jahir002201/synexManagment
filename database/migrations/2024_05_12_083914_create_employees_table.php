@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('start_date');
             $table->unsignedBigInteger('department_id')->nullable()->default(null);
             $table->unsignedBigInteger('designation_id')->nullable()->default(null);
-            $table->string('address',255)->nullable();
+            $table->longText('address')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
 
