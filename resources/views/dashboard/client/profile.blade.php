@@ -115,16 +115,21 @@
                 <p class="card-text"> {!!$data->description!!}</p>
 
                 <h6>Leader :</h6>
-                <p class="card-text">{{$data->leader->name}} </p>
+                <p class="card-text">{{$data->leader ? $data->leader->name : 'N/A'}} </p>
                 <h6>Members :</h6>
                 <p class="card-text">
                     @php
                         $memberIds = explode(',', $data->member_id);
                         $members = App\Models\User::whereIn('id', $memberIds)->get();
+
                     @endphp
-                   @foreach ($members as $member )
-                        {{ $member->name }}.
-                   @endforeach
+                    @if($members->count() == 0)
+                        {{ 'N/A' }}
+                    @else
+                        @foreach ($members as $member )
+                                {{  $member->name }}.
+                        @endforeach
+                    @endif
                 </p>
 
             </div>
