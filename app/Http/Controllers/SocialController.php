@@ -60,6 +60,9 @@ class SocialController extends Controller
      */
     public function destroy(Social $social)
     {
-        //
+        $social->delete();
+
+        return back();
+
     }
 }

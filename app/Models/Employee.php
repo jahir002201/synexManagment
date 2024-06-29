@@ -17,4 +17,7 @@ class Employee extends Model
     public function designations(){
         return $this->belongsTo(Designation::class, 'designation_id' );
      }
+     public function socials(){
+        return $this->hasMany(Social::class, 'user_id', 'user_id' );
+     }
 }

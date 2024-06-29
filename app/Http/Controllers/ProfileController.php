@@ -18,7 +18,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        
+
         return view('dashboard.profile');
     }
 
@@ -99,7 +99,7 @@ class ProfileController extends Controller
             $employee->phone = $request->phone;
             $employee->address = $request->address;
             $employee->save();
-            flash()->options(['position' => 'bottom-right'])->success('Data Updated successfully');
+            flash()->options(['position' => 'bottom-right'])->success('Profile Updated successfully');
             return back();
         }
         if($request->imgBtn == 1){
@@ -247,4 +247,5 @@ class ProfileController extends Controller
     {
         //
     }
+
 }

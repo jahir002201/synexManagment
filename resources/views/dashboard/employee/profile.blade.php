@@ -14,7 +14,7 @@
                         <img src="https://ui-avatars.com/api/?name={{$user->name}}&background=random" class="rounded-circle " style="width: 150px; height: auto;"  alt="" >
                         {{-- <img src="{{ asset('dashboard_assets/avatar-02.jpg') }}" class="img-fluid rounded-circle" alt=""> --}}
                         @else
-                        <img src="{{ asset('uploads/client') }}/{{$user->employees->image}}" class="img-fluid rounded-circle" alt="">
+                        <img src="{{ asset('uploads/employee') }}/{{$user->employees->image}}" class="img-fluid rounded-circle" alt="">
                         @endif
 
                     </div>
@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col-xl-4 col-sm-4 border-right-1 prf-col">
                                     <div class="profile-name">
-                                        <h4 class="text-primary">{{ $user->name}} asdfasdf</h4>
+                                        <h4 class="text-primary">{{ $user->name}} </h4>
                                         <p>{{$user->employees->departments ? $user->employees->departments->department : 'UNKNOWN'}} / {{$user->employees->designations? $user->employees->designations->designation : 'UNKNOWN'}}</p>
                                     </div>
                                 </div>
@@ -107,10 +107,15 @@
                                             <h5 class="f-w-500">Socials <span class="pull-right">:</span></h5>
                                         </div>
                                         <div class="col-8 ">
-                                            <i class="fa fa-facebook-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
-                                            <i class="fa fa-github-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
-                                            <i class="fa fa-linkedin-square text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
-                                            <i class="fa fa-whatsapp  text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
+                                            @foreach ($user->employees->socials as $data )
+                                            <div class="social_icons_container">
+                                                <a class="social_icons" href="{{ $data->link }}" target="_blank" rel="noopener noreferrer">
+                                                    <i class="{{ $data->icon }} text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
+                                                </a>
+
+                                            </div>
+                                            @endforeach
+
                                         </div>
                                     </div>
 

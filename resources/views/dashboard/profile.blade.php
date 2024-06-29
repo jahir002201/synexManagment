@@ -1,5 +1,35 @@
 
 @extends('dashboard.layouts.app')
+@section('style')
+ <style>
+    .social_icons_container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .social_icons {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hover_a_tag {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 40%;
+            transform: translateX(-50%);
+            z-index: 2;
+            background-color: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .social_icons_container:hover .hover_a_tag {
+            display: block;
+        }
+ </style>
+@endsection
 @section('content')
 
 @if (Auth::user()->employees)
@@ -67,7 +97,7 @@
                         </div>
                        </div>
                         <div class="tab-content ">
-                            <div id="about-me" class="tab-pane fade   shadow-sm rounded bg-white">
+                            <div id="about-me" class="tab-pane fade active show  shadow-sm rounded bg-white">
                                 <div class="profile-personal-info mt-4  pt-2 pl-4">
                                     <h4 class="text-primary mb-4 pt-4">Personal Information</h4>
                                     {{-- <div class="row mb-4">
@@ -108,10 +138,19 @@
                                         </div>
                                         <div class="col-8 ">
                                             @foreach (Auth::user()->socials as $data )
-                                                <a href="{{ $data->link }}" target="_blank" rel="noopener noreferrer">
+                                            <div class="social_icons_container">
+                                                <a class="social_icons" href="{{ $data->link }}" target="_blank" rel="noopener noreferrer">
                                                     <i class="{{ $data->icon }} text-dark mr-2" style="font-size: 30px;" aria-hidden="true"></i>
                                                 </a>
-
+                                                <form action="{{ route('social.destroy', $data->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class=" hover_a_tag text-danger" type="submit">
+                                                        <i class="fa fa-trash "></i>
+                                                    </button>
+                                                </form>
+                                                {{-- <a class="hover_a_tag" href="{{ route('social.delete', $data->id) }}" target="_blank" rel="noopener noreferrer"></a> --}}
+                                            </div>
                                             @endforeach
 
                                         </div>
@@ -120,7 +159,7 @@
                                 </div>
                             </div>
 
-                      <div id="profile-settings" class="tab-pane active show fade  ml-4">
+                      <div id="profile-settings" class="tab-pane  fade  ml-4">
                                 <div class="">
                                     <div class="settings-form">
 
@@ -140,10 +179,10 @@
                                                     <div class="card-body">
 
                                                         <div class="col-12 icon-div mb-3">
-                                                            <i class="fa fa-facebook-square  " style="font-size: 30px;" aria-hidden="true"></i>
-                                                            <i class="fa fa-github-square  " style="font-size: 30px;" aria-hidden="true"></i>
-                                                            <i class="fa fa-linkedin-square  " style="font-size: 30px;" aria-hidden="true"></i>
-                                                            <i class="fa fa-whatsapp  " style="font-size: 30px;" aria-hidden="true"></i>
+                                                            <i class="fa fa-facebook-square mr-1 " style="font-size: 30px;" aria-hidden="true"></i>
+                                                            <i class="fa fa-github-square mr-1 " style="font-size: 30px;" aria-hidden="true"></i>
+                                                            <i class="fa fa-linkedin-square mr-1 " style="font-size: 30px;" aria-hidden="true"></i>
+                                                            <i class="fa fa-whatsapp mr-1 " style="font-size: 30px;" aria-hidden="true"></i>
                                                         </div>
 
                                                         <div class="col-md-12 mb-3">
