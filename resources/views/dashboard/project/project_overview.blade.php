@@ -137,7 +137,7 @@
                         </div>
                     </div>
                     <div class="row mt-4  ml-1">
-                        <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6> <a href="{{route('client.show',$project->client_id)}}" class="" style="margin-bottom: 0.5rem;"> {{ $project->client->name}}</a>
+                        <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6> <a href="{{route('client.show',$project->client_id)}}" class="" style="margin-bottom: 0.5rem;"> {{ $project->client? $project->client->name : 'N/A' }}</a>
                     </div>
                     <div class="row   ml-1">
                         <h6 class="" style=" margin-right: 3px">Budget :</h6> <span style="position: relative; top: -2.5px">৳{{ $project->budget }}</span>
@@ -157,7 +157,12 @@
                                 <div class="d-inline-block  ">
                                     <p class="mb-0">Leader</p>
                                     <h6>
+                                        @if ($project->leader)
                                         <a class="" href="{{route('employee.show',$project->leader_id)}}" >{{$project->leader->name}}</a>
+                                        @else
+                                        {{ 'UNASSIGNED' }}
+                                        @endif
+
                                     </h6>
                                 </div>
                                 <div class="float-right ">
@@ -392,7 +397,7 @@
                         </div>
                     </div>
                     <div class="row mt-4  ml-1">
-                        <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6> <span class="" style="margin-bottom: 0.5rem;"> {{ $project->client->name}}</span>
+                        <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6> <span class="" style="margin-bottom: 0.5rem;"> {{ $project->client? $project->client->name : 'N/A'}}</span>
                     </div>
 
                     <div class="row mt-1 ml-1">
@@ -410,7 +415,7 @@
                                 <div class="d-inline-block  ">
                                     <p class="mb-0">Leader</p>
                                     <h6>
-                                        {{$project->leader->name}}
+                                        {{$project->leader? $project->leader->name : 'UNASSIGNED'}}
                                     </h6>
                                 </div>
                                 <div class="float-right ">

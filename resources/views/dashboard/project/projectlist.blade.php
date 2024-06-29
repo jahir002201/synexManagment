@@ -98,7 +98,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$data->name}} </td>
-                                        <td>{{$data->leader->name}}</td>
+                                        <td>{{$data->leader? $data->leader->name : 'UNASSIGNED'}}</td>
                                         <td>
                                             <span class="badge badge-light text-primary badge-xs" style="font-size: 10px">{{dateConvert($data->dateRange)}}</span>
                                            <span class="badge badge-light text-info badge-xs"> {{ dateLeft($data->dateRange, $data->status) }}</span>
@@ -176,7 +176,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$data->name}} </td>
-                                        <td>{{$data->leader->name}}</td>
+                                        <td>{{$data->leader? $data->leader->name : 'UNASSIGNED'}}</td>
                                         <td>
                                             <span class="badge badge-light text-primary badge-xs" style="font-size: 10px">{{dateConvert($data->dateRange)}}</span>
                                            <span class="badge badge-light text-info badge-xs"> {{ dateLeft($data->dateRange, $data->status) }}</span>

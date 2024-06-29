@@ -155,7 +155,13 @@
                             <tr>
 
                                 <td>{{ $data->name }}</td>
-                                <td><a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a></td>
+                                <td>
+                                    @if($data->leader)
+                                    <a href="{{ route('employee.show', $data->leader->id)  }}">{{ $data->leader->name  }}</a>
+                                    @else
+                                    {{ 'UNASSIGNED' }}
+                                    @endif
+                                </td>
                                 <td>
                                     {{ endDate($data->dateRange) }}
                                 </td>

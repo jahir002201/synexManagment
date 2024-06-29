@@ -139,6 +139,7 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         //project file
+        
         $files = json_decode($project->file, true) ?? [];
         //members
         $memberIds = explode(',', $project->member_id);
