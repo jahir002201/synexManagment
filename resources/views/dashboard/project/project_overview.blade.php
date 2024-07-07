@@ -222,7 +222,8 @@
                    @foreach ($project->tasks as $data )
 
                    <div class=" hover d-flex justify-content-between  pt-3 px-3 border-bottom">
-                       <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
+                       {{-- <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p> --}}
+                       <p class="text-dark fullText" data-title="{{ $data->title }}" data-serial="{{ $loop->iteration }}" >{{ substr($data->title,0,20) .'...' }}</p>
                        <div class="d-flex justify-content-end ">
 
                         @if (Auth::user()->can('project.task.edit'))
@@ -471,7 +472,8 @@
                    @foreach ($project->tasks as $data )
 
                    <div class=" hover d-flex justify-content-between  pt-3 px-3 border-bottom">
-                       <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p>
+                       {{-- <p class="text-dark copyable" data-title="{{ $data->title }}">{{ substr($data->title,0,20) .'...' }}</p> --}}
+                       <p class="text-dark fullText" data-title="{{ $data->title }}" data-serial="{{ $loop->iteration }}" >{{ substr($data->title,0,20) .'...' }}</p>
                        <div class="d-flex justify-content-end ">
                             <a href="{{ route('task.status.update', $data->id) }}" >
                                 <p class="text-dark  ml-2 update" style=" cursor: pointer"><i class="mt-1 fa fa-{{ $data->status == 1? 'check' : 'exclamation' }}  text-{{ $data->status == 1? 'success': 'danger' }} ">  </i></p>
@@ -538,6 +540,23 @@
 
 
 @endif
+    {{-- task show modal --}}
+    <div class="modal fade" id="taskShowModal">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="border-left: 2px solid #593bdb">
+                    <span class="modal-title ml-1" id="titleNo" ></span></h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <p id="modalTitle" class="text-dark"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
 <script>
@@ -626,6 +645,19 @@
     });
     $('body').on('click', '.update', function () {
         $('#taskUpdate').submit();
+    });
+    });
+
+</script>
+<script>
+    $(document).ready(function(){
+    $('.fullText').click(function(){
+        var title = $(this).data('title');
+        var serial = $(this).data('serial');
+
+        $('#modalTitle').text(title);
+        $('#titleNo').text(' Task '+serial);
+        $('#taskShowModal').modal('show');
     });
 });
 

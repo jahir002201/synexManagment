@@ -72,7 +72,8 @@
                     <tbody>
                         @forelse ($taskFour as $data )
                             <tr>
-                                <td class="w-100">{{ substr($data->title,0,40) .'...' }}</td>
+                                <td class="w-100">{{$data->title }}</td>
+                                {{-- <td class="w-100">{{ substr($data->title,0,40) .'...' }}</td> --}}
                                 <td>
                                     <a href="{{ route('task.status.update', $data->id) }}" >
                                         <p class="text-dark  ml-2 " style=" cursor: pointer"><i class="mt-1 fa fa-{{ $data->status == 1? 'check' : 'exclamation' }}  text-{{ $data->status == 1? 'success': 'danger' }} ">  </i></p>
@@ -141,7 +142,7 @@
                                 </span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('project.show', $data->id) }}" class="btn btn-outline-primary btn-sm " style="height: 24px">
+                                    <a href="{{ route('employee.project.overview', $data->id) }}" class="btn btn-outline-primary btn-sm " style="height: 24px">
                                      <span style="font-size: 10px; position: relative; top: -5px">view</span>
                                     </a>
 
