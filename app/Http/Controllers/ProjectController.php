@@ -138,13 +138,15 @@ class ProjectController extends Controller
     public function show(String $id)
     {
         $project = Project::find($id);
+
         //project file
-        
+
         $files = json_decode($project->file, true) ?? [];
         //members
         $memberIds = explode(',', $project->member_id);
         $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
         $members = User::whereIn('id', $memberIds)->get();
+
         if(Auth::user()->can('project.overView')){
             return view('dashboard.project.project_overview',[
                 'project' => $project,
@@ -227,7 +229,9 @@ class ProjectController extends Controller
     }
 
     public function employeeProjectShow($id){
+
         $project = Project::find($id);
+
         //project file
         $files = json_decode($project->file, true) ?? [];
         //members
@@ -235,13 +239,21 @@ class ProjectController extends Controller
         $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
         $members = User::whereIn('id', $memberIds)->get();
 
-
+       
+        if ( (in_array(Auth::user()->id, $memberIds)) || ($project->leader? ($project->leader_id == Auth::user()->id): false)) {
             return view('dashboard.project.project_overview',[
                 'project' => $project,
                 'members' => $members,
                 'memberCount' => $memberCount,
                 'files' => $files,
             ]);
+
+        } else {
+           return redirect(route('dashboard'));
+
+        }
+
+
 
     }
 }
