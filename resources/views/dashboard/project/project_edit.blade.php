@@ -139,8 +139,9 @@
                 </div>
                 <div class=" mt-2 border-bottom"></div>
                 <div class="card-body">
-                    <form action="{{route('project.store')}}" method="POST">
+                    <form action="{{route('project.update',$project->id)}}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="form-row mb-3">
                             <div class="form-group col-md-8">
                                 <label for="" class="form-label font-weight-bold">Project Name :</label>
@@ -156,7 +157,7 @@
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4" class="font-weight-bold">Client / Stakeholder :</label>
                                 <a href="{{ route('client.index') }}" class="btn btn-outline-primary float-right mr-1" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -8px; left: -1px; position: relative; font-size:10px;"></i></a>
-                                <select id="" name="client_id" class="single-select" required >
+                                <select id="" name="client_id" class="single-select"  >
                                   <option value="">SELECT CLIENT</option>
                                   @foreach ($client as $id => $name )
                                       <option {{ $id == $project->client_id ? 'selected' : '' }}  value="{{$id}}">{{$name}}</option>
@@ -176,7 +177,7 @@
                         <div class="form-row mb-3">
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Leader :</label>
-                                <select class="multi-select" name="leader"  required >
+                                <select class="multi-select" name="leader"   >
                                     <option value=""> SELECT LEADER</option>
                                     @foreach ($employees as $id => $name  )
                                         <option {{ $id == $project->leader_id ? 'selected' : '' }}   value="{{ $id }}">{{$name}}</option>
@@ -186,7 +187,7 @@
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Member :</label>
                                 <a href="{{ route('employee.index') }}" class="btn btn-outline-primary float-right" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -9px; left: -2px; position: relative; font-size:10px;"></i></a>
-                                <select class="multi-select" name="member[]" multiple="multiple" required >
+                                <select class="multi-select" name="member[]" multiple="multiple"  >
 
                                     @foreach ($employees as $id => $name  )
                                         <option

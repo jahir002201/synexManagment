@@ -123,7 +123,7 @@
                             <tr>
 
                                 <td>{{ $data->name }}</td>
-                                <td>{{ $data->leader->name  }}</td>
+                                <td>{{ $data->leader? $data->leader->name : 'UNASSIGNED'  }}</td>
                                 <td>
                                     {{ endDate($data->dateRange) }}
                                 </td>

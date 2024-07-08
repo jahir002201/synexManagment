@@ -137,7 +137,12 @@
                         </div>
                     </div>
                     <div class="row mt-4  ml-1">
-                        <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6> <a href="{{route('client.show',$project->client_id)}}" class="" style="margin-bottom: 0.5rem;"> {{ $project->client? $project->client->name : 'N/A' }}</a>
+                        <h6 class="" style="margin-top: 2px; margin-right: 3px">Client : </h6>
+                        @if($project->client_id == 0)
+                        <span style="position: relative; top: -2.5px">N/A</span>
+                        @else
+                        <a href="{{route('client.show',$project->client_id)}}" class="" style="margin-bottom: 0.5rem;"> {{ $project->client? $project->client->name : 'N/A' }}</a>
+                        @endif
                     </div>
                     <div class="row   ml-1">
                         <h6 class="" style=" margin-right: 3px">Budget :</h6> <span style="position: relative; top: -2.5px">৳{{ $project->budget }}</span>
@@ -178,7 +183,12 @@
                                 <div class="float-right ">
                                     <p class="mb-0">Members</p>
                                 <h6 class="ml-4">
+                                    @if ($memberCount == 0)
+                                        {{ 'N/A' }}
+                                    @else
+
                                     {{$memberCount >= 5 ? '5+' : $memberCount}}
+                                    @endif
                                 </h6>
                                 </div>
                             </div>
@@ -433,7 +443,11 @@
                                 <div class="float-right ">
                                     <p class="mb-0">Members</p>
                                 <h6 class="ml-4">
+                                    @if($memberCount == 0)
+                                        {{ 'N/A' }}
+                                    @else
                                     {{$memberCount >= 5 ? '5+' : $memberCount}}
+                                    @endif
                                 </h6>
                                 </div>
                             </div>
@@ -498,14 +512,16 @@
                         <p class=" text-dark pb-0 mb-0">Name</p>
                         <p class="text-dark pb-0 mb-0">Designation</p>
                     </div>
-                    @foreach ($members as $data )
+                    @forelse ($members as $data )
 
                     <div class="d-flex justify-content-between pt-3 px-3 border-bottom">
                         <p >{{$data->name}}</p>
 
                         <p class="text-dark"><i class="badge badge-outline-success text-success">  {{$data->employees->designations? $data->employees->designations->designation : 'UNKNOWN'}}</i></p>
                     </div>
-                    @endforeach
+                    @empty
+                    @endforelse
+
 
                 </div>
             </div>

@@ -143,8 +143,8 @@ class ProjectController extends Controller
 
         $files = json_decode($project->file, true) ?? [];
         //members
-        $memberIds = explode(',', $project->member_id);
-        $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
+        $memberIds = $project->member_id ? explode(',', $project->member_id) : [];
+        $memberCount =  User::whereIn('id', $memberIds)->pluck('name')->count();
         $members = User::whereIn('id', $memberIds)->get();
 
         if(Auth::user()->can('project.overView')){
@@ -173,12 +173,15 @@ class ProjectController extends Controller
         $client = Client::pluck('name','id');
         $employees = User::has('employees')->pluck('name', 'id');
         $memberIds = explode(',', $project->member_id);
-        return view('dashboard.project.project_edit',[
-            'project'  => $project,
-            'client'   => $client,
-            'employees' => $employees,
-            'members' => $memberIds
-        ]);
+        if(Auth::user()->can('project.edit')){
+            return view('dashboard.project.project_edit',[
+                'project'  => $project,
+                'client'   => $client,
+                'employees' => $employees,
+                'members' => $memberIds
+            ]);
+        }else{return back();}
+
     }
 
     /**
@@ -186,7 +189,39 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+          //project data upload
+          $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'daterange' => 'required',
+            'budget'    => 'required',
+            ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->messages() as  $messages) {
+                foreach ($messages as $message) {
+                    flash()->options([
+                        'position' => 'bottom-right',
+                    ])->error($message);
+                }
+            }
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $project = Project::find($id);
+        $project->name = $request->name;
+        $project->client_id = $request->client_id;
+        $project->budget = $request->budget;
+        $project->description = $request->description;
+        $project->dateRange = $request->daterange;
+        $project->status = $request->status;
+        $project->priority = $request->priority;
+        $project->leader_id = $request->leader;
+        $memberIds = $request->member ? implode(',', $request->member):null;
+        $project->member_id = $memberIds;
+        $project->save();
+        flash()->options(['position' => 'bottom-right'])-> success('Project updated successfully');
+        return redirect()->route('project.show', $project->id);
     }
 
     /**
