@@ -120,13 +120,13 @@
 @section('content')
 <div class="row ">
     <div class="col-lg-6">
-        <h3 class="display-5">Create Projects</h3>
+        <h3 class="display-5">Edit Project</h3>
     </div>
     <div class="col-lg-6">
         <ol class="breadcrumb " style="float:inline-end; background-color: transparent;">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
             <li class="breadcrumb-item">Projects</li>
-            <li class="breadcrumb-item " ><a class="text-primary">Create Project</a></li>
+            <li class="breadcrumb-item " ><a class="text-primary">Edit Project</a></li>
         </ol>
     </div>
 
@@ -135,7 +135,7 @@
         <div class="col-lg-12 mb-5">
             <div class="card ">
                 <div class="card-header ">
-                   <h4 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp;Create Project</h4>
+                   <h4 class="font-weight-bold" > <span style="border-left: 4px solid #593bdb"> </span> &nbsp;Edit Project </h4>
                 </div>
                 <div class=" mt-2 border-bottom"></div>
                 <div class="card-body">
@@ -144,12 +144,12 @@
                         <div class="form-row mb-3">
                             <div class="form-group col-md-8">
                                 <label for="" class="form-label font-weight-bold">Project Name :</label>
-                                <input type="text" name="name" class="form-control" placeholder="Enter Project Name" value="{{old('name')}}" required value="{{old('name')}}">
+                                <input type="text" name="name" class="form-control" placeholder="Enter Project Name" value="{{ $project->name }}" required >
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="" class="form-label font-weight-bold">Timeline :</label>
-                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="{{old('daterange')}}" required value="{{old('daterange')}}">
+                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="{{ $project->dateRange }}" required >
                             </div>
                         </div>
                         <div class="form-row mb-3">
@@ -158,38 +158,43 @@
                                 <a href="{{ route('client.index') }}" class="btn btn-outline-primary float-right mr-1" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -8px; left: -1px; position: relative; font-size:10px;"></i></a>
                                 <select id="" name="client_id" class="single-select" required >
                                   <option value="">SELECT CLIENT</option>
-                                  @foreach ($client as $data )
-                                      <option value="{{$data->id}}">{{$data->name}}</option>
+                                  @foreach ($client as $id => $name )
+                                      <option {{ $id == $project->client_id ? 'selected' : '' }}  value="{{$id}}">{{$name}}</option>
                                   @endforeach
                               </select>
                               </div>
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Budget :</label>
-                                <input type="number" min="0" name="budget" id="" class="form-control" placeholder="৳" value="{{old('budget')}}" required>
+                                <input type="number" min="0" name="budget" id="" class="form-control" placeholder="৳" value="{{ $project->budget }}" required>
                             </div>
                         </div>
                         <div id="snote" class="mb-3">
                             <label for="" class="form-label font-weight-bold">Project Description :</label>
-                            <textarea name="description" id="summernote" class="form-control " cols="30" rows="10" >{{old('description')}}</textarea>
+                            <textarea name="description" id="summernote" class="form-control " cols="30" rows="10" >{{ $project->description }}</textarea>
                         </div>
 
                         <div class="form-row mb-3">
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Leader :</label>
-                                <select class="multi-select" name="leader"  required value={{old('leader')}}>
+                                <select class="multi-select" name="leader"  required >
                                     <option value=""> SELECT LEADER</option>
                                     @foreach ($employees as $id => $name  )
-                                        <option value="{{ $id }}">{{$name}}</option>
+                                        <option {{ $id == $project->leader_id ? 'selected' : '' }}   value="{{ $id }}">{{$name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Team Member :</label>
                                 <a href="{{ route('employee.index') }}" class="btn btn-outline-primary float-right" style="height:18px; width:30px;"><i class="fa fa-plus" style="top: -9px; left: -2px; position: relative; font-size:10px;"></i></a>
-                                <select class="multi-select" name="member[]" multiple="multiple" required value="{{old('member[]')}}">
+                                <select class="multi-select" name="member[]" multiple="multiple" required >
 
                                     @foreach ($employees as $id => $name  )
-                                        <option value="{{ $id }}">{{$name}}</option>
+                                        <option
+                                            @foreach ($members as $member)
+                                            {{ $id == $member ? 'selected' : '' }}
+                                            @endforeach
+                                            value="{{ $id }}">{{$name}}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -200,17 +205,17 @@
                             <div class="form-group  col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Status :</label>
                                 <select name="status" class="single-select" value="{{old('status')}}">
-                                    <option selected>INPROGRESS</option>
-                                    <option>ON-HOLD</option>
-                                    <option>COMPLETED</option>
+                                    <option {{ $project->status == 'INPROGRESS' ? 'selected' : '' }}>INPROGRESS</option>
+                                    <option {{ $project->status == 'ON-HOLD' ? 'selected' : '' }} >ON-HOLD</option>
+                                    <option {{ $project->status == 'COMPLETED' ? 'selected' : '' }} >COMPLETED</option>
                                 </select>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label for="inputPassword4" class="font-weight-bold">Priority :</label>
                                 <select name="priority" class="single-select" value="{{old('priority')}}">
-                                    <option>LOW</option>
-                                    <option selected >MEDIUM</option>
-                                    <option>HIGH</option>
+                                    <option {{ $project->priority == 'LOW' ? 'selected' : '' }} >LOW</option>
+                                    <option {{ $project->priority == 'MEDIUM' ? 'selected' : '' }} >MEDIUM</option>
+                                    <option {{ $project->priority == 'HIGH' ? 'selected' : '' }} >HIGH</option>
                                 </select>
                             </div>
                         </div>
@@ -219,7 +224,7 @@
 
 
 
-                            <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Create Project</button>
+                            <button class="btn  btn-outline-primary float-right" style="font-size: 11px;">Update Project</button>
                         </div>
                     </form>
                 </div>

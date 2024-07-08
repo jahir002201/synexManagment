@@ -169,7 +169,16 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Project::find($id);
+        $client = Client::pluck('name','id');
+        $employees = User::has('employees')->pluck('name', 'id');
+        $memberIds = explode(',', $project->member_id);
+        return view('dashboard.project.project_edit',[
+            'project'  => $project,
+            'client'   => $client,
+            'employees' => $employees,
+            'members' => $memberIds
+        ]);
     }
 
     /**
@@ -239,7 +248,7 @@ class ProjectController extends Controller
         $memberCount = User::whereIn('id', $memberIds)->pluck('name')->count();
         $members = User::whereIn('id', $memberIds)->get();
 
-       
+
         if ( (in_array(Auth::user()->id, $memberIds)) || ($project->leader? ($project->leader_id == Auth::user()->id): false)) {
             return view('dashboard.project.project_overview',[
                 'project' => $project,

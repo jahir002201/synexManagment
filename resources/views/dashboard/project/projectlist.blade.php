@@ -110,7 +110,8 @@
                                         @if (Auth::user()->can('project.edit') || Auth::user()->can('project.delete'))
                                         <td class="d-flex justify-content-spacebetween">
                                             @if (Auth::user()->can('project.edit'))
-                                            <a href="{{route('project.show',$data->id) }}" class=" btn btn-primary btn-sm mr-1  "> <i class="fa fa-eye "></i></a>
+                                            <a href="{{route('project.show',$data->id) }}" title="View" class=" btn btn-outline-primary btn-sm mr-1  "> <i class="fa fa-eye "></i></a>
+                                            <a href="{{route('project.edit',$data->id) }}" title="Edit" class=" btn btn-outline-info btn-sm mr-1  "> <i class="fa fa-pencil"></i></a>
                                             @endif
                                             @if (Auth::user()->can('project.delete'))
 
@@ -118,7 +119,7 @@
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <button class=" btn btn-danger btn-sm   "> <i class="fa fa-trash "></i></button>
+                                                <button title="Delete" class=" btn btn-outline-danger btn-sm   "> <i class="fa fa-trash "></i></button>
                                             </form>
                                             @endif
                                         </td>
