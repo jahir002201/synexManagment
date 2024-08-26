@@ -26,7 +26,8 @@ class ServiceProject extends Model
     // Define any relationships if applicable
     public function serviceCategory()
     {
-        return $this->belongsTo(ServiceCategory::class);
+        return $this->belongsTo(ServiceCategory::class)->withDefault([
+            'name' => 'Unknown'
+        ]);
     }
-
 }

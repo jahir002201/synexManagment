@@ -2,96 +2,49 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\ServiceProject;
-use App\Models\ServiceCategory;
-use App\Helpers\Photo;
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ProjectResource;
 
 class ServiceProjectController extends Controller
 {
     public function index()
     {
-        $projects = ServiceProject::with('serviceCategory')->latest()->paginate(2);
-        if ($projects) {
+        $data = ProjectResource::collection(ServiceProject::paginate(1));
+
+        if ($data) {
             return response()->json([
                 'status' => 1,
-                'data' => $projects,
-            ],200);
+                'data' => $data,
+                'pagination' => [
+                    'total' => $data->total(),
+                    'count' => $data->count(),
+                    'per_page' => $data->perPage(),
+                    'current_page' => $data->currentPage(),
+                    'total_pages' => $data->lastPage(),
+                ],
+            ]);
         }
 
         return response()->json([
             'status' => 0,
             'message' => 'Not found',
-        ],200);
+        ], 200);
     }
-
-    public function show(ServiceProject $project)
+    public function homeitem()
     {
-        return response()->json($project, Response::HTTP_OK);
-    }
+        $data = ProjectResource::collection(ServiceProject::get()->take(3));
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'thumbnail_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'company_name' => 'required|string',
-            'title' => 'required|string',
-            'short_description' => 'required|string',
-            'slug' => 'nullable|unique:service_projects',
-            'project_url' => 'nullable|url',
-            'service_category_id' => 'required|exists:service_categories,id',
-        ]);
-
-        if ($request->hasFile('thumbnail_image')) {
-            Photo::upload($request->file('thumbnail_image'), 'uploads/service_project/photo', 'PROJECT', [640, 420]);
+        if ($data) {
+            return response()->json([
+                'status' => 1,
+                'data' => $data,
+            ]);
         }
 
-        $data = $request->all();
-        $data['thumbnail_image'] = Photo::$name;
-
-        $project = ServiceProject::create($data);
-        return response()->json($project, Response::HTTP_CREATED);
-    }
-
-    public function update(Request $request, ServiceProject $project)
-    {
-        $request->validate([
-            'thumbnail_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'company_name' => 'required|string',
-            'title' => 'required|string',
-            'short_description' => 'required|string',
-            'slug' => 'nullable|unique:service_projects,slug,' . $project->id,
-            'project_url' => 'nullable|url',
-            'service_category_id' => 'required|exists:service_categories,id',
-        ]);
-
-        if ($request->hasFile('thumbnail_image')) {
-            if ($project->thumbnail_image) {
-                Photo::delete($project->thumbnail_image);
-            }
-
-            Photo::upload($request->file('thumbnail_image'), 'uploads/service_project/photo', 'PROJECT', [640, 420]);
-            $filePath = Photo::$name;
-        } else {
-            $filePath = $project->thumbnail_image;
-        }
-
-        $data = $request->all();
-        $data['thumbnail_image'] = $filePath;
-
-        $project->update($data);
-        return response()->json($project, Response::HTTP_OK);
-    }
-
-    public function destroy(ServiceProject $project)
-    {
-        if ($project->thumbnail_image) {
-            Photo::delete($project->thumbnail_image);
-        }
-
-        $project->delete();
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return response()->json([
+            'status' => 0,
+            'message' => 'Not found',
+        ], 200);
     }
 }

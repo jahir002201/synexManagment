@@ -37,7 +37,7 @@ class ServiceProjectController extends Controller
             Photo::upload($request->file('thumbnail_image'), 'uploads/service_project/photo', 'PROJECT', [640, 420]);
         }
         $data = $request->all();
-        $data['thumbnail_image'] = Photo::$name; 
+        $data['thumbnail_image'] = Photo::$name;
         ServiceProject::create($data);
         return back()->with('success', 'Project created successfully.');
     }
@@ -71,8 +71,8 @@ class ServiceProjectController extends Controller
             }
 
             // Upload new file
-           Photo::upload($request->file('thumbnail_image'), 'uploads/service_project/photo', 'PROJECT', [640, 420]);
-           $filePath = Photo::$name;
+            Photo::upload($request->file('thumbnail_image'), 'uploads/service_project/photo', 'PROJECT', [640, 420]);
+            $filePath = Photo::$name;
         } else {
             $filePath = $project->thumbnail_image;
         }
