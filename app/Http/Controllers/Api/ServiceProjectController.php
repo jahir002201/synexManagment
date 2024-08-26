@@ -10,7 +10,7 @@ class ServiceProjectController extends Controller
 {
     public function index()
     {
-        $data = ProjectResource::collection(ServiceProject::paginate(10));
+        $data = ProjectResource::collection(ServiceProject::paginate(1));
 
         if ($data) {
             return response()->json([

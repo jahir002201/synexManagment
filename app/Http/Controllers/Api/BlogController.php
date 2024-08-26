@@ -10,18 +10,25 @@ class BlogController extends Controller
 {
     public function index()
     {
+        $blogs = Blog::orderBy('view_count', 'desc')->take(4)->get();
+        $bestOne = new BlogsResource($blogs->first());
+        $bestThree = BlogsResource::collection($blogs->skip(1)->take(3));
 
-        $blogs = BlogsResource::collection(Blog::paginate(10));
-        if ($blogs) {
+        $latest = BlogsResource::collection(Blog::latest()->paginate(1));
+        if ($latest) {
             return response()->json([
                 'status' => 1,
-                'blogs' => $blogs,
+                'bests' => [
+                    'bestOne' => $bestOne,
+                    'bestThree' => $bestThree,
+                ],
+                'latest' => $latest,
                 'pagination' => [
-                    'total' => $blogs->total(),
-                    'count' => $blogs->count(),
-                    'per_page' => $blogs->perPage(),
-                    'current_page' => $blogs->currentPage(),
-                    'total_pages' => $blogs->lastPage(),
+                    'total' => $latest->total(),
+                    'count' => $latest->count(),
+                    'per_page' => $latest->perPage(),
+                    'current_page' => $latest->currentPage(),
+                    'total_pages' => $latest->lastPage(),
                 ],
             ]);
         }
