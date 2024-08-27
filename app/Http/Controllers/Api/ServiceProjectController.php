@@ -10,7 +10,7 @@ class ServiceProjectController extends Controller
 {
     public function index()
     {
-        $data = ProjectResource::collection(ServiceProject::paginate(1));
+        $data = ProjectResource::collection(ServiceProject::paginate(10));
 
         if ($data) {
             return response()->json([
@@ -31,6 +31,7 @@ class ServiceProjectController extends Controller
             'message' => 'Not found',
         ], 200);
     }
+
     public function homeitem()
     {
         $data = ProjectResource::collection(ServiceProject::get()->take(3));
