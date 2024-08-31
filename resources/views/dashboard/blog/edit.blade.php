@@ -1,11 +1,10 @@
 @extends('dashboard.layouts.app')
 
-@section('style')
+@section('summernote-style')
     <!-- include libraries(jQuery, bootstrap) -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+  
 @endsection
 
 @section('content')
@@ -14,8 +13,8 @@
         <div class="row">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fa-solid fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="" class="disabled">Blogs</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('blog.create') }}">View</a></li>
+                <li class="breadcrumb-item"><a class="text-primary" href="{{ route('blog.create') }}" class="disabled">Blogs</a></li>
+                <li class="breadcrumb-item"><a class="text-primary" href="{{ route('blog.create') }}">View</a></li>
                 <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit</a></li>
             </ol>
             <div class="col-lg-12">
@@ -35,20 +34,15 @@
                                     <label class="col-sm-3 col-form-label">Category Name</label>
                                     <select name="category_id" class="form-control">
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name ?? Unknown }}</option>
+                                                <option {{$category->id==$blog->category_id? "selected":""}} value="{{ $category->id }}">{{ $category->name ?? Unknown }}</option>
                                             @endforeach
                                             <option value="" disabled>If category is not in the list, than firstly add the category's information</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label class="col-sm-3 col-form-label">Employee Name</label>
-                                    <select name="employee_id" class="form-control">
-                                            @foreach ($employees as $employee)
-                                                <option value="{{ $employee->id }}">{{ $employee->users->name ?? Unknown }}</option>
-                                            @endforeach
-                                            <option value="" disabled>If category is not in the list, than firstly add the category's information</option>
-                                    </select>
+                                    <label class="col-sm-3 col-form-label">Author </label>
+                                    <input class="form-control" type="text" name="author" value="{{ $blog->author}}" readonly>                                  
                                 </div>
 
                                 <div class="form-group col-md-6">
@@ -62,22 +56,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label for="formFile" class="form-label">Image</label>
-                                    <input class="form-control" type="file" id="formFile" name="image">
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Content</label>
-                                    <textarea id="summernote" class="form-control @error('content') is-invalid @enderror" name="content">{{ $blog->content }}</textarea>
-                                    @error('content')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
                                 <div class="form-group col-md-6">
                                     <label class="col-sm-3 col-form-label">Blog Slug</label>
                                     <div class="col-sm-12">
@@ -89,6 +67,23 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label for="formFile" class="form-label">Image</label>
+                                    <input class="form-control" type="file" id="formFile" name="image">
+                                </div>
+
+                                <div class=" col-12">
+                                    <label class="col-sm-3 col-form-label">Content</label>
+                                    <textarea id="summernote" class="form-control @error('content') is-invalid @enderror" name="content">{{ $blog->content }}</textarea>
+                                    @error('content')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                
 
                                 <div class="form-group col-md-6">
                                     <label class="col-sm-3 col-form-label">Status</label>
@@ -143,9 +138,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">SEO Description</label>
-                                <textarea class="form-control @error('seo_description') is-invalid @enderror" rows="5" name="seo_description">{{ $blog->seo_description }}</textarea>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <label class="form-label">SEO Description</label>
+                                    <textarea class="form-control @error('seo_description') is-invalid @enderror" rows="5" cols="130" name="seo_description">{{ $blog->seo_description }}</textarea>
+                                </div>
                                 @error('seo_description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -163,7 +161,8 @@
 
 @endsection
 
-@section('script')
+@section('summernote-script')
+<script src="{{asset('dashboard_assets/js/sd-note.js')}}"> </script>
 <script>
     $('#summernote').summernote({
       placeholder: 'Write content for your blog',

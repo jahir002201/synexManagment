@@ -4,9 +4,9 @@
         <div class="row">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fa-solid fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="" class="disabled">Category</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('category.create') }}">View</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit</a></li>
+                <li class="breadcrumb-item"><a class="text-primary" href="{{route('category.index')}}" class="disabled">Category</a></li>
+                <li class="breadcrumb-item"><a class="text-primary" href="{{ route('category.create') }}">View</a></li>
+                <li class="breadcrumb-item active"><a class="text-primary" href="{{ route('category.create')}}">Edit</a></li>
             </ol>
             @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
@@ -103,8 +103,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">SEO Description</label>
-                                <textarea class="from-control @error('seo_description') is-invalid @enderror" rows="5" name="seo_description">{{ $category->seo_description }}</textarea>
+                                <div class="col-lg-12">
+                                    <label class="col-form-label">SEO Description</label><br>
+                                    <textarea class="from-control @error('seo_description') is-invalid @enderror" rows="5" cols="130" name="seo_description">{{ $category->seo_description }}</textarea>
+                                </div>
                                 @error('seo_description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

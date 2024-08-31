@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Helpers\Photo;
 
+
 class BlogController extends Controller
 {
     /**
@@ -17,13 +18,10 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blog = Blog::all();
-        $category = Category::all();
-        $employee = Employee::all();
+        $blog = Blog::latest()->paginate(5);
+    
         return view('dashboard.blog.index', [
-            'blog'          => $blog,
-            'categories'    => $category,
-            'employees'    =>$employee,
+            'blog' => $blog,
         ]);
     }
 
@@ -34,11 +32,11 @@ class BlogController extends Controller
     {
         $blog = Blog::all();
         $category = Category::all();
-        $employee = Employee::all();
+        $employee = auth()->user();
         return view('dashboard.blog.create', [
             'blog'          => $blog,
             'categories'    => $category,
-            'employees'     => $employee,
+            'employee'     => $employee,
         ]);
     }
 
@@ -49,7 +47,7 @@ class BlogController extends Controller
     {
         $request->validate([
             'category_id'       => 'required',
-            'employee_id'       => 'required',
+            'author'            => 'required',
             'title'             => 'required',
             'content'           => 'required',
             'seo_title'         => 'required',
@@ -64,7 +62,7 @@ class BlogController extends Controller
         Photo::upload($request->image, 'uploads/blog/photo/blog', 'BLOG', [640, 420]);
 
         $blog->category_id      = $request->category_id;
-        $blog->employee_id      = $request->employee_id;
+        $blog->author           = $request->author;
         $blog->title            = $request->title;
         $blog->content          = $request->content;
         $blog->image            = Photo::$name?Photo::$name:'Null';
@@ -89,12 +87,8 @@ class BlogController extends Controller
     public function show(string $id)
     {
         $blog = Blog::find($id);
-        $category = Category::all();
-        $employee = Employee::all();
         return view('dashboard.blog.show', [
-            'blog'          => $blog,
-            'categories'    => $category,
-            'employees' =>$employee,
+            'blog'  => $blog,
         ]);
     }
 
@@ -105,11 +99,9 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         $category = Category::all();
-        $employee = Employee::all();
         return view('dashboard.blog.edit', [
             'blog'          => $blog,
             'categories'    => $category,
-            'employees' =>$employee,
         ]);
 
     }
@@ -128,8 +120,8 @@ class BlogController extends Controller
             'seo_description'   => 'required',
         ]);
 
+        // $blog->author           = $request->author;
         $blog->category_id      = $request->category_id;
-        $blog->employee_id      = $request->employee_id;
         $blog->title            = $request->title;
         $blog->content          = $request->content;
         $blog->seo_title        = $request->seo_title;

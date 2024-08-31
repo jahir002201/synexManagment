@@ -18,8 +18,8 @@
             <p><strong>Active:</strong> {{ $project->is_active ? 'Yes' : 'No' }}</p>
         </div>
         <div class="card-footer">
-            <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning">Edit</a>
-            <a href="{{ route('projects.index') }}" class="btn btn-secondary">Back to List</a>
+            <a href="{{ route('service-projects.edit', $project->id) }}" class="btn btn-warning">Edit</a>
+            <a href="{{ route('service-projects.index') }}" class="btn btn-secondary">Back to List</a>
         </div>
     </div>
 </div>

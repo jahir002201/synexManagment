@@ -11,7 +11,7 @@ class ServiceProjectController extends Controller
 {
     public function index()
     {
-        $projects = ServiceProject::with('serviceCategory')->latest()->paginate(2);
+        $projects = ServiceProject::with('serviceCategory')->latest()->paginate(5);
         return view('dashboard.service_project.index', compact('projects'));
     }
 
@@ -23,7 +23,7 @@ class ServiceProjectController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        
         $request->validate([
             'thumbnail_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'company_name' => 'required|string',
@@ -42,19 +42,22 @@ class ServiceProjectController extends Controller
         return back()->with('success', 'Project created successfully.');
     }
 
-    public function show(ServiceProject $project)
+    public function show(String $id )
     {
+        $project = ServiceProject::findOrFail($id);
         return view('dashboard.service_project.show', compact('project'));
     }
 
-    public function edit(ServiceProject $project)
+    public function edit(String $id )
     {
+        $project = ServiceProject::findOrFail($id);
         $categories = ServiceCategory::all();
         return view('dashboard.service_project.edit', compact('project', 'categories'));
     }
 
-    public function update(Request $request, ServiceProject $project)
+    public function update(Request $request, String $id)
     {
+        $project = ServiceProject::findOrFail($id);
         $request->validate([
             'thumbnail_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'company_name' => 'required|string',
@@ -86,8 +89,9 @@ class ServiceProjectController extends Controller
         return back()->with('success', 'Project updated successfully.');
     }
 
-    public function destroy(ServiceProject $project)
+    public function destroy(String $id)
     {
+        $project = ServiceProject::findOrFail($id);
         if ($project->thumbnail_image) {
             Photo::delete($project->thumbnail_image);
         }

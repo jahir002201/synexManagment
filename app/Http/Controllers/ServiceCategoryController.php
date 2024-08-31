@@ -12,7 +12,7 @@ class ServiceCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ServiceCategory::latest()->paginate(2);
+        $categories = ServiceCategory::latest()->paginate(5);
         return view('dashboard.service_category.index', compact('categories'));
     }
 
@@ -66,7 +66,7 @@ class ServiceCategoryController extends Controller
         ]);
 
         $serviceCategory->update($request->all());
-        return redirect()->route('service-categories.index')->with('success', 'Service Category updated successfully.');
+        return back()->with('success', 'Service Category updated successfully.');
     }
 
     /**

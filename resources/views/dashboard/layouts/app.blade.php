@@ -11,6 +11,8 @@
 
     @yield('style')
     @include('dashboard.layouts.headerLink')
+    @yield('summernote-style')
+
 </head>
 
 <body>
@@ -69,9 +71,9 @@
     <!--**********************************
         Main wrapper end
     ***********************************-->
-        @yield('summernote')
-        @include('dashboard.layouts.scripts')
-        @yield('script')
+    @include('dashboard.layouts.scripts')
+    @yield('script')
+    @yield('summernote-script')
 </body>
 
 </html>

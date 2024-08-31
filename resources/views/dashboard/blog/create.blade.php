@@ -1,11 +1,9 @@
 @extends('dashboard.layouts.app')
-@section('style')
-    <!-- include libraries(jQuery, bootstrap) -->
+@section('summernote-style')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 @endsection
+
 @section('content')
 
         <div class="container-fluid">
@@ -40,13 +38,9 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label class="col-sm-3 col-form-label">Employee Name</label>
-                                        <select name="employee_id" class="form-control">
-                                            @foreach ($employees as $employee)
-                                                <option value="{{ $employee->id }}">{{ $employee->users?$employee->users->name:'' }}</option>
-                                            @endforeach
-                                            <option value="" disabled>If employee is not in the list, than firstly add the category's information</option>
-                                        </select>
+                                        <label class="col-sm-3 col-form-label">Author </label>
+                                        <input class="form-control" type="text" name="author" value="{{ $employee->name}}" readonly>
+                                        
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -60,15 +54,13 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="mb-3 col-md-6">
-                                        <label for="formFile" class="form-label">Image</label>
-                                        <input class="form-control" type="file" id="formFile"  name="image">
-                                        <span class="text-red">* Image size should be 680x420 px and should be less than 1MB</span>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label">Blog Slug</label>                                        
+                                        <input type="text" class="form-control " placeholder="Enter blog slug (Must be on small letter)" name="slug">
+                                        
                                     </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Content</label>
+                                    <div class="form-group col-md-12">
+                                        <label class="form-label">Content</label>
                                         <textarea id="summernote" class="form-control @error('content') is-invalid @enderror" name="content"></textarea>
                                         @error('content')
                                             <span class="invalid-feedback" role="alert">
@@ -77,16 +69,15 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label class="col-sm-3 col-form-label">Blog Slug</label>
-                                        <div class="col-sm-12">
-                                            <input type="text" class="form-control" placeholder="Enter blog slug (Must be on small letter)" name="slug">
-                                        </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="formFile" class="form-label">Image</label>
+                                        <input class="form-control" type="file" id="formFile"  name="image">
+                                        <span class="text-red">* Image size should be 680x420 px and should be less than 1MB</span>
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label class="col-sm-3 col-form-label">Status</label>
-                                        <div class="col-sm-12">
+                                    <div class="mb-3 col-md-6 ">
+                                        <label class="form-label">Status</label>
+                                        <div class="">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="status" value="active" checked>
                                                 <label class="form-check-label">
@@ -101,10 +92,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
-
+    
                             </div>
                         </div>
+                       
 
                         <div class="card">
                             <div class="card-header">
@@ -137,16 +130,18 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">SEO Description</label>
-                                    <textarea class="from-control @error('seo_description') is-invalid @enderror" rows="5"  name="seo_description"></textarea>
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <label class="form-label">SEO Description</label>
+                                        <textarea class="from-control @error('seo_description') is-invalid @enderror" rows="5" cols="130"  name="seo_description"></textarea>
+                                    </div>
                                     @error('seo_description')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
 
                             </div>
                         </div>
@@ -160,10 +155,12 @@
 
 
 
-
 @endsection
 
-@section('script')
+@section('summernote-script')
+<script src="{{asset('dashboard_assets/js/sd-note.js')}}"> </script>
+
+
 <script>
     $('#summernote').summernote({
       placeholder: 'Write content for your blog',

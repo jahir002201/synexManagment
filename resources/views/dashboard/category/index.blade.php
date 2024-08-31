@@ -111,8 +111,10 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-form-label">SEO Description</label>
-                                    <textarea class="from-control @error('seo_description') is-invalid @enderror" rows="5" name="seo_description"></textarea>
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label">SEO Description</label><br>
+                                        <textarea class="from-control @error('seo_description') is-invalid @enderror" rows="5" cols="130" name="seo_description"></textarea>
+                                    </div>
                                     @error('seo_description')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

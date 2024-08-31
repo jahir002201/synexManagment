@@ -10,7 +10,7 @@ class Blog extends Model
     use HasFactory;
     protected $fillable = [
         'category_id',
-        'employee_id',
+        'author',
         'title',
         'content',
         'image',
