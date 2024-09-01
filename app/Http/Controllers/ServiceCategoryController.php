@@ -12,7 +12,7 @@ class ServiceCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ServiceCategory::latest()->paginate(5);
+        $categories = ServiceCategory::latest()->paginate(10);
         return view('dashboard.service_category.index', compact('categories'));
     }
 

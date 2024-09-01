@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $category = Category::latest()->paginate(5);
+        $category = Category::latest()->paginate(10);
         return view('dashboard.category.create', [
             'category'      => $category,
         ]);
